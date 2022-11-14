@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
  <style>
  
@@ -29,11 +29,11 @@ td, th {
   border: 1px solid black;
 }
 
-.no-borders: {
+.no-borders {
 	border: none;
 }
 
-td.topless: {
+td.topless {
 	border-top: none;
 }
 
@@ -136,131 +136,169 @@ hr {
 	<tr>
 		<td colspan="3"></td>
 		<td colspan="4">Cod numeric personal-CNP</td>
-		<td class="center"><div class="pen big">1</div><div>S</div></td>
-		<td class="center"><div class="pen big">9</div><div>A</div></td>
-		<td class="center"><div class="pen big">8</div><div>A</div></td>
-		<td class="center"><div class="pen big">0</div><div>L</div></td>
-		<td class="center"><div class="pen big">5</div><div>L</div></td>
-		<td class="center"><div class="pen big">2</div><div>Z</div></td>
-		<td class="center"><div class="pen big">1</div><div>Z</div></td>
-		<td class="center"><div class="pen big">2</div><div>N</div></td>
-		<td class="center"><div class="pen big">7</div><div>N</div></td>
-		<td class="center"><div class="pen big">0</div><div>N</div></td>
-		<td class="center"><div class="pen big">0</div><div>N</div></td>
-		<td class="center"><div class="pen big">2</div><div>N</div></td>
-		<td class="center"><div class="pen big">3</div><div>C</div></td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),0, 1)}"/>
+			<div>S</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),1, 2)}"/>
+			<div>A</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),2, 3)}"/>
+			<div>A</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),3, 4)}"/>
+			<div>L</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),4, 5)}"/>
+			<div>L</div></td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),5, 6)}"/>
+			<div>Z</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),6, 7)}"/>
+			<div>Z</div>
+		</td>
+		<td class="center">
+			<div class="pen big"th:text="${#strings.substring(request.getPersonalNumericCode(),7, 8)}"/>
+			<div>N</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),8, 9)}"/>
+			<div>N</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),9, 10)}"/>
+			<div>N</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),10, 11)}"/>
+			<div>N</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),11, 12)}"/>
+			<div>N</div>
+		</td>
+		<td class="center">
+			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),12, 13)}"/>
+			<div>C</div>
+		</td>
 	</tr>
 	<tr>
 		<td rowspan="2" colspan="3"><b><i>Subsemnatul:</i></b></td>
 		<td colspan="2">Nume</td>
-		<td colspan="15" class="pen">STEFAN</td>
+		<td colspan="15" class="pen" th:text="${request.lastName}"/>
 	</tr>
 	<tr>
 		<td colspan="2">Prenume</td>
-		<td colspan="15" class="pen">COSMIN</td>
+		<td colspan="15" class="pen" th:text="${request.firstName}"/>
 	</tr>
 	<tr>
 		<td rowspan="2" colspan="3">Prenume parinti</td>
 		<td colspan="2">Tata</td>
-		<td colspan="15" class="pen"></td>
+		<td colspan="15" class="pen" th:text="${request.fatherFirstName}"/>
 	</tr>
 	<tr>
 		<td colspan="2">Mama</td>
-		<td colspan="15" class="pen"></td>
+		<td colspan="15" class="pen" th:text="${request.motherFirstName}"/>
 	</tr>
 	<tr>
 		<td colspan="3">Sex</td>
 		<td colspan="3"></td>
-		<td colspan="1" class="pen">X</td>
+		<td colspan="1" class="pen" th:text="${request.isMale} ? 'X' : ''"/>
 		<td colspan="6"><b>M</b></td>
-		<td colspan="1" class="pen"></td>
+		<td colspan="1" class="pen"th:text="${request.isFemale} ? 'X' : ''"/>
 		<td colspan="6"><b>F</b></td>
 	</tr>
 	<tr>
 		<td rowspan="2" colspan="3">Loc si data nastere</td>
 		<td colspan="4">Mun./oras/sector/com./sat</td>
-		<td colspan="13" class="pen">PIATRA NEAMT</td>
+		<td colspan="13" class="pen" th:text="${request.birthTown}"/>
 	</tr>
 	<tr>
 		<td colspan="2">Judet</td>
-		<td colspan="3" class="pen">NEAMT</td>
+		<td colspan="3" class="pen" th:text="${request.birthCountry}"/>
 		<td colspan="2">Data nasterii:  An</td>
-		<td class="pen">1</td>
-		<td class="pen">9</td>
-		<td class="pen">9</td>
-		<td class="pen">8</td>
+		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),0,1)}"/>
+		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),1,2)}"/>
+		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),2,3)}"/>
+		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),3,4)}"/>
 		<td>luna</td>
-		<td class="pen">0</td>
-		<td class="pen">5</td>
+		<td class="pen" th:text="${#strings.substring(request.getBirthDate(),0,1)}"/>
+		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),1,2)}"/>
 		<td>zi</td>
-		<td class="pen">2</td>
-		<td class="pen">1</td>
+		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getDayOfMonth(),0,1)}"/>
+		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getDayOfMonth(),1,2)}"/>
 	</tr>
 	<tr>
 		<td rowspan="4" colspan="3">Domiciliul actual</td>
 		<td colspan="4">Mun./oras/sector/comuna</td>
-		<td colspan="13" class="pen">PIATRA NEAMT</td>
+		<td colspan="13" class="pen" th:text="${request.currentAdress?.townName}"/>
 	</tr>
 	<tr>
 		<td colspan="2">Strada/sat</td>
-		<td colspan="15" class="pen">DECEBAL</td>
+		<td colspan="15" class="pen" th:text="${request.currentAdress?.streetName}"/>
 	</tr>
 	<tr>
 		<td>Nr.</td>
-		<td class="pen">88</td>
+		<td class="pen" th:text="${request.currentAdress?.streetNumber}"/>
 		<td>Bl.</td>
-		<td colspan="2" class="pen">E</td>
+		<td colspan="2" class="pen" th:text="${request.currentAdress?.buildingName}"/>
 		<td colspan="2">Sc.</td>
-		<td class="pen">C</td>
+		<td class="pen" th:text="${request.currentAdress?.entrance}"/>
 		<td colspan="2">Etj.</td>
-		<td colspan="2" class="pen">3</td>
+		<td colspan="2" class="pen" th:text="${request.currentAdress?.floorNumber}"/>
 		<td colspan="2">Apt</td>
-		<td colspan="3" class="pen">40</td>
+		<td colspan="3" class="pen" th:text="${request.currentAdress?.apartment}"/>
 	</tr>
 		<td colspan="2">Judet</td>
-		<td colspan="6" class="pen">NEAMT</td>
+		<td colspan="6" class="pen" th:text="${request.currentAdress?.countryName}"/>
 		<td colspan="4">Tel</td>
-		<td colspan="5" class="pen">0787429643</td>
+		<td colspan="5" class="pen" th:text="${request.phoneNumber}"/>
 	</tr>
 	<tr>
 		<td rowspan="4" colspan="3">Domiciliul anterior(numai pentru cei care isi schimba domiciliul)</td>
 		<td colspan="4">Mun./oras/sector/comuna</td>
-		<td colspan="13" class="pen"></td>
+		<td colspan="13" class="pen" th:text="${request.previousAdress?.townName}"/>
 	</tr>
 	<tr>
 		<td colspan="2">Strada/sat</td>
-		<td colspan="15" class="pen"></td>
+		<td colspan="15" class="pen" th:text="${request.previousAdress?.streetName}"/>
 	</tr>
 	<tr>
 		<td>Nr.</td>
-		<td class="pen"></td>
+		<td class="pen" th:text="${request.previousAdress?.streetNumber}"/>
 		<td>Bl.</td>
-		<td colspan="2" class="pen"></td>
+		<td colspan="2" class="pen" th:text="${request.previousAdress?.buildingName}"/>
 		<td colspan="2">Sc.</td>
-		<td class="pen"></td>
+		<td class="pen" th:text="${request.previousAdress?.entrance}"/>
 		<td colspan="2">Etj.</td>
-		<td colspan="2" class="pen"></td>
+		<td colspan="2" class="pen" th:text="${request.previousAdress?.floorNumber}"/>
 		<td colspan="2">Apt</td>
-		<td colspan="3" class="pen"></td>
+		<td colspan="3" class="pen" th:text="${request.previousAdress?.apartment}"/>
 	</tr>
 		<td colspan="2">Judet</td>
-		<td colspan="6" class="pen"></td>
+		<td colspan="6" class="pen" th:text="${request.previousAdress?.countryName}"/>
 		<td colspan="4">Tel</td>
 		<td colspan="5" class="pen"></td>
 	</tr>
 	<tr>
 		<td colspan="3">Nume anterior</td>
-		<td colspan="17" class="pen"></td>
+		<td colspan="17" class="pen" th:text="${request.previousName}"/>
 	</tr>
 	<tr>
 		<td colspan="3">Stare civila</td>
-		<td class="pen">X</td>
+		<td class="pen" th:text="${request.isSingle} ? 'X' : ''"/>
 		<td colspan="3">Necasatorit(a)</td>
-		<td class="pen"></td>
+		<td class="pen" th:text="${request.isMarried} ? 'X' : ''"/>
 		<td colspan="4">Casatorit(a)</td>
-		<td class="pen"></td>
+		<td class="pen" th:text="${request.isDivorced} ? 'X' : ''"/>
 		<td colspan="3">Divortat(a)</td>
-		<td class="pen"></td>
+		<td class="pen" th:text="${request.isWidow} ? 'x' : ''"/>
 		<td colspan="3">Vaduv(a)</td>
 	</tr>
 	<tr>
@@ -276,11 +314,11 @@ hr {
 	</tr>
 	<tr>
 		<td colspan="3">Ultima scoala absolvita</td>
-		<td colspan="17" class="pen">FII</td>
+		<td colspan="17" class="pen" th:text="${request.previousSchool}"/>
 	</tr>
 	<tr>
 		<td colspan="3">Ocupatia actuala(meseria,functia)</td>
-		<td colspan="17" class="pen">PROGRAMATOR</td>
+		<td colspan="17" class="pen" th:text="${request.profession}" />
 	</tr>
 	<tr>
 		<td rowspan="7" colspan="3">Copii minori(sub 14 ani)</td>
@@ -328,7 +366,7 @@ hr {
 	<tr>
 		<td colspan="20">
 			<div class="big"><i><b>Rog sa mi se elibereze actul de identitate pentru motivul:</b></i></div>
-			<div class="big left pen one-tab-padding">PIERDERE</div>
+			<div class="big left pen one-tab-padding" th:text="${request.reason}"/>
 		</td>
 	</tr>
 </table>
