@@ -3,7 +3,7 @@ package fii.request.manager.domain;
 import lombok.Data;
 
 @Data
-public class Adress {
+public class Address {
     String townName;
     String countryName;
     String streetName;

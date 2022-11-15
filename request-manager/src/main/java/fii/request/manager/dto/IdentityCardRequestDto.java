@@ -1,5 +1,6 @@
 package fii.request.manager.dto;
 
+import fii.request.manager.domain.Address;
 import fii.request.manager.domain.Child;
 import lombok.Data;
 
@@ -13,15 +14,14 @@ public class IdentityCardRequestDto {
         String personalNumericCode;
         String firstName;
         String lastName;
-        @Pattern(regexp = "male|female")
         String sex;
         String fatherFirstName;
         String motherFirstName;
         LocalDate birthDate;
         String birthTown;
         String birthCountry;
-        AdressDto currentAdress;
-        AdressDto previousAdress;
+        Address currentAdress;
+        Address previousAdress;
         String phoneNumber;
         String previousName;
         @Pattern(regexp = "single|married|divorced|widow")

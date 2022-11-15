@@ -37,10 +37,6 @@ td.topless {
 	border-top: none;
 }
 
-table.inline {
-	display: inline;
-}
-
 table.small-square>td {
 	width: 1em;
 	height: 1em;
@@ -137,54 +133,54 @@ hr {
 		<td colspan="3"></td>
 		<td colspan="4">Cod numeric personal-CNP</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),0, 1)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,0, 1)}"/>
 			<div>S</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),1, 2)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,1, 2)}"/>
 			<div>A</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),2, 3)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,2, 3)}"/>
 			<div>A</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),3, 4)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,3, 4)}"/>
 			<div>L</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),4, 5)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,4, 5)}"/>
 			<div>L</div></td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),5, 6)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,5, 6)}"/>
 			<div>Z</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),6, 7)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,6, 7)}"/>
 			<div>Z</div>
 		</td>
 		<td class="center">
-			<div class="pen big"th:text="${#strings.substring(request.getPersonalNumericCode(),7, 8)}"/>
+			<div class="pen big"th:text="${#strings.substring(request.personalNumericCode,7, 8)}"/>
 			<div>N</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),8, 9)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,8, 9)}"/>
 			<div>N</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),9, 10)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,9, 10)}"/>
 			<div>N</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),10, 11)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,10, 11)}"/>
 			<div>N</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),11, 12)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,11, 12)}"/>
 			<div>N</div>
 		</td>
 		<td class="center">
-			<div class="pen big" th:text="${#strings.substring(request.getPersonalNumericCode(),12, 13)}"/>
+			<div class="pen big" th:text="${#strings.substring(request.personalNumericCode,12, 13)}"/>
 			<div>C</div>
 		</td>
 	</tr>
@@ -211,7 +207,7 @@ hr {
 		<td colspan="3"></td>
 		<td colspan="1" class="pen" th:text="${request.isMale} ? 'X' : ''"/>
 		<td colspan="6"><b>M</b></td>
-		<td colspan="1" class="pen"th:text="${request.isFemale} ? 'X' : ''"/>
+		<td colspan="1" class="pen" th:text="${request.isFemale} ? 'X' : ''"/>
 		<td colspan="6"><b>F</b></td>
 	</tr>
 	<tr>
@@ -223,66 +219,66 @@ hr {
 		<td colspan="2">Judet</td>
 		<td colspan="3" class="pen" th:text="${request.birthCountry}"/>
 		<td colspan="2">Data nasterii:  An</td>
-		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),0,1)}"/>
-		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),1,2)}"/>
-		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),2,3)}"/>
-		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),3,4)}"/>
+		<td class="pen" th:text="${#strings.substring(request.birthDate.year,0, 1)}"/>
+		<td class="pen" th:text="${#strings.substring(request.birthDate.year,1, 2)}"/>
+		<td class="pen" th:text="${#strings.substring(request.birthDate.year,2, 3)}"/>
+		<td class="pen" th:text="${#strings.substring(request.birthDate.year,3, 4)}"/>
 		<td>luna</td>
-		<td class="pen" th:text="${#strings.substring(request.getBirthDate(),0,1)}"/>
-		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getYear(),1,2)}"/>
+		<td class="pen" th:text="${#strings.substring(request.birthDate.month,0, 1)}"/>
+		<td class="pen" th:text="${#strings.substring(request.birthDate.month,1, 2)}"/>
 		<td>zi</td>
-		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getDayOfMonth(),0,1)}"/>
-		<td class="pen" th:text="${#strings.substring(request.getBirthDate().getDayOfMonth(),1,2)}"/>
+		<td class="pen" th:text="${#strings.substring(request.birthDate.day,0, 1)}"/>
+		<td class="pen" th:text="${#strings.substring(request.birthDate.day,1, 2)}"/>
 	</tr>
 	<tr>
 		<td rowspan="4" colspan="3">Domiciliul actual</td>
 		<td colspan="4">Mun./oras/sector/comuna</td>
-		<td colspan="13" class="pen" th:text="${request.currentAdress?.townName}"/>
+		<td colspan="13" class="pen" th:text="${request.getCurrentAddress?.townName}"/>
 	</tr>
 	<tr>
 		<td colspan="2">Strada/sat</td>
-		<td colspan="15" class="pen" th:text="${request.currentAdress?.streetName}"/>
+		<td colspan="15" class="pen" th:text="${request.getCurrentAddress?.streetName}"/>
 	</tr>
 	<tr>
 		<td>Nr.</td>
-		<td class="pen" th:text="${request.currentAdress?.streetNumber}"/>
+		<td class="pen" th:text="${request.getCurrentAddress?.streetNumber}"/>
 		<td>Bl.</td>
-		<td colspan="2" class="pen" th:text="${request.currentAdress?.buildingName}"/>
+		<td colspan="2" class="pen" th:text="${request.getCurrentAddress?.buildingName}"/>
 		<td colspan="2">Sc.</td>
-		<td class="pen" th:text="${request.currentAdress?.entrance}"/>
+		<td class="pen" th:text="${request.getCurrentAddress?.entrance}"/>
 		<td colspan="2">Etj.</td>
-		<td colspan="2" class="pen" th:text="${request.currentAdress?.floorNumber}"/>
+		<td colspan="2" class="pen" th:text="${request.getCurrentAddress?.floorNumber}"/>
 		<td colspan="2">Apt</td>
-		<td colspan="3" class="pen" th:text="${request.currentAdress?.apartment}"/>
+		<td colspan="3" class="pen" th:text="${request.getCurrentAddress?.apartment}"/>
 	</tr>
 		<td colspan="2">Judet</td>
-		<td colspan="6" class="pen" th:text="${request.currentAdress?.countryName}"/>
+		<td colspan="6" class="pen" th:text="${request.getCurrentAddress?.countryName}"/>
 		<td colspan="4">Tel</td>
 		<td colspan="5" class="pen" th:text="${request.phoneNumber}"/>
 	</tr>
 	<tr>
 		<td rowspan="4" colspan="3">Domiciliul anterior(numai pentru cei care isi schimba domiciliul)</td>
 		<td colspan="4">Mun./oras/sector/comuna</td>
-		<td colspan="13" class="pen" th:text="${request.previousAdress?.townName}"/>
+		<td colspan="13" class="pen" th:text="${request.getPreviousAddress?.townName}"/>
 	</tr>
 	<tr>
 		<td colspan="2">Strada/sat</td>
-		<td colspan="15" class="pen" th:text="${request.previousAdress?.streetName}"/>
+		<td colspan="15" class="pen" th:text="${request.getPreviousAddress?.streetName}"/>
 	</tr>
 	<tr>
 		<td>Nr.</td>
-		<td class="pen" th:text="${request.previousAdress?.streetNumber}"/>
+		<td class="pen" th:text="${request.getPreviousAddress?.streetNumber}"/>
 		<td>Bl.</td>
-		<td colspan="2" class="pen" th:text="${request.previousAdress?.buildingName}"/>
+		<td colspan="2" class="pen" th:text="${request.getPreviousAddress?.buildingName}"/>
 		<td colspan="2">Sc.</td>
-		<td class="pen" th:text="${request.previousAdress?.entrance}"/>
+		<td class="pen" th:text="${request.getPreviousAddress?.entrance}"/>
 		<td colspan="2">Etj.</td>
-		<td colspan="2" class="pen" th:text="${request.previousAdress?.floorNumber}"/>
+		<td colspan="2" class="pen" th:text="${request.getPreviousAddress?.floorNumber}"/>
 		<td colspan="2">Apt</td>
-		<td colspan="3" class="pen" th:text="${request.previousAdress?.apartment}"/>
+		<td colspan="3" class="pen" th:text="${request.getPreviousAddress?.apartment}"/>
 	</tr>
 		<td colspan="2">Judet</td>
-		<td colspan="6" class="pen" th:text="${request.previousAdress?.countryName}"/>
+		<td colspan="6" class="pen" th:text="${request.getPreviousAddress?.countryName}"/>
 		<td colspan="4">Tel</td>
 		<td colspan="5" class="pen"></td>
 	</tr>
@@ -303,13 +299,13 @@ hr {
 	</tr>
 	<tr>
 		<td colspan="3">Situatie militara</td>
-		<td class="pen"></td>
+		<td class="pen" th:text="${request.isActive} ? 'X' : ''"/>
 		<td colspan="3">Cadru activ</td>
-		<td class="pen"></td>
+		<td class="pen" th:text="${request.isRecruit} ? 'X' : ''"/>
 		<td colspan="4">Recrut</td>
-		<td class="pen"></td>
+		<td class="pen" th:text="${request.isReservist} ? 'X' : ''"/>
 		<td colspan="2">Rezervist*</td>
-		<td class="pen">X</td>
+		<td class="pen" th:text="${request.isWithoutMilitaryObligation} ? 'X' : ''"/>
 		<td colspan="4">Fara obligatii militare</td>
 	</tr>
 	<tr>
@@ -388,16 +384,16 @@ hr {
 	<div class="two-thirds">
 		<table class="center"><tr>
 			<td class="no-borders">An</td>
-			<td class="pen topless">2</td>
-			<td class="pen topless">0</td>
-			<td class="pen topless">2</td>
-			<td class="pen topless">2</td>
+			<td class="pen topless" th:text="${#strings.substring(request.requestDate.year,0,1)}"/>
+			<td class="pen topless" th:text="${#strings.substring(request.requestDate.year,1,2)}"/>
+			<td class="pen topless" th:text="${#strings.substring(request.requestDate.year,2,3)}"/>
+			<td class="pen topless" th:text="${#strings.substring(request.requestDate.year,3,4)}"/>
 			<td class="no-borders">luna</td>
-			<td class="pen topless">1</td>
-			<td class="pen">1</td>
+			<td class="pen topless" th:text="${#strings.substring(request.requestDate.month,0,1)}"/>
+			<td class="pen topless" th:text="${#strings.substring(request.requestDate.month,1,2)}"/>
 			<td class="no-borders">zi</td>
-			<td class="pen topless">0</td>
-			<td class="pen topless">9</td>
+			<td class="pen topless" th:text="${#strings.substring(request.requestDate.day,0,1)}"/>
+			<td class="pen topless" th:text="${#strings.substring(request.requestDate.day,1,2)}"/>
 		</tr></table>
 	</div>
 </section>

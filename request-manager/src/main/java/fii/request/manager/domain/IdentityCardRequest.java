@@ -2,7 +2,6 @@ package fii.request.manager.domain;
 
 import lombok.Data;
 
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -13,18 +12,18 @@ public class IdentityCardRequest {
     String lastName;
     String fatherFirstName;
     String motherFirstName;
-    LocalDate birthDate;
+    DateString birthDate;
     String birthTown;
     String birthCountry;
-    Adress currentAdress;
-    Adress previousAdress;
+    Address currentAddress;
+    Address previousAddress;
     String phoneNumber;
     String previousName;
     String previousSchool;
     String profession;
     ArrayList<Child> children;
     String reason;
-    LocalDate requestDate;
+    DateString requestDate;
     Boolean isMale;
     Boolean isFemale;
     Boolean isSingle;
