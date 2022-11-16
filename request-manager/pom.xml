@@ -65,6 +65,18 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>8.0.0.Final</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
+		<dependency>
+			<groupId>net.sourceforge.tess4j</groupId>
+			<artifactId>tess4j</artifactId>
+			<version>5.4.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/opencv/opencv -->
+		<dependency>
+			<groupId>opencv</groupId>
+			<artifactId>opencv</artifactId>
+			<version>4.0.0-0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -84,4 +96,10 @@
 		</plugins>
 	</build>
 
+	<repositories>
+		<repository>
+			<id>clojars.org</id>
+			<url>http://clojars.org/repo</url>
+		</repository>
+	</repositories>
 </project>

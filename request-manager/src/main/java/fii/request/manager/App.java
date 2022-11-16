@@ -1,5 +1,8 @@
 package fii.request.manager;
 
+import fii.request.manager.service.OcrService;
+import fii.request.manager.service.OcrServiceImpl;
+import fii.request.manager.service.preprocessing.PreprocessingHandlerChain;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +21,8 @@ public class App {
 		return args -> {
 			String[] beans = appContext.getBeanDefinitionNames();
 			Arrays.stream(beans).sorted().forEach(System.out::println);
+			//var preprocessingHandlerChain = (PreprocessingHandlerChain) appContext.getBean("preprocessingHandlerChain");
+
 		};
 	}
 }
