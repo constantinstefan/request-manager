@@ -1,12 +1,14 @@
 package fii.request.manager.service.preprocessing;
 
-import fii.request.manager.service.preprocessing.PreprocessingHandler;
-import lombok.Data;
+import nu.pattern.OpenCV;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.Scalar;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 @Component
@@ -18,10 +20,14 @@ public class PreprocessingHandlerChain {
         this.handlers=handlers;
     }
 
-    public BufferedImage doPreprocessing(BufferedImage bufferedImage) {
+    public byte[] doPreprocessing(byte[] inputImage) {
+        Mat imageMatrix = Imgcodecs.imdecode(new MatOfByte(inputImage), Imgcodecs.IMREAD_UNCHANGED);
         for(var handler: handlers) {
-            bufferedImage = handler.doPreprocessing(bufferedImage);
+            imageMatrix = handler.doPreprocessing(imageMatrix);
         }
-        return bufferedImage;
+        //Imgproc.polylines(inputImage, , true, new Scalar(255,0,0),3);
+        MatOfByte imageMatrixOfBytes = new MatOfByte();
+        Imgcodecs.imencode(".jpg", imageMatrix, imageMatrixOfBytes);
+        return imageMatrixOfBytes.toArray();
     }
 }

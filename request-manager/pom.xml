@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.5</version>
+		<version>3.0.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fii.request</groupId>
@@ -15,13 +15,13 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
+		<spring-cloud.version>2022.0.1</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-			<version>2.7.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -71,13 +71,46 @@
 			<artifactId>tess4j</artifactId>
 			<version>5.4.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/opencv/opencv -->
+		<!-- https://mvnrepository.com/artifact/org.openpnp/opencv -->
 		<dependency>
-			<groupId>opencv</groupId>
+			<groupId>org.openpnp</groupId>
 			<artifactId>opencv</artifactId>
-			<version>4.0.0-0</version>
+			<version>4.5.5-1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-language -->
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-language</artifactId>
+			<version>2.12.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/me.xdrop/fuzzywuzzy -->
+		<dependency>
+			<groupId>me.xdrop</groupId>
+			<artifactId>fuzzywuzzy</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+
+
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -95,11 +128,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>clojars.org</id>
-			<url>http://clojars.org/repo</url>
-		</repository>
-	</repositories>
 </project>
