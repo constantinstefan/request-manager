@@ -1,6 +1,6 @@
-package fii.request.manager.util;
+package fii.request.manager.helper.string;
 
-public class StringUtil {
+public class StringHelper {
     public static String toUpperCase(String string) {
         return (string != null)
                 ? string.toUpperCase()
