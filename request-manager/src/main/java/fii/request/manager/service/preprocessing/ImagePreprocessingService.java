@@ -1,4 +1,4 @@
-package fii.request.manager.service;
+package fii.request.manager.service.preprocessing;
 
 public interface ImagePreprocessingService {
 

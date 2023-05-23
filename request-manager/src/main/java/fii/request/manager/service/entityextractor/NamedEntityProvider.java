@@ -26,8 +26,8 @@ public class NamedEntityProvider {
     }
 
     public List<String> getAllEntityKeysInSameContext(String entityKey) {
-        String contextKey = namedEntities.get(entityKey).getContextKey();
-        List<String> result = namedEntities.keySet().stream()
+        final String contextKey = namedEntities.get(entityKey).getContextKey();
+        final List<String> result = namedEntities.keySet().stream()
                 .filter(key -> namedEntities.get(key).getContextKey().equals(contextKey))
                 .collect(Collectors.toList());
         return result;

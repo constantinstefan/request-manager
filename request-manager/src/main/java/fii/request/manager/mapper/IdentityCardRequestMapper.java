@@ -6,7 +6,7 @@ import fii.request.manager.dto.IdentityCardRequestDto;
 
 import java.time.LocalDate;
 
-import static fii.request.manager.util.StringUtil.toUpperCase;
+import static fii.request.manager.service.helper.string.StringHelper.toUpperCase;
 
 public class IdentityCardRequestMapper {
 
@@ -22,14 +22,14 @@ public class IdentityCardRequestMapper {
         identityCardRequest.setMotherFirstName(toUpperCase(identityCardRequestDto.getMotherFirstName()));
         identityCardRequest.setIsMale(identityCardRequestDto.getSex().equals("male"));
         identityCardRequest.setIsFemale(identityCardRequestDto.getSex().equals("female"));
-        identityCardRequest.setIsSingle(identityCardRequestDto.getCivilStatus().equals("single"));
-        identityCardRequest.setIsMarried(identityCardRequestDto.getCivilStatus().equals("married"));
-        identityCardRequest.setIsDivorced(identityCardRequestDto.getCivilStatus().equals("divorced"));
-        identityCardRequest.setIsWidow(identityCardRequestDto.getCivilStatus().equals("widow"));
-        identityCardRequest.setIsActive(identityCardRequestDto.getMilitaryStatus().equals("active"));
-        identityCardRequest.setIsReservist(identityCardRequestDto.getMilitaryStatus().equals("reservist"));
-        identityCardRequest.setIsRecruit(identityCardRequestDto.getMilitaryStatus().equals("recruit"));
-        identityCardRequest.setIsWithoutMilitaryObligation(identityCardRequestDto.getMilitaryStatus().equals("no-military-obligation"));
+        //identityCardRequest.setIsSingle(identityCardRequestDto.getCivilStatus().equals("single"));
+        //identityCardRequest.setIsMarried(identityCardRequestDto.getCivilStatus().equals("married"));
+        //identityCardRequest.setIsDivorced(identityCardRequestDto.getCivilStatus().equals("divorced"));
+        //identityCardRequest.setIsWidow(identityCardRequestDto.getCivilStatus().equals("widow"));
+        //identityCardRequest.setIsActive(identityCardRequestDto.getMilitaryStatus().equals("active"));
+        //identityCardRequest.setIsReservist(identityCardRequestDto.getMilitaryStatus().equals("reservist"));
+        //identityCardRequest.setIsRecruit(identityCardRequestDto.getMilitaryStatus().equals("recruit"));
+        //identityCardRequest.setIsWithoutMilitaryObligation(identityCardRequestDto.getMilitaryStatus().equals("no-military-obligation"));
         identityCardRequest.setCurrentAddress(AdressFormatter.format(identityCardRequestDto.getCurrentAdress()));
         identityCardRequest.setPreviousAddress(AdressFormatter.format(identityCardRequestDto.getPreviousAdress()));
         identityCardRequest.setPreviousSchool(toUpperCase(identityCardRequestDto.getPreviousSchool()));

@@ -28,10 +28,11 @@ public class IdentityCardRequestController {
     }
 
     @GetMapping(value = "/identity-card")
-    public ResponseEntity<byte[]> getIdentityCard(@Valid @RequestBody IdentityCardRequestDto identityCardRequestDto) {
-        byte[] content = identityCardRequestService.getPdf(
+    public ResponseEntity<byte[]> getIdentityCard() throws Exception {
+        /*byte[] content = identityCardRequestService.getPdf(
                 IdentityCardRequestMapper.map(identityCardRequestDto)
-        );
+        );*/
+        byte[] content = identityCardRequestService.getPdf();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);

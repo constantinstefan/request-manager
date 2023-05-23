@@ -2,13 +2,16 @@ package fii.request.manager.dto;
 
 import fii.request.manager.domain.Address;
 import fii.request.manager.domain.Child;
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 @Data
+@Builder
 public class IdentityCardRequestDto {
         @Size(min=13, max=13)
         String personalNumericCode;

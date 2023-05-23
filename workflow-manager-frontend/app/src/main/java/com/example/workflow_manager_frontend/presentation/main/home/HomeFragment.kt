@@ -1,6 +1,7 @@
 package com.example.workflow_manager_frontend.presentation.main.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.example.workflow_manager_frontend.databinding.FragmentHomeBinding
 import com.example.workflow_manager_frontend.domain.model.Workflow
+import com.example.workflow_manager_frontend.presentation.workflow.WorkflowActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,7 +49,8 @@ class HomeFragment(
     }
 
     private fun setUpRecycleView() {
-        binding.recycleViewWorkflow.adapter = WorkflowAdapter(WorkflowDiffCallback())
+        binding.recycleViewWorkflow.adapter = WorkflowAdapter(WorkflowDiffCallback()
+        ) { startWorkflowActivity() }
         binding.recycleViewWorkflow.layoutManager = LinearLayoutManager(context)
     }
 
@@ -62,6 +65,10 @@ class HomeFragment(
                 }
             }
         }
+    }
+
+    private fun startWorkflowActivity() {
+        startActivity(Intent(context, WorkflowActivity::class.java))
     }
 
 }

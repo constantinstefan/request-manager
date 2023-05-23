@@ -13,13 +13,13 @@ public class FuzzySearchAdapter {
     }
 
     public String fuzzySearch(String doc, String toSearch, String separator) {
-        List<String> tokens = List.of(doc.split(separator));
+        final List<String> tokens = List.of(doc.split(separator));
         return fuzzySearch(tokens, toSearch);
     }
 
     public String fuzzySearch(List<String> tokens, String toSearch) {
 
-        var result = FuzzySearch.extractTop(toSearch, tokens,1)
+        final var result = FuzzySearch.extractTop(toSearch, tokens,1)
                 .stream().findFirst().orElse(null);
         if(result == null) {
             return null;

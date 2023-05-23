@@ -18,6 +18,7 @@ public class App {
 	@Bean
 	public CommandLineRunner run(ApplicationContext appContext) {
 		return args -> {
+
 			String[] beans = appContext.getBeanDefinitionNames();
 			Arrays.stream(beans).sorted().forEach(System.out::println);
 			//var preprocessingHandlerChain = (PreprocessingHandlerChain) appContext.getBean("preprocessingHandlerChain");

@@ -2,10 +2,11 @@ package fii.request.manager.service.ocr;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fii.request.manager.service.ImagePreprocessingService;
+import fii.request.manager.service.preprocessing.ImagePreprocessingService;
 import fii.request.manager.service.htttpclient.OcrSpaceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 @Service
+//@Primary
 public class OcrServiceImpl implements OcrService {
     OcrSpaceClient ocrSpaceClient;
     ImagePreprocessingService imagePreprocessingService;
@@ -31,7 +33,7 @@ public class OcrServiceImpl implements OcrService {
 
     @Override
     public String processImage(BufferedImage bufferedImage) throws IOException {
-        String imagePathName = "src/main/resources/buletin3.jpg";
+        String imagePathName = "src/main/resources/certificat-nastere-2.jpg";
         byte[] resizedImage = imagePreprocessingService.getLessThan1MbResizedImage(imagePathName);
 
         MultipartFile multipartFile = new MockMultipartFile("file","buletin.jpg","image/jpeg", new ByteArrayInputStream(resizedImage));

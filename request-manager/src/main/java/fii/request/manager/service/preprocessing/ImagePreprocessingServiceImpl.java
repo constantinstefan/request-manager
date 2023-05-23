@@ -1,5 +1,6 @@
-package fii.request.manager.service;
+package fii.request.manager.service.preprocessing;
 
+import fii.request.manager.service.preprocessing.ImagePreprocessingService;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.Size;
@@ -8,7 +9,7 @@ import org.opencv.imgproc.Imgproc;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ImagePreprocessingServiceImpl implements ImagePreprocessingService{
+public class ImagePreprocessingServiceImpl implements ImagePreprocessingService {
 
     @Override
     public byte[] getLessThan1MbResizedImage(String imagePathName) {

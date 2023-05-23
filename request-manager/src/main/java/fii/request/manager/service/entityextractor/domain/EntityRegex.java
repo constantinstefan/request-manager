@@ -26,15 +26,14 @@ public class EntityRegex {
         String context = contextLines.stream().collect(Collectors.joining("\n"));
         String regex = buildEntityRegex(entityKey);
         if(regex == null) {
-            return "regex failed";
+            return "";
         }
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(context);
         if(!matcher.find()){
-            return "not found";
+            return "";
         }
-        System.out.println("found "+ matcher.group());
         removeTextFromContextLines(contextLines, matcher.group());
         return matcher.group(1);
     }

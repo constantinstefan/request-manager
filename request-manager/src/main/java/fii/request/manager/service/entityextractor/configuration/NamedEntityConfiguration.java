@@ -1,5 +1,6 @@
 package fii.request.manager.service.entityextractor.configuration;
 
+import fii.request.manager.service.entityextractor.NamedEntityProvider;
 import fii.request.manager.service.entityextractor.domain.NamedEntityAttributes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 public class NamedEntityConfiguration {
 
     @Bean
-    HashMap<String, NamedEntityAttributes> namedEntities() {
+    HashMap<String,NamedEntityAttributes> namedEntities() {
         HashMap<String , NamedEntityAttributes> namedEntities = new HashMap<>();
         namedEntities.put("cnp", new NamedEntityAttributes("CNP", "\\d{13}"));
         namedEntities.put("bd", new NamedEntityAttributes("Bd", "\\w+(\\s(?!\\n)+\\w+)*"));
