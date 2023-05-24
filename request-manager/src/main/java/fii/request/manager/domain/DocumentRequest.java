@@ -14,7 +14,7 @@ public class DocumentRequest {
 
     private boolean isOcrRequired;
 
-    private String fileResultLabel;
+    private String uploadedFileVariable;
 
-    private String ocrResultLabel;
+    private String ocrResultVariable;
 }

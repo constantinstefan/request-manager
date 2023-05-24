@@ -26,4 +26,8 @@ public class EditableHtmlService {
         EditableHtml editableHtml = editableHtmlMapper.map(editableHtmlDto);
         return editableHtmlMapper.map(editableHtmlRepository.save(editableHtml));
     }
+
+    public EditableHtmlResponseDto getByWorkflowStepId(Long workflowStepId) {
+        return editableHtmlMapper.map(editableHtmlRepository.findByWorkflowStepId(workflowStepId).orElseThrow());
+    }
 }

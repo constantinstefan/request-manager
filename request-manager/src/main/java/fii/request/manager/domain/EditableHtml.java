@@ -16,5 +16,7 @@ public class EditableHtml {
 
     private String path;
 
-    private String fileResultLabel;
+    private String uploadedEditedHtmlFileVariable;
+
+    private String pdfResultVariable;
 }

@@ -2,8 +2,10 @@ package fii.request.manager.controller;
 
 import fii.request.manager.domain.*;
 import fii.request.manager.dto.*;
+import fii.request.manager.mapper.WorkflowExecutionContextMapper;
 import fii.request.manager.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -103,9 +105,20 @@ public class WorkflowController {
         return workflowService.getAllWorkflows();
     }
 
-    @PostMapping(value= "/{workflowId}/execution")
-    ResponseEntity doExecution(@PathVariable Long workflowId, @RequestBody WorkflowExecutionContextDto workflowExecutionContextDto) {
-        workflowRunnerService.runWorkflow(workflowExecutionContextDto);
-        return ResponseEntity.ok().build();
+    @PostMapping(value= "/{workflowId}/execution", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResponseEntity<byte[]> doExecution(@PathVariable Long workflowId,
+                               @RequestPart(value="file") List<MultipartFile> files,
+                               @RequestPart(value="data") WorkflowExecutionContextDto workflowExecutionContextDto) {
+        workflowExecutionContextDto.setFiles(files);
+        WorkflowExecutionContext workflowExecutionContext = WorkflowExecutionContextMapper.map(workflowExecutionContextDto);
+        workflowRunnerService.runWorkflow(workflowId, workflowExecutionContext);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "result.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(workflowExecutionContext.getFile("pdf-file"));
     }
 }

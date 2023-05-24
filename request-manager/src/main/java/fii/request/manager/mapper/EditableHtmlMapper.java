@@ -22,8 +22,9 @@ public class EditableHtmlMapper {
         if(editableHtmlDto == null) return null;
         EditableHtml editableHtml = new EditableHtml();
         editableHtml.setPath(localFileStorageService.store(editableHtmlDto.getFile()));
-        editableHtml.setFileResultLabel(editableHtmlDto.getFileResultLabel());
+        editableHtml.setUploadedEditedHtmlFileVariable(editableHtmlDto.getUploadedEditedHtmlFileVariable());
         editableHtml.setWorkflowStepId(editableHtmlDto.getWorkflowStepId());
+        editableHtml.setPdfResultVariable(editableHtmlDto.getPdfResultVariable());
         return editableHtml;
     }
 
@@ -31,7 +32,8 @@ public class EditableHtmlMapper {
         if(editableHtml == null) return null;
         return EditableHtmlResponseDto.builder()
                 .content(HtmlUtils.htmlEscape(localFileStorageService.load(editableHtml.getPath())))
-                .fileResultLabel(editableHtml.getFileResultLabel())
+                .uploadedEditedHtmlFileVariable(editableHtml.getUploadedEditedHtmlFileVariable())
+                .pdfResultVariable(editableHtml.getPdfResultVariable())
                 .build();
     }
 }

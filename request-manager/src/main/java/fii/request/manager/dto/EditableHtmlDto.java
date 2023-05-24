@@ -14,5 +14,7 @@ public class EditableHtmlDto {
 
     MultipartFile file;
 
-    String fileResultLabel;
+    String uploadedEditedHtmlFileVariable;
+
+    String pdfResultVariable;
 }

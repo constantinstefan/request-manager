@@ -8,5 +8,7 @@ import lombok.Data;
 public class EditableHtmlResponseDto {
     String content;
 
-    private String fileResultLabel;
+    private String uploadedEditedHtmlFileVariable;
+
+    private String pdfResultVariable;
 }

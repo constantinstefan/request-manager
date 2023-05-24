@@ -1,22 +1,39 @@
 package fii.request.manager.service.helper.convertor;
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+import fii.request.manager.domain.EditableHtml;
+import fii.request.manager.domain.WorkflowExecutionContext;
+import fii.request.manager.dto.EditableHtmlResponseDto;
+import fii.request.manager.dto.WorkflowExecutionContextDto;
+import fii.request.manager.service.EditableHtmlService;
+import fii.request.manager.service.StepRunnerService;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.W3CDom;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-@Service
-public class HtmlToPdfConvertorServiceImpl implements HtmlToPdfConvertorService{
+@Service("HtmlToPdfConvertorService")
+public class HtmlToPdfConvertorServiceImpl implements HtmlToPdfConvertorService, StepRunnerService {
+    private EditableHtmlService editableHtmlService;
+
+    @Autowired
+    HtmlToPdfConvertorServiceImpl(EditableHtmlService editableHtmlService) {
+        this.editableHtmlService = editableHtmlService;
+    }
+
     @Override
-    public byte[] convertToPdf(String html) {
+    public byte[] convertToPdf(byte[] htmlBytes) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         try {
             Document document = new W3CDom().fromJsoup(
-                    Jsoup.parse(html));
+                    Jsoup.parse(new ByteArrayInputStream(htmlBytes), null, ""));
 
             new PdfRendererBuilder()
                     .toStream(os)
@@ -29,5 +46,13 @@ public class HtmlToPdfConvertorServiceImpl implements HtmlToPdfConvertorService{
         }
 
         return os.toByteArray();
+    }
+
+    @Override
+    public void runServerStep(Long workflowStepId, WorkflowExecutionContext workflowExecutionContext) {
+        EditableHtmlResponseDto editableHtml = editableHtmlService.getByWorkflowStepId(workflowStepId);
+        byte[] htmlBytes = workflowExecutionContext.getFile("file");
+        workflowExecutionContext.setFile(editableHtml.getUploadedEditedHtmlFileVariable(), htmlBytes);
+        workflowExecutionContext.setFile(editableHtml.getPdfResultVariable(), convertToPdf(htmlBytes));
     }
 }
