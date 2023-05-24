@@ -31,7 +31,8 @@ public class WorkflowRunnerServiceImpl implements ApplicationContextAware, Workf
 
     @PostConstruct
     private void setUpStepRunners() {
-        stepRunnerServiceByStepType.put("EDITABLE_HTML", (StepRunnerService) applicationContext.getBean("HtmlToPdfConvertorService"));//applicationContext.getBean());
+        stepRunnerServiceByStepType.put("EDITABLE_HTML", (StepRunnerService) applicationContext.getBean("HtmlToPdfConvertorService"));
+        stepRunnerServiceByStepType.put("EMAIL", (StepRunnerService) applicationContext.getBean("EmailSenderService"));
     }
 
     @Override

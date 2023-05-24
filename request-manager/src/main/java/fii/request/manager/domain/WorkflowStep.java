@@ -34,4 +34,8 @@ public class WorkflowStep {
     @OneToOne
     @JoinColumn(name="editable_html_id")
     private EditableHtml editableHtml;
+
+    @OneToOne
+    @JoinColumn(name="email_step_id")
+    private EmailStep emailStep;
 }

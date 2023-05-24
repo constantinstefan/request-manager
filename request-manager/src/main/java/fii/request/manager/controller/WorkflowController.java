@@ -29,6 +29,8 @@ public class WorkflowController {
 
     private DocumentRequestService documentRequestService;
 
+    private EmailStepService emailStepService;
+
 
     @Autowired
     WorkflowController(WorkflowService workflowService,
@@ -37,7 +39,8 @@ public class WorkflowController {
                        WorkflowRunnerServiceImpl workflowRunnerService,
                        FormFieldService formFieldService,
                        EditableHtmlService editableHtmlService,
-                       DocumentRequestService documentRequestService) {
+                       DocumentRequestService documentRequestService,
+                       EmailStepService emailStepService) {
         this.workflowService = workflowService;
         this.workflowStepService = workflowStepService;
         this.workflowSharingService = workflowSharingService;
@@ -45,6 +48,7 @@ public class WorkflowController {
         this.formFieldService = formFieldService;
         this.editableHtmlService = editableHtmlService;
         this.documentRequestService = documentRequestService;
+        this.emailStepService = emailStepService;
     }
 
     @GetMapping(value="/{workflowId}")
@@ -100,6 +104,13 @@ public class WorkflowController {
         return documentRequestService.addDocumentRequest(stepId, documentRequest);
     }
 
+    @PostMapping(value= "/{workflowId}/steps/{stepId}/email")
+    EmailStep addEmailStep(@PathVariable Long workflowId,
+                                    @PathVariable Long stepId,
+                                    @RequestBody EmailStepDto emailStep) {
+        workflowService.assertContainsWorkflowStep(workflowId, stepId);
+        return emailStepService.addEmailStep(stepId, emailStep);
+    }
     @GetMapping
     List<WorkflowDto> getAll() {
         return workflowService.getAllWorkflows();
