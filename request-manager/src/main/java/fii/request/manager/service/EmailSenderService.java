@@ -22,6 +22,8 @@ public class EmailSenderService implements StepRunnerService{
 
     private EmailStepService emailStepService;
 
+    private static boolean shouldSendEmail = true;
+
     @Autowired
     EmailSenderService(JavaMailSender emailSender,
                        EmailStepService emailStepService) {
@@ -29,8 +31,7 @@ public class EmailSenderService implements StepRunnerService{
         this.emailStepService = emailStepService;
     }
 
-    public void sendEmail(
-            String to, String subject, String text, Map<String, byte[]> attachements) {
+    public void sendEmail(String to, String subject, String text, Map<String, byte[]> attachements) {
 
         try {
 
@@ -47,7 +48,10 @@ public class EmailSenderService implements StepRunnerService{
                 helperAddAttachment(helper, fileName, fileBytes);
             });
 
-            emailSender.send(message);
+            if(shouldSendEmail) {
+                emailSender.send(message);
+            }
+            System.out.println("email " + to + subject + text + attachements);
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -63,14 +67,10 @@ public class EmailSenderService implements StepRunnerService{
     @Override
     public void runServerStep(Long workflowStepId, WorkflowExecutionContext workflowExecutionContext) {
         EmailStep emailStep = emailStepService.getByWorkflowStepId(workflowStepId);
-        workflowExecutionContext.setVariable("-email-step-to", emailStep.getReceiverEmail());
-        workflowExecutionContext.setVariable("-email-step-content", emailStep.getContent());
-        workflowExecutionContext.setVariable("-email-step-subject", emailStep.getSubject());
-        workflowExecutionContext.setVariable("-email-step-attachements", emailStep.getAttachements());
 
-        sendEmail(workflowExecutionContext.getVariable("-email-step-to"),
-                workflowExecutionContext.getVariable("-email-step-subject"),
-                workflowExecutionContext.getVariable("-email-step-content"),
-                new HashMap<>());
+        sendEmail(workflowExecutionContext.resolveVariable(emailStep.getReceiverEmail()),
+                workflowExecutionContext.resolveVariable(emailStep.getSubject()),
+                workflowExecutionContext.resolveVariable(emailStep.getContent()),
+                workflowExecutionContext.getFiles(emailStep.getAttachements()));
     }
 }

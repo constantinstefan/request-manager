@@ -73,7 +73,8 @@ public class WorkflowController {
     }
 
     @PostMapping(value="/{workflowId}/sharing")
-    WorkflowSharing addWorkflowSharing(@PathVariable Long workflowId, @RequestBody WorkflowSharing workflowSharing) {
+    WorkflowSharing addWorkflowSharing(@PathVariable Long workflowId,
+                                       @RequestBody WorkflowSharing workflowSharing) {
         return workflowSharingService.addWorkflowSharing(workflowId, workflowSharing);
     }
 
@@ -106,8 +107,8 @@ public class WorkflowController {
 
     @PostMapping(value= "/{workflowId}/steps/{stepId}/email")
     EmailStep addEmailStep(@PathVariable Long workflowId,
-                                    @PathVariable Long stepId,
-                                    @RequestBody EmailStepDto emailStep) {
+                           @PathVariable Long stepId,
+                           @RequestBody EmailStepDto emailStep) {
         workflowService.assertContainsWorkflowStep(workflowId, stepId);
         return emailStepService.addEmailStep(stepId, emailStep);
     }
@@ -118,8 +119,8 @@ public class WorkflowController {
 
     @PostMapping(value= "/{workflowId}/execution", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<byte[]> doExecution(@PathVariable Long workflowId,
-                               @RequestPart(value="file") List<MultipartFile> files,
-                               @RequestPart(value="data") WorkflowExecutionContextDto workflowExecutionContextDto) {
+                                       @RequestPart(value="file") List<MultipartFile> files,
+                                       @RequestPart(value="data") WorkflowExecutionContextDto workflowExecutionContextDto) {
         workflowExecutionContextDto.setFiles(files);
         WorkflowExecutionContext workflowExecutionContext = WorkflowExecutionContextMapper.map(workflowExecutionContextDto);
         workflowRunnerService.runWorkflow(workflowId, workflowExecutionContext);

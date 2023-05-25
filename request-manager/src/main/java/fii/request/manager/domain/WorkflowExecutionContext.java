@@ -2,7 +2,11 @@ package fii.request.manager.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Builder
 public class WorkflowExecutionContext {
@@ -10,7 +14,9 @@ public class WorkflowExecutionContext {
 
     Map<String, String> variableValueByName;
 
-    Map<String, byte[]> fileContentByFileName;
+    Map<String, String> fileNameByFileVariableName;
+
+    Map<String, byte[]> fileContentByFileVariableName;
 
     public String getVariable(String key) {
         return variableValueByName.get(key);
@@ -28,10 +34,27 @@ public class WorkflowExecutionContext {
     }
 
     public byte[] getFile(String key) {
-        return fileContentByFileName.get(key);
+        return fileContentByFileVariableName.get(key);
     }
 
-    public void setFile(String key, byte[] fileContent) {
-        fileContentByFileName.put(key, fileContent);
+    public void setFile(String key, String fileName, byte[] fileContent) {
+        fileContentByFileVariableName.put(key, fileContent);
+        fileNameByFileVariableName.put(key, fileName);
+    }
+
+    public String resolveVariable(String variable) {
+        String found = variableValueByName.get(variable.substring(1));
+        return (found != null)
+                ? found
+                : variable;
+    }
+
+    public Map<String, byte[]> getFiles(String fileVariables) {
+        return Arrays.asList(fileVariables.split(";")).stream()
+                .map(fileVariable -> fileVariable.substring(1))
+                .filter(fileVariable -> fileContentByFileVariableName.containsKey(fileVariable))
+                .collect(Collectors.toMap(
+                        fileVariable -> fileNameByFileVariableName.get(fileVariable),
+                        fileVariable -> fileContentByFileVariableName.get(fileVariable)));
     }
 }

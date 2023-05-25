@@ -10,16 +10,25 @@ import java.util.HashMap;
 public class WorkflowExecutionContextMapper {
     public static WorkflowExecutionContext map(WorkflowExecutionContextDto workflowExecutionContextDto) {
         WorkflowExecutionContext workflowExecutionContext = WorkflowExecutionContext.builder()
-                .fileContentByFileName(new HashMap<>())
+                .fileContentByFileVariableName(new HashMap<>())
+                .fileNameByFileVariableName(new HashMap<>())
                 .variableValueByName(new HashMap<>())
                 .workflowId(workflowExecutionContextDto.getWorkflowId())
                 .build();
         workflowExecutionContextDto.getVariables().forEach(variable
                 -> workflowExecutionContext.setVariable(variable.getName(), variable.getValue()));
         workflowExecutionContextDto.getFiles().forEach(file
-                -> workflowExecutionContext.setFile(file.getName(), getBytes(file)));
+                -> workflowExecutionContext.setFile(getBaseFileName(file.getOriginalFilename()), file.getOriginalFilename(), getBytes(file)));
 
         return workflowExecutionContext;
+    }
+
+    private static String getBaseFileName(String fileName) {
+        int separatorIndex = fileName.lastIndexOf(".");
+        if(separatorIndex == -1) {
+            return fileName;
+        }
+        return fileName.substring(0, separatorIndex);
     }
 
     private static byte[] getBytes(MultipartFile file) {

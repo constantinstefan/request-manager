@@ -51,8 +51,9 @@ public class HtmlToPdfConvertorServiceImpl implements HtmlToPdfConvertorService,
     @Override
     public void runServerStep(Long workflowStepId, WorkflowExecutionContext workflowExecutionContext) {
         EditableHtmlResponseDto editableHtml = editableHtmlService.getByWorkflowStepId(workflowStepId);
-        byte[] htmlBytes = workflowExecutionContext.getFile("file");
-        workflowExecutionContext.setFile(editableHtml.getUploadedEditedHtmlFileVariable(), htmlBytes);
-        workflowExecutionContext.setFile(editableHtml.getPdfResultVariable(), convertToPdf(htmlBytes));
+        String htmlKeyFile = editableHtml.getUploadedEditedHtmlFileVariable();
+        String pdfKeyFile = editableHtml.getPdfResultVariable();
+        byte[] htmlBytes = workflowExecutionContext.getFile(htmlKeyFile);
+        workflowExecutionContext.setFile(pdfKeyFile, pdfKeyFile + ".pdf", convertToPdf(htmlBytes));
     }
 }
