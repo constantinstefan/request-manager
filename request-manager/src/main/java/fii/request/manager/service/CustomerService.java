@@ -72,6 +72,11 @@ public class CustomerService {
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    public Customer getByEmail(String email) {
+        return customerRepository.findByEmail(email)
+                .orElseThrow();
+    }
+
     public Set<Customer> getAll() {
         List<Customer> customers = customerRepository.findAll();
         return customerRepository.findAll().stream().collect(Collectors.toSet());

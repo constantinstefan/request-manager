@@ -1,2 +1,4 @@
 https://gist.github.com/BurningAXE/6527743bc632d36d2eb3a9bef72400c1
 https://www.baeldung.com/spring-email
+https://github.com/Ozair0/Spring-Boot-3-Auth-JWT-Cookie-JPA??
+https://medium.com/geekculture/implementing-json-web-token-jwt-authentication-using-spring-security-detailed-walkthrough-1ac480a8d970

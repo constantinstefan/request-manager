@@ -4,15 +4,11 @@ import fii.request.manager.domain.EmailStep;
 import fii.request.manager.domain.WorkflowExecutionContext;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.util.ByteArrayDataSource;
-import org.hibernate.pretty.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service("EmailSenderService")

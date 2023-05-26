@@ -14,6 +14,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CustomerDto {
     Long id;
+    String email;
     String firstName;
     String lastName;
     String role;

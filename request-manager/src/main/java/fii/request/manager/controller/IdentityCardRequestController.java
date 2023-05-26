@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 
 @Controller
-@RequestMapping("/api/v1")
+//@RequestMapping("/api/v1")
 public class IdentityCardRequestController {
     IdentityCardRequestService identityCardRequestService;
 

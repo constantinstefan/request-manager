@@ -29,6 +29,7 @@ public class CustomerMapper {
         if(customer == null) return null;
         return CustomerDto.builder()
                 .id(customer.getCustomerId())
+                .email(customer.getEmail())
                 .role(customer.getRole().name())
                 .firstName(customer.getFirstName())
                 .lastName(customer.getLastName())
