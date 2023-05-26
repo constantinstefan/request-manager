@@ -14,5 +14,5 @@ public class CustomerGroupDto {
     Long id;
     String name;
     String description;
-    List<Customer> customers;
+    List<CustomerDto> customers;
 }

@@ -10,6 +10,7 @@ import fii.request.manager.mapper.WorkflowMapper;
 import fii.request.manager.repository.CustomerRepository;
 import fii.request.manager.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,19 +29,24 @@ public class CustomerService {
 
     private WorkflowMapper workflowMapper;
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     CustomerService(CustomerRepository customerRepository,
                     GroupRepository groupRepository,
                     WorkflowService workflowService,
-                    WorkflowMapper workflowMapper) {
+                    WorkflowMapper workflowMapper,
+                    PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.groupRepository = groupRepository;
         this.workflowService = workflowService;
         this.workflowMapper = workflowMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public Customer addCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public CustomerDto addCustomer(Customer customer) {
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        return CustomerMapper.map(customerRepository.save(customer));
     }
 
     public CustomerDto getByIdFetchingGroups(Long customerId) {
@@ -83,7 +89,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer addCustomer(Long groupId, Customer customerToAdd) {
+    public CustomerDto addCustomer(Long groupId, Customer customerToAdd) {
         Customer customer = customerRepository.findById(customerToAdd.getCustomerId())
                 .orElseThrow();
         CustomerGroup group = groupRepository.findById(groupId)

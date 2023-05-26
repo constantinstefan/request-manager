@@ -2,6 +2,7 @@ package fii.request.manager.controller;
 
 import fii.request.manager.domain.Customer;
 import fii.request.manager.domain.CustomerGroup;
+import fii.request.manager.dto.CustomerDto;
 import fii.request.manager.dto.CustomerGroupDto;
 import fii.request.manager.service.CustomerService;
 import fii.request.manager.service.GroupService;
@@ -43,7 +44,7 @@ public class GroupController {
 
     @PostMapping(value = "/{groupId}/members")
     @ResponseBody
-    Customer addMember(@PathVariable Long groupId, @RequestBody Customer customer) {
+    CustomerDto addMember(@PathVariable Long groupId, @RequestBody Customer customer) {
         return customerService.addCustomer(groupId, customer);
     }
 }
