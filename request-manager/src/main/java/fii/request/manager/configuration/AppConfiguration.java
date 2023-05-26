@@ -5,6 +5,8 @@ import net.sourceforge.tess4j.util.LoadLibs;
 import nu.pattern.OpenCV;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.File;
 
@@ -34,5 +36,10 @@ public class AppConfiguration {
         }
 
         return tesseract;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
