@@ -2,6 +2,7 @@ package fii.request.manager.security.domain;
 
 import fii.request.manager.domain.Customer;
 import lombok.Builder;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Builder
+@Data
 public class CustomerDetails implements UserDetails {
 
     private Customer customer;

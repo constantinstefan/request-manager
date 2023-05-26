@@ -1,6 +1,9 @@
 package fii.request.manager.security.controller;
 
 import fii.request.manager.domain.Customer;
+import fii.request.manager.dto.CustomerDto;
+import fii.request.manager.mapper.CustomerMapper;
+import fii.request.manager.security.domain.CustomerDetails;
 import fii.request.manager.security.dto.AuthenticationRequestDto;
 import fii.request.manager.security.dto.AuthenticationResponseDto;
 import fii.request.manager.security.service.CustomerDetailsService;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping(value = "/api/v1/auth")
+@RequestMapping(value = "/api/v1")
 public class AuthenticationController {
 
     private AuthenticationManager authenticationManager;
@@ -35,7 +39,7 @@ public class AuthenticationController {
         this.customerDetailsService = customerDetailsService;
     }
 
-    @PostMapping(value="/login")
+    @PostMapping(value = "/auth")
     @ResponseBody
     AuthenticationResponseDto login(@RequestBody AuthenticationRequestDto authenticationRequestDto) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequestDto.getEmail(), authenticationRequestDto.getPassword(), new ArrayList<>()));
@@ -44,5 +48,13 @@ public class AuthenticationController {
                 .token(jwtTokenService.generateToken(userDetails))
                 .build();
         return authenticationResponseDto;
+    }
+
+    @GetMapping(value = "/principal")
+    @ResponseBody
+    CustomerDto getPrincipal() {
+        String userName = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerDetails customerDetails = (CustomerDetails) customerDetailsService.loadUserByUsername(userName);
+        return CustomerMapper.map(customerDetails.getCustomer());
     }
 }
