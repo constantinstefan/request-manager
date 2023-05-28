@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class WorkflowDto {
+    private Long id;
     private String name;
     private String description;
 

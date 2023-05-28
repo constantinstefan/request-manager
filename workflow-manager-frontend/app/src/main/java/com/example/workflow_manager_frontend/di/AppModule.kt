@@ -2,14 +2,9 @@ package com.example.workflow_manager_frontend.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.workflow_manager_frontend.data.repository.WorkflowRepository
-import com.example.workflow_manager_frontend.data.repository.WorkflowRepositoryImpl
-import com.example.workflow_manager_frontend.data.repository.WorkflowRepositoryStub
-import com.example.workflow_manager_frontend.data.source.WorkflowDatabase
-import com.example.workflow_manager_frontend.presentation.main.home.WorkflowAdapter
-import com.example.workflow_manager_frontend.presentation.main.home.WorkflowDiffCallback
-import dagger.Binds
+import com.example.workflow_manager_frontend.data.repository.*
+import com.example.workflow_manager_frontend.data.source.db.WorkflowDatabase
+import com.example.workflow_manager_frontend.data.source.network.JwtRepositoryInstance
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,14 +21,24 @@ object AppModule {
             app,
             WorkflowDatabase::class.java,
             WorkflowDatabase.DATABASE_NAME
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesJwtRepository(workflowDatabase: WorkflowDatabase) : JwtRepository {
+        val jwtRepository: JwtRepository = JwtRepositoryImpl(workflowDatabase.jwtDao())
+        JwtRepositoryInstance.setJwtRepository(jwtRepository)
+        return jwtRepository
     }
 
     @Provides
     @Singleton
     fun providesWorkflowRepository(workflowDatabase: WorkflowDatabase): WorkflowRepository {
-        //return WorkflowRepositoryImpl(workflowDatabase.workflowDao())
-        return WorkflowRepositoryStub()
+        return WorkflowRepositoryImpl(workflowDatabase.workflowDao())
+        //return WorkflowRepositoryStub()
     }
 }
 

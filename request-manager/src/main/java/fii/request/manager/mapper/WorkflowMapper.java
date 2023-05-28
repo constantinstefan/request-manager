@@ -30,6 +30,7 @@ public class WorkflowMapper {
     public WorkflowDto map(Workflow workflow) {
         if(workflow == null) return null;
         return WorkflowDto.builder()
+                .id(workflow.getId())
                 .name(workflow.getName())
                 .description(workflow.getDescription())
                 .sharing(WorkflowSharingMapper.map(workflow.getSharing()))

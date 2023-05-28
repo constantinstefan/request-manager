@@ -10,5 +10,5 @@ import java.util.Set;
 
 public interface WorkflowRepository extends JpaRepository<Workflow, Long> {
 
-    Set<Workflow> findBySharing(WorkflowSharing sharing);
+    Set<Workflow> findBySharingId(Long id);
 }

@@ -21,6 +21,24 @@
     <style name="Theme.Requestmanagerfrontend.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
     <style name="AppTheme" parent="Theme.MaterialComponents">
-    <item name="colorOnSurfaceVariant">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/white</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="Widget.AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="errorTextAppearance">@style/ErrorTextAppearance</item>
+    </style>
+
+    <style name="ErrorTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">#FF0000</item>
     </style>
 </resources>

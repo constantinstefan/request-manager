@@ -1,25 +1,27 @@
 package com.example.workflow_manager_frontend.data.repository
 
-import com.example.workflow_manager_frontend.domain.model.Workflow
+import com.example.workflow_manager_frontend.domain.Sharing
+import com.example.workflow_manager_frontend.domain.Workflow
+
 
 class WorkflowRepositoryStub : WorkflowRepository {
 
     private var workflowList : List<Workflow> =  mutableListOf(
-        Workflow(1, "Cerere buletin" , "public", null, null),
-        Workflow(2, "Cerere pasaport" , "public", null, null)
+        Workflow("Cerere buletin", 1,"Cerere buletin" , Sharing(0,0,"public",1)),
+        Workflow("Cerere pasaport", 2,"Cerere pasaport" , Sharing(0,0,"public", 2))
     )
 
-    override fun getWorkflows(fetchFromRemote: Boolean): List<Workflow>
+    override suspend fun getWorkflows(fetchFromRemote: Boolean): List<Workflow>
         = workflowList
 
-    override fun getWorkflowById(id: Int, fetchFromRemote: Boolean): Workflow?
+    override suspend fun getWorkflowById(id: Int, fetchFromRemote: Boolean): Workflow?
         = workflowList[id]
 
-    override fun insertWorkflow(workflow: Workflow) {
+    override suspend fun insertWorkflow(workflow: Workflow) {
         //workflowList.add(workflow)
     }
 
-    override fun deleteWorkflow(workflow: Workflow) {
+    override suspend fun deleteWorkflow(workflow: Workflow) {
         //workflowList.remove(workflow)
     }
 }

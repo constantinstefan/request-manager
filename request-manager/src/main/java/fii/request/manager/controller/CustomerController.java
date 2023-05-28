@@ -32,8 +32,8 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/{customerId}/workflows")
-    CustomerDto getByIdWithWorkflows(@PathVariable Long customerId) {
-        return customerService.getByIdFetchingWorkflows(customerId);
+    List<WorkflowDto> getByIdWithWorkflows(@PathVariable Long customerId) {
+        return customerService.getByIdFetchingWorkflows(customerId).getWorkflows();
     }
 
     @PostMapping

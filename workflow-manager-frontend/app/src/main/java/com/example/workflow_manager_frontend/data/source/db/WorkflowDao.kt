@@ -1,7 +1,7 @@
-package com.example.workflow_manager_frontend.data.source
+package com.example.workflow_manager_frontend.data.source.db
 
 import androidx.room.*
-import com.example.workflow_manager_frontend.domain.model.Workflow
+import com.example.workflow_manager_frontend.domain.Workflow
 
 @Dao
 interface WorkflowDao {

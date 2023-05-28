@@ -12,6 +12,7 @@ import fii.request.manager.repository.WorkflowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,12 +63,18 @@ public class WorkflowService {
 
     public Set<Workflow> getWorkflowsByGroupId(Long groupId) {
         WorkflowSharing sharing = workflowSharingService.getWorkflowSharingByGroupId(groupId);
-        return workflowRepository.findBySharing(sharing);
+        if(sharing == null) return Collections.emptySet();
+        Set<Workflow> workflows = workflowRepository.findBySharingId(sharing.getId());
+        workflows.forEach(workflow -> workflow.setSharing(sharing));
+        return workflows;
     }
 
     public Set<Workflow> getPublicWorkflows() {
         WorkflowSharing publicSharing = workflowSharingService.getWorkflowSharingBySharingType(SharingType.PUBLIC);
-        return workflowRepository.findBySharing(publicSharing);
+        if(publicSharing == null) return Collections.emptySet();
+        Set<Workflow> workflows = workflowRepository.findBySharingId(publicSharing.getId());
+        workflows.forEach(workflow -> workflow.setSharing(publicSharing));
+        return workflows;
     }
 
     public void assertContainsWorkflowStep(Long workflowId, Long workflowStepId) {

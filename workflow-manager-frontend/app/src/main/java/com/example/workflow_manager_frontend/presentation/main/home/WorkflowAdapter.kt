@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.workflow_manager_frontend.R
-import com.example.workflow_manager_frontend.domain.model.Workflow
+import com.example.workflow_manager_frontend.domain.Workflow
 
 class WorkflowAdapter(
     workflowDiffCallback: WorkflowDiffCallback,
@@ -40,7 +40,7 @@ class WorkflowAdapter(
 
     override fun onBindViewHolder(holder: WorkflowViewHolder, position: Int) {
         val workflow = getItem(position)
-        holder.title.text = workflow.title
-        holder.type.text = workflow.type
+        holder.title.text = workflow.name
+        holder.type.text = workflow.sharing?.sharingType
     }
 }
