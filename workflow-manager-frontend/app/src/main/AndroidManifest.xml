@@ -13,25 +13,36 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.auth.SignUpActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-        <activity
-            android:name=".presentation.auth.LoginActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            android:name=".presentation.developer.DeveloperMainActivity"
+            android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.main.profile.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.auth.SignUpActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".presentation.auth.LoginActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".presentation.workflow.WorkflowActivity"
@@ -40,7 +51,9 @@
             android:name=".presentation.main.MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.canhub.cropper.CropImageActivity" />
+        <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

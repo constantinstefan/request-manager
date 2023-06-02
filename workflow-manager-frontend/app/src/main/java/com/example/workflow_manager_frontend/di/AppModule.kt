@@ -40,5 +40,17 @@ object AppModule {
         return WorkflowRepositoryImpl(workflowDatabase.workflowDao())
         //return WorkflowRepositoryStub()
     }
+
+    @Provides
+    @Singleton
+    fun providesWorkflowStepRepository(workflowDatabase: WorkflowDatabase) : WorkflowStepRepository {
+        return WorkflowStepRepositoryImpl(workflowDatabase.workflowStepDao())
+    }
+
+    @Provides
+    @Singleton
+    fun providesWorkflowExecutionRepository() : WorkflowExecutionRepository {
+        return WorkflowExecutionRepositoryImpl()
+    }
 }
 

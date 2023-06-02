@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_item_home"
+        android:enabled="true"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Home"/>
+    <item
+        android:id="@+id/menu_item_groups"
+        android:enabled="true"
+        android:icon="@drawable/baseline_groups_24"
+        android:title="Groups"/>
+    <item
+        android:id="@+id/menu_item_profile"
+        android:enabled="true"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Profile"/>
+</menu>

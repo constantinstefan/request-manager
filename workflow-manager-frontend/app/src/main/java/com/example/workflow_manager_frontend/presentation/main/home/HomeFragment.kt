@@ -35,12 +35,14 @@ class HomeFragment(
 
     var workflowList: List<Workflow> = emptyList()
 
+    private val classTag = "HomeFragment"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentHomeBinding.inflate(inflater,container,false);
+        _binding = FragmentHomeBinding.inflate(inflater,container,false)
 
         setUpRecycleView()
         setUpViewModel()
@@ -49,7 +51,7 @@ class HomeFragment(
 
     private fun setUpRecycleView() {
         binding.recycleViewWorkflow.adapter = WorkflowAdapter(WorkflowDiffCallback()
-        ) { startWorkflowActivity() }
+        ) { workflow -> startWorkflowActivity(workflow) }
         binding.recycleViewWorkflow.layoutManager = LinearLayoutManager(context)
     }
 
@@ -66,8 +68,12 @@ class HomeFragment(
         }
     }
 
-    private fun startWorkflowActivity() {
-        startActivity(Intent(context, WorkflowActivity::class.java))
+    private fun startWorkflowActivity(workflow: Workflow) {
+        Log.d(classTag, workflow.toString())
+        val intent = Intent(context, WorkflowActivity::class.java).apply {
+            putExtra("workflowId", workflow.id)
+        }
+        startActivity(intent)
     }
 
 }

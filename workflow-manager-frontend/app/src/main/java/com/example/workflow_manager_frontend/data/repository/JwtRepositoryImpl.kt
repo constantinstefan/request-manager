@@ -5,6 +5,8 @@ import com.example.workflow_manager_frontend.data.source.db.JwtDao
 import com.example.workflow_manager_frontend.data.source.network.RetrofitInstance
 import com.example.workflow_manager_frontend.domain.Jwt
 import com.example.workflow_manager_frontend.domain.request.AuthenticationRequest
+import retrofit2.Response
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,6 +16,7 @@ class JwtRepositoryImpl @Inject constructor(
 ) : JwtRepository
 
 {
+    private val tag = "JwtRepository"
     override suspend fun getJwt(): Jwt? {
         return jwtDao.getToken()
     }
@@ -28,12 +31,17 @@ class JwtRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getJwtFromRemote(authenticationRequest: AuthenticationRequest): Jwt? {
-        val response = RetrofitInstance.api.login(authenticationRequest)
-        if(! response.isSuccessful) {
-            Log.e("LoginActivity", response.toString())
-            return null;
-        }
+        try {
+            val response = RetrofitInstance.api.login(authenticationRequest)
+            if (!response.isSuccessful) {
+                Log.e(tag, response.toString())
+                return null;
+            }
 
-        return response.body()
+            return response.body()
+        } catch(e: IOException) {
+            Log.e(tag, e.toString())
+        }
+        return null
     }
 }

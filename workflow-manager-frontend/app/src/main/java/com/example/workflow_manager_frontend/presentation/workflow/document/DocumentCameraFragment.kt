@@ -1,4 +1,4 @@
-package com.example.workflow_manager_frontend.presentation.workflow
+package com.example.workflow_manager_frontend.presentation.workflow.document
 import android.os.Bundle
 import android.view.*
 import androidx.camera.core.Camera

@@ -119,8 +119,8 @@ public class WorkflowController {
 
     @PostMapping(value= "/{workflowId}/execution", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<byte[]> doExecution(@PathVariable Long workflowId,
-                                       @RequestPart(value="file") List<MultipartFile> files,
-                                       @RequestPart(value="data") WorkflowExecutionContextDto workflowExecutionContextDto) {
+                                       @RequestPart(value="file", required=false) List<MultipartFile> files,
+                                       @RequestPart(value="data", required = false) WorkflowExecutionContextDto workflowExecutionContextDto) {
         workflowExecutionContextDto.setFiles(files);
         WorkflowExecutionContext workflowExecutionContext = WorkflowExecutionContextMapper.map(workflowExecutionContextDto);
         workflowRunnerService.runWorkflow(workflowId, workflowExecutionContext);

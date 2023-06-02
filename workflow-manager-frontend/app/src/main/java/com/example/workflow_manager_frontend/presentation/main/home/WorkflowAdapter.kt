@@ -11,26 +11,33 @@ import com.example.workflow_manager_frontend.domain.Workflow
 
 class WorkflowAdapter(
     workflowDiffCallback: WorkflowDiffCallback,
-    private val onItemViewClicked : ()-> Unit
+    private val onItemViewClicked: (Workflow) -> Unit
 ) : ListAdapter<Workflow, WorkflowAdapter.WorkflowViewHolder>(
         workflowDiffCallback) {
 
-    class WorkflowViewHolder(
+    inner class WorkflowViewHolder(
         itemView : View,
-        private val onItemViewClicked : ()-> Unit
+        private val onItemViewClicked : (Workflow)-> Unit
     ) : RecyclerView.ViewHolder(itemView) {
         val title: TextView
         val type: TextView
+        //val group: TextView
 
         init {
             title = itemView.findViewById(R.id.item_workflow_title)
             type = itemView.findViewById(R.id.item_workflow_type)
+            //group = itemView.findViewById(R.id.item_workflow_group)
 
             itemView.setOnClickListener {
-                onItemViewClicked()
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val workflow = getItem(position)
+                    onItemViewClicked(workflow)
+                }
             }
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkflowViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_workflow,parent,false)

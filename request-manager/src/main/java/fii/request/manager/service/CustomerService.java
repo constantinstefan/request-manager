@@ -2,7 +2,7 @@ package fii.request.manager.service;
 
 import fii.request.manager.domain.Customer;
 import fii.request.manager.domain.CustomerGroup;
-import fii.request.manager.domain.Workflow;
+import fii.request.manager.dto.ChangePasswordDto;
 import fii.request.manager.dto.CustomerDto;
 import fii.request.manager.dto.WorkflowDto;
 import fii.request.manager.mapper.CustomerMapper;
@@ -45,7 +45,14 @@ public class CustomerService {
     }
 
     public CustomerDto addCustomer(Customer customer) {
+        if (customerRepository.findByEmail(customer.getEmail()).isPresent()) {
+            throw new NoSuchElementException();
+        }
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        return CustomerMapper.map(customerRepository.save(customer));
+    }
+
+    public CustomerDto updateCustomer(Customer customer) {
         return CustomerMapper.map(customerRepository.save(customer));
     }
 
@@ -95,6 +102,15 @@ public class CustomerService {
         CustomerGroup group = groupRepository.findById(groupId)
                 .orElseThrow();
         customer.getCustomerGroups().add(group);
-        return addCustomer(customer);
+        return updateCustomer(customer);
+    }
+
+    public CustomerDto changePassword(Long customerId, ChangePasswordDto changePasswordDto) {
+        Customer customer = getById(customerId);
+        if(! passwordEncoder.matches(changePasswordDto.getOldPassword(), customer.getPassword())) {
+            throw new NoSuchElementException();
+        }
+        customer.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+        return CustomerMapper.map(customerRepository.save(customer));
     }
 }
