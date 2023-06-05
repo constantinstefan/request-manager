@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FormField(
-    val id: Int,
-    val label: String
+    val id: Int = 0,
+    val label: String = ""
 ) : Parcelable

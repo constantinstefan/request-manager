@@ -8,17 +8,15 @@ import com.example.workflow_manager_frontend.domain.EditableHtml
 import com.example.workflow_manager_frontend.domain.Jwt
 import com.example.workflow_manager_frontend.domain.Workflow
 import com.example.workflow_manager_frontend.domain.WorkflowStep
-import com.example.workflow_manager_frontend.domain.converter.DocumentConverter
-import com.example.workflow_manager_frontend.domain.converter.EditableHtmlConverter
-import com.example.workflow_manager_frontend.domain.converter.FormFieldConverter
-import com.example.workflow_manager_frontend.domain.converter.SharingTypeConverter
+import com.example.workflow_manager_frontend.domain.converter.*
 
-@Database(entities = [Workflow::class, Jwt::class, WorkflowStep::class], version = 3)
+@Database(entities = [Workflow::class, Jwt::class, WorkflowStep::class], version = 5)
 @TypeConverters(
     SharingTypeConverter::class,
     DocumentConverter::class,
     EditableHtmlConverter::class,
-    FormFieldConverter::class)
+    FormFieldConverter::class,
+    EmailConverter::class)
 abstract class WorkflowDatabase : RoomDatabase() {
     abstract fun workflowDao(): WorkflowDao
     abstract fun jwtDao(): JwtDao

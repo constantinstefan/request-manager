@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.workflow_manager_frontend.data.repository.*
 import com.example.workflow_manager_frontend.data.source.db.WorkflowDatabase
 import com.example.workflow_manager_frontend.data.source.network.JwtRepositoryInstance
+import com.example.workflow_manager_frontend.presentation.developer.home.createworkflow.steps.StepsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,6 +52,12 @@ object AppModule {
     @Singleton
     fun providesWorkflowExecutionRepository() : WorkflowExecutionRepository {
         return WorkflowExecutionRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun providesUserRepository() : UserRepository {
+        return UserRepositoryImpl()
     }
 }
 

@@ -5,13 +5,14 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class WorkflowStep(
-    val document: Document?,
-    val editableHtml: EditableHtml?,
-    val formFields: List<FormField>?,
-    val stepDescription: String,
-    val stepName: String,
-    val stepNumber: Int,
-    val stepType: String,
-    val workflowId: Int,
-    @PrimaryKey val workflowStepId: Int
+    val document: Document? = null,
+    val editableHtml: EditableHtml? = null,
+    val formFields: MutableList<FormField>? = null,
+    val email: Email? = null,
+    val stepDescription: String = "",
+    val stepName: String = "",
+    val stepNumber: Int = 0,
+    val stepType: String = "",
+    val workflowId: Int = 0,
+    @PrimaryKey val workflowStepId: Int = 0
 )

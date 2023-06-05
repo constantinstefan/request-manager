@@ -2,6 +2,8 @@ package com.example.workflow_manager_frontend.data.repository
 
 import com.example.workflow_manager_frontend.domain.Sharing
 import com.example.workflow_manager_frontend.domain.Workflow
+import com.example.workflow_manager_frontend.domain.request.SharingRequest
+import com.example.workflow_manager_frontend.domain.request.WorkflowRequest
 
 
 class WorkflowRepositoryStub : WorkflowRepository {
@@ -23,5 +25,13 @@ class WorkflowRepositoryStub : WorkflowRepository {
 
     override suspend fun deleteWorkflow(workflow: Workflow) {
         //workflowList.remove(workflow)
+    }
+
+    override suspend fun setSharingRemote(workflowId: Int?, sharing: SharingRequest): Sharing? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setWorkflowRemote(workflow: WorkflowRequest): Workflow? {
+        TODO("Not yet implemented")
     }
 }

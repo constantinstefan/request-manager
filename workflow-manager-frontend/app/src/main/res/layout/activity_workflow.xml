@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.workflow.WorkflowActivity">
+    tools:context=".presentation.main.home.workflow.WorkflowActivity">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"

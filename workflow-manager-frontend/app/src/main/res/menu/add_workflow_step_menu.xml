@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:itemIconTint="@color/purple_primary">
+    <item
+        android:id="@+id/menu_item_document"
+        android:icon="@drawable/baseline_document_24"
+        android:title="Document" />
+    <item
+        android:id="@+id/menu_item_form"
+        android:icon="@drawable/baseline_form_24"
+        android:title="Form fields" />
+    <item
+        android:id="@+id/menu_item_editable_html"
+        android:icon="@drawable/baseline_html_24"
+        android:title="Editable html" />
+    <item
+        android:id="@+id/menu_item_email"
+        android:icon="@drawable/baseline_email_24"
+        android:title="Email"/>
+    <item
+        android:id="@+id/menu_item_ai"
+        android:icon="@drawable/baseline_chat_24"
+        android:title="LLM step"/>
+</menu>

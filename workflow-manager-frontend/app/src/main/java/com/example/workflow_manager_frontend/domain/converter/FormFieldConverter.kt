@@ -6,7 +6,7 @@ import com.example.workflow_manager_frontend.domain.FormField
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class FormFieldConverter {
+object FormFieldConverter {
 
     @TypeConverter
     fun fromString(value: String?): List<FormField>? {

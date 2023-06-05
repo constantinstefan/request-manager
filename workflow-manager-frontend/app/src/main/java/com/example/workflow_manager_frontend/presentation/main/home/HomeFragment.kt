@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.example.workflow_manager_frontend.databinding.FragmentHomeBinding
 import com.example.workflow_manager_frontend.domain.Workflow
-import com.example.workflow_manager_frontend.presentation.workflow.WorkflowActivity
+import com.example.workflow_manager_frontend.presentation.main.home.workflow.WorkflowActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match

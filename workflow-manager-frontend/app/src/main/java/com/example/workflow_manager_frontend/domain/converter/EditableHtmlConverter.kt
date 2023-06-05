@@ -5,7 +5,7 @@ import com.example.workflow_manager_frontend.domain.EditableHtml
 import com.example.workflow_manager_frontend.domain.Sharing
 import com.google.gson.Gson
 
-class EditableHtmlConverter {
+object EditableHtmlConverter {
     @TypeConverter
     fun fromString(value: String?): EditableHtml? {
         return value?.let { Gson().fromJson(it, EditableHtml::class.java) }

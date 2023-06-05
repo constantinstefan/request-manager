@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Workflow(
-    val description: String,
-    @PrimaryKey val id: Int?,
-    val name: String,
-    val sharing: Sharing
+    var description: String = "",
+    @PrimaryKey val id: Int? = 0,
+    var name: String = "",
+    val sharing: Sharing? = null
 )

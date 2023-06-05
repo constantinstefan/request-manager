@@ -5,7 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class EditableHtml(
-    val content: String,
-    val pdfResultVariable: String,
-    val uploadedEditedHtmlFileVariable: String
+    var content: String = "",
+    val pdfResultVariable: String = "",
+    val uploadedEditedHtmlFileVariable: String = "",
+    var fileName: String=""
 ) : Parcelable

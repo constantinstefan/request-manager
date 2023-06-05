@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.data.source.network.RetrofitInstance
 import com.example.workflow_manager_frontend.domain.request.AuthenticationRequest
+import com.example.workflow_manager_frontend.presentation.developer.DeveloperMainActivity
 import com.example.workflow_manager_frontend.presentation.main.MainActivity
 import com.example.workflow_manager_frontend.presentation.main.home.HomeViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -22,6 +23,8 @@ import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
+
+    private val tag ="LoginActivity"
 
     private val loginViewModel: LoginViewModel by viewModels()
 
@@ -48,14 +51,26 @@ class LoginActivity : AppCompatActivity() {
         val password = findViewById<TextInputEditText>(R.id.passwordField).text.toString()
 
         withContext(Dispatchers.IO) {
-            if (loginViewModel.login(userName, password)) {
-                createMainActivityIntent()
+            if (! loginViewModel.login(userName, password)) {
+                return@withContext
+            }
+
+            when(val role = loginViewModel.getRole()) {
+                "ROLE_CUSTOMER" -> createMainActivityIntent()
+                "ROLE_DEVELOPER" -> createDeveloperMainActivityIntent()
+                else -> Log.e(tag, "invalid role: $role")
             }
         }
     }
 
     private fun createMainActivityIntent() {
         val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun createDeveloperMainActivityIntent() {
+        val intent = Intent(this, DeveloperMainActivity::class.java)
         startActivity(intent)
         finish()
     }
