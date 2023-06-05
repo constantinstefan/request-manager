@@ -21,6 +21,15 @@ public class WorkflowSharingService {
     }
 
     public WorkflowSharing addWorkflowSharing(Long workflowId, WorkflowSharing workflowSharing) {
+        if(workflowSharing.getSharingType().equals(SharingType.PUBLIC)) {
+            WorkflowSharing publicSharing = getWorkflowSharingBySharingType(SharingType.PUBLIC);
+            if(publicSharing != null) {
+                Workflow workflow = workflowRepository.findById(workflowId).orElseThrow();
+                workflow.setSharing(publicSharing);
+                workflowRepository.save(workflow);
+                return publicSharing;
+            }
+        }
         workflowSharing.setWorkflowId(workflowId);
         WorkflowSharing savedWorkflowSharing = workflowSharingRepository.save(workflowSharing);
         Workflow workflow = workflowRepository.findById(workflowId).orElseThrow();

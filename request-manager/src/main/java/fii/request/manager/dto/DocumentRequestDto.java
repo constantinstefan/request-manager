@@ -17,4 +17,6 @@ public class DocumentRequestDto {
     private String uploadedFileVariable;
 
     private String ocrResultVariable;
+
+    private Boolean isRequired;
 }

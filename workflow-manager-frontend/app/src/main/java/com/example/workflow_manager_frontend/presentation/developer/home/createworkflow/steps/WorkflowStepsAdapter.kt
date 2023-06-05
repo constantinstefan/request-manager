@@ -1,9 +1,7 @@
 package com.example.workflow_manager_frontend.presentation.developer.home.createworkflow.steps
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.domain.WorkflowStep
@@ -25,19 +23,19 @@ class WorkflowStepsAdapter(
         return when (viewType) {
             VIEW_TYPE_DOCUMENT -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_add_document, parent, false)
-                DocumentViewHolder(view, parent.context, fragment as DeleteStepListener)
+                DocumentViewHolder(view, parent.context, fragment as DeleteStepListener, fragment.getViewModel())
             }
             VIEW_TYPE_FORM_FIELD -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_add_form_field, parent, false)
-                FormFieldViewHolder(view, parent.context, fragment as DeleteStepListener)
+                FormFieldViewHolder(view, parent.context, fragment as DeleteStepListener, fragment.getViewModel())
             }
             VIEW_TYPE_EDITABLE_HTML -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_add_editable_html, parent, false)
-                EditableHtmlViewHolder(view, parent.context, fragment as DeleteStepListener, fragment as HtmlUploadListener)
+                EditableHtmlViewHolder(view, parent.context, fragment as DeleteStepListener, fragment as HtmlUploadListener, fragment.getViewModel())
             }
             VIEW_TYPE_EMAIL -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_add_email, parent, false)
-                EmailViewHolder(view, parent.context, fragment as DeleteStepListener)
+                EmailViewHolder(view, parent.context, fragment as DeleteStepListener, fragment.getViewModel())
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
@@ -56,7 +54,7 @@ class WorkflowStepsAdapter(
             val item = items[position]
             return when (item.stepType) {
                 "DOCUMENT" -> VIEW_TYPE_DOCUMENT
-                "FORM_FIELD" -> VIEW_TYPE_FORM_FIELD
+                "FORM_FIELDS" -> VIEW_TYPE_FORM_FIELD
                 "EDITABLE_HTML" -> VIEW_TYPE_EDITABLE_HTML
                 "EMAIL" -> VIEW_TYPE_EMAIL
                 else -> throw IllegalArgumentException("Invalid item type")

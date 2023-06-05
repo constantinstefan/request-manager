@@ -58,7 +58,7 @@
                 android:layout_marginBottom="8dp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/contentTextField"
+                android:id="@+id/htmlTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Html file content variable">
@@ -71,7 +71,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/attachmentsTextField"
+                android:id="@+id/pdfTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Pdf file content variable">
@@ -87,16 +87,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="end"
                 android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Required"
+                    android:textSize="16sp"/>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/requiredSwitch"
+                    android:layout_marginStart="8dp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
 
                 <ImageView
                     android:id="@+id/uploadIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/baseline_upload_file_24"
-                    app:tint="@color/purple_primary"
-                    android:layout_marginEnd="8dp"/>
+                    app:tint="@color/purple_primary"/>
 
                 <TextView
                     android:id="@+id/uploadedFileTextView"

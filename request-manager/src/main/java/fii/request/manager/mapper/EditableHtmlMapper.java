@@ -25,6 +25,7 @@ public class EditableHtmlMapper {
         editableHtml.setUploadedEditedHtmlFileVariable(editableHtmlDto.getUploadedEditedHtmlFileVariable());
         editableHtml.setWorkflowStepId(editableHtmlDto.getWorkflowStepId());
         editableHtml.setPdfResultVariable(editableHtmlDto.getPdfResultVariable());
+        editableHtml.setIsRequired(editableHtmlDto.getIsRequired());
         return editableHtml;
     }
 
@@ -34,6 +35,7 @@ public class EditableHtmlMapper {
                 .content(HtmlUtils.htmlEscape(localFileStorageService.load(editableHtml.getPath())))
                 .uploadedEditedHtmlFileVariable(editableHtml.getUploadedEditedHtmlFileVariable())
                 .pdfResultVariable(editableHtml.getPdfResultVariable())
+                .isRequired(editableHtml.getIsRequired())
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package fii.request.manager.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,4 +18,6 @@ public class DocumentRequest {
     private String uploadedFileVariable;
 
     private String ocrResultVariable;
+
+    private Boolean isRequired;
 }

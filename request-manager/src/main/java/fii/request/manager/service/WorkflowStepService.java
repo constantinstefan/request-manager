@@ -1,8 +1,12 @@
 package fii.request.manager.service;
 
 import fii.request.manager.domain.WorkflowStep;
+import fii.request.manager.dto.EditableHtmlDto;
+import fii.request.manager.dto.FormFieldDto;
 import fii.request.manager.dto.WorkflowStepDto;
 import fii.request.manager.exception.WorkflowNotFoundException;
+import fii.request.manager.mapper.EditableHtmlMapper;
+import fii.request.manager.mapper.FormFieldMapper;
 import fii.request.manager.mapper.WorkflowStepMapper;
 import fii.request.manager.repository.EditableHtmlRepository;
 import fii.request.manager.repository.FormFieldRepository;
@@ -11,6 +15,7 @@ import fii.request.manager.repository.WorkflowStepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +29,8 @@ public class WorkflowStepService {
 
     private EditableHtmlRepository editableHtmlRepository;
 
+    private EditableHtmlMapper editableHtmlMapper;
+
     private WorkflowStepMapper workflowStepMapper;
 
 
@@ -31,11 +38,13 @@ public class WorkflowStepService {
                                    WorkflowRepository workflowRepository,
                                    FormFieldRepository formFieldRepository,
                                    WorkflowStepMapper workflowStepMapper,
-                                   EditableHtmlRepository editableHtmlRepository) {
+                                   EditableHtmlRepository editableHtmlRepository,
+                                   EditableHtmlMapper editableHtmlMapper) {
         this.workflowStepRepository = workflowStepRepository;
         this.workflowRepository = workflowRepository;
         this.formFieldRepository = formFieldRepository;
         this.workflowStepMapper = workflowStepMapper;
+        this.editableHtmlMapper = editableHtmlMapper;
         this.editableHtmlRepository = editableHtmlRepository;
     }
     public WorkflowStep addWorkflowStep(Long workflowId, WorkflowStep workflowStep) {
@@ -49,7 +58,7 @@ public class WorkflowStepService {
     }
 
     public List<WorkflowStepDto> getWorkflowStepsFetchingChildren(Long workflowId) {
-        List<WorkflowStep> workflowSteps = workflowStepRepository.findByWorkflowId(workflowId);
+       /* List<WorkflowStep> workflowSteps = workflowStepRepository.findByWorkflowId(workflowId);
         workflowSteps.stream()
                     .forEach(workflowStep -> {
                         switch (workflowStep.getStepType()) {
@@ -63,7 +72,26 @@ public class WorkflowStepService {
                                         .ifPresent(editableHtml -> workflowStep.setEditableHtml(editableHtml));
                             }
                         }});
-        return workflowSteps.stream().map(workflowStepMapper::map).collect(Collectors.toList());
+        return workflowSteps.stream().map(workflowStepMapper::map).collect(Collectors.toList());*/
+        List<WorkflowStepDto> workflowStepDtos = new ArrayList<>();
+        workflowStepRepository.findByWorkflowId(workflowId).stream().forEach(workflowStep -> {
+            switch (workflowStep.getStepType()) {
+                case "FORM_FIELDS": {
+                    List<FormFieldDto> formFieldDtos = formFieldRepository.findByWorkflowStep(workflowStep).stream()
+                            .map(FormFieldMapper::map).collect(Collectors.toList());
+                        workflowStepDtos.add(workflowStepMapper.map(workflowStep, formFieldDtos));
+                } break;
+                case "EDITABLE_HTML": {
+                    editableHtmlRepository.findByWorkflowStepId(workflowStep.getWorkflowStepId())
+                            .map(editableHtml -> editableHtmlMapper.map(editableHtml))
+                            .ifPresent(editableHtmlDto -> workflowStepDtos.add(workflowStepMapper.map(workflowStep, editableHtmlDto)));
+                } break;
+                default: {
+                    workflowStepDtos.add(workflowStepMapper.map(workflowStep));
+                }
+            }
+        });
+        return workflowStepDtos;
     }
 
     public WorkflowStep getByWorkflowStepId(Long workflowStepId) {

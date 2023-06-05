@@ -5,11 +5,13 @@ import fii.request.manager.dto.FormFieldDto;
 
 public class FormFieldMapper {
 
-    static FormFieldDto map(FormField formField) {
+    public static FormFieldDto map(FormField formField) {
         if(formField == null) return null;
         return FormFieldDto.builder()
                 .id(formField.getId())
                 .label(formField.getLabel())
+                .isRequired(formField.getIsRequired())
+                .name(formField.getName())
                 .build();
     }
 }

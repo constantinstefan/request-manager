@@ -19,4 +19,6 @@ public class EditableHtml {
     private String uploadedEditedHtmlFileVariable;
 
     private String pdfResultVariable;
+
+    private Boolean isRequired;
 }

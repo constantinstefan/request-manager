@@ -1,11 +1,13 @@
 package com.example.workflow_manager_frontend.presentation.developer.home.createworkflow.steps
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.workflow_manager_frontend.domain.Workflow
 import com.example.workflow_manager_frontend.domain.WorkflowStep
+import java.io.File
 
 class StepsViewModel: ViewModel() {
     private val tag = "StepsViewModel"
@@ -20,7 +22,7 @@ class StepsViewModel: ViewModel() {
         selectedPosition = position
     }
 
-    fun getSelectedPoition() : Int {
+    fun getSelectedPosition() : Int {
         return selectedPosition
     }
 
@@ -51,6 +53,7 @@ class StepsViewModel: ViewModel() {
 
     fun addItem(workflowStep: WorkflowStep) {
         val currentSteps = workflowSteps.value.orEmpty().toMutableList()
+        workflowStep.stepNumber = currentSteps.size + 1
         currentSteps.add(workflowStep)
         workflowSteps.value = currentSteps
     }
@@ -75,12 +78,63 @@ class StepsViewModel: ViewModel() {
         workflowSteps.value = currentSteps
     }
 
-    fun updateHtmlForEditableHtml(position: Int, filename: String) {
+    fun updateHtmlForEditableHtml(position: Int, filename: String, file: File) {
         val currentSteps = workflowSteps.value.orEmpty().toMutableList()
         val editableHtml = currentSteps[position].editableHtml
             ?: return
         editableHtml.fileName = filename
+        editableHtml.file = file
         workflowSteps.value = currentSteps
     }
 
+    fun setDocumentDescription(position: Int, description: String) {
+        workflowSteps.value?.get(position)?.document?.description = description
+    }
+
+    fun setDocumentUploadFileContentVariable(position: Int, fileContentVariable: String) {
+        workflowSteps.value?.get(position)?.document?.uploadedFileVariable = fileContentVariable
+    }
+
+    fun setIsRequiredForDocument(position: Int, isRequired: Boolean) {
+        workflowSteps.value?.get(position)?.document?.isRequired = isRequired
+    }
+
+    fun setHtmlFileVariableForEditableHtml(position: Int, htmlFileVariable: String) {
+        workflowSteps.value?.get(position)?.editableHtml?.uploadedEditedHtmlFileVariable = htmlFileVariable
+    }
+
+    fun setPdfFileVariableForEditableHtml(position: Int, pdfFileVariable: String) {
+        workflowSteps.value?.get(position)?.editableHtml?.pdfResultVariable = pdfFileVariable
+    }
+
+    fun setIsRequiredForEditableHtml(position: Int, isRequired: Boolean) {
+        workflowSteps.value?.get(position)?.editableHtml?.isRequired = isRequired
+    }
+
+    fun setReceiverForEmail(position: Int, receiver: String) {
+        workflowSteps.value?.get(position)?.email?.receiver = receiver
+    }
+
+    fun setContentForEmail(position: Int, content: String) {
+        workflowSteps.value?.get(position)?.email?.content = content
+    }
+
+    fun setSubjectForEmail(position: Int, subject: String) {
+        workflowSteps.value?.get(position)?.email?.subject = subject
+    }
+
+    fun setAttachmentsForEmail(position: Int, attachments: String) {
+        workflowSteps.value?.get(position)?.email?.attachments = attachments
+    }
+
+    fun setNameForFormField(position: Int, formFieldPosition: Int, name: String) {
+        workflowSteps.value?.get(position)?.formFields?.get(formFieldPosition)?.name = name
+    }
+    fun setLabelForFormField(position: Int, formFieldPosition: Int, label: String) {
+        workflowSteps.value?.get(position)?.formFields?.get(formFieldPosition)?.label = label
+    }
+
+    fun setIsRequiredForFormField(position: Int, formFieldPosition: Int, isRequired: Boolean) {
+        workflowSteps.value?.get(position)?.formFields?.get(formFieldPosition)?.isRequired = isRequired
+    }
 }

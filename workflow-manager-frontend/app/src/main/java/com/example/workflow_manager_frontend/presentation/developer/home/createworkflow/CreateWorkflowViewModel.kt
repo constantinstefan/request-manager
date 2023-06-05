@@ -39,8 +39,8 @@ class CreateWorkflowViewModel @Inject constructor(
             groupId = null)
         ) ?: return false
 
-        stepsViewModel.getWorkflowSteps().value?.forEach {
-            workflowStepRepository.createWorkflowStep(workflow?.id, step = it)
+        stepsViewModel.getWorkflowSteps().value?.forEach {step ->
+            workflowStepRepository.createWorkflowStep(workflow.id, step)
         }
         return true
     }

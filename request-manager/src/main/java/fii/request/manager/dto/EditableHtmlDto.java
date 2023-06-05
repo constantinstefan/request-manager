@@ -17,4 +17,6 @@ public class EditableHtmlDto {
     String uploadedEditedHtmlFileVariable;
 
     String pdfResultVariable;
+
+    Boolean isRequired;
 }

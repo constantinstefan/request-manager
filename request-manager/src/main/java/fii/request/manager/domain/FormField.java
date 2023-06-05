@@ -15,4 +15,6 @@ public class FormField {
     private WorkflowStep workflowStep;
 
     private String label;
+    private String name;
+    private Boolean isRequired;
 }

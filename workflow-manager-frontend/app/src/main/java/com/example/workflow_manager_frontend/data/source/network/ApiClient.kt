@@ -67,6 +67,15 @@ interface ApiClient {
     )
 
     @Multipart
+    @POST("/api/v1/workflows/{workflowId}/steps/{stepId}/editable-html")
+    suspend fun addEditableHtml(
+        @Path("workflowId") workflowId: Int?,
+        @Path("stepId") stepId: Int?,
+        @Part("data") data: RequestBody,
+        @Part file: MultipartBody.Part
+    )
+
+    @Multipart
     @POST("/api/v1/workflows/{workflowId}/execution")
     suspend fun executeWorkflow(
         @Path("workflowId") workflowId : Long,

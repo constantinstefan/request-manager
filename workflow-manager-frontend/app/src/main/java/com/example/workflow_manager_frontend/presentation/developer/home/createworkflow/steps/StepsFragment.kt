@@ -22,6 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.databinding.FragmentStepsBinding
 import com.example.workflow_manager_frontend.domain.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 /**
  * A simple [Fragment] subclass.
@@ -45,10 +48,14 @@ class StepsFragment(
             ?: return@registerForActivityResult
         val fileName = intent.data?.let { uri -> getFileNameByUri(uri) }
             ?: return@registerForActivityResult
-        val position = stepsViewModel.getSelectedPoition()
+        val position = stepsViewModel.getSelectedPosition()
         if(position == -1)
             return@registerForActivityResult
-        stepsViewModel.updateHtmlForEditableHtml(position,fileName)
+        saveUriAsFile(intent.data!!)?.let {
+            stepsViewModel.updateHtmlForEditableHtml(position,fileName,
+                it
+            )
+        }
         stepsViewModel.setSelectedPosition(-1)
     }
 
@@ -98,7 +105,7 @@ class StepsFragment(
                         formFields.add(FormField())
                         stepsViewModel.addItem(WorkflowStep(
                             formFields = formFields,
-                            stepType = "FORM_FIELD"))
+                            stepType = "FORM_FIELDS"))
                         true
                     }
                     R.id.menu_item_editable_html -> {
@@ -134,9 +141,9 @@ class StepsFragment(
     }
 
     override fun onHtmlUpload(position: Int) {
-            val intent =  ActivityResultContracts.GetContent().createIntent(
+            val intent =  ActivityResultContracts.OpenDocument().createIntent(
                 requireContext(),
-                "text/html"
+                arrayOf("text/html")
             )
         stepsViewModel.setSelectedPosition(position)
         filePickerLauncher.launch(intent)
@@ -156,5 +163,27 @@ class StepsFragment(
     private fun bind() {
         stepsViewModel.setWorkflowName(binding.nameTextField.editText?.text.toString())
         stepsViewModel.setWorkflowDescription(binding.descriptionTextField.editText?.text.toString())
+    }
+
+    fun getViewModel() : StepsViewModel{
+        return stepsViewModel
+    }
+
+    private fun saveUriAsFile(uri: Uri): File? {
+        val context = requireContext()
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val file = uri.lastPathSegment?.let { File(context.cacheDir, it) }
+
+        try {
+            val outputStream = FileOutputStream(file)
+            inputStream?.copyTo(outputStream)
+            outputStream.close()
+            inputStream?.close()
+            return file
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return null
     }
 }

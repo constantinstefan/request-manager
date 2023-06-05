@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Email (
-    val receiver: String = "",
-    val subject: String = "",
-    val content: String = "",
-    val attachments: String = ""
+    var receiver: String = "",
+    var subject: String = "",
+    var content: String = "",
+    var attachments: String = ""
     ) : Parcelable

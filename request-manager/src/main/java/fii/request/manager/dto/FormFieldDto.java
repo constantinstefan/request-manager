@@ -12,4 +12,6 @@ public class FormFieldDto {
     private Long id;
 
     private String label;
+    private String name;
+    private Boolean isRequired;
 }

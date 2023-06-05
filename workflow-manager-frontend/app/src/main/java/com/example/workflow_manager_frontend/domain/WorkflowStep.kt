@@ -11,7 +11,7 @@ data class WorkflowStep(
     val email: Email? = null,
     val stepDescription: String = "",
     val stepName: String = "",
-    val stepNumber: Int = 0,
+    var stepNumber: Int = 0,
     val stepType: String = "",
     val workflowId: Int = 0,
     @PrimaryKey val workflowStepId: Int = 0

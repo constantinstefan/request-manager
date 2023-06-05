@@ -5,9 +5,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Document(
-    val description: String = "",
+    var description: String = "",
     val id: Int = 0,
     val ocrRequired: Boolean = false,
     val ocrResultVariable: String = "",
-    val uploadedFileVariable: String = ""
+    var uploadedFileVariable: String = "",
+    var isRequired: Boolean = true
 ) : Parcelable

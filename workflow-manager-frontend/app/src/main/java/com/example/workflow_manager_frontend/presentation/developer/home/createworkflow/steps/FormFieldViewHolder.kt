@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Switch
 import androidx.annotation.RequiresApi
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.domain.FormField
@@ -19,7 +20,8 @@ import com.google.android.material.textfield.TextInputLayout
 class FormFieldViewHolder(
     itemView: View,
     private val context: Context,
-    private val deleteStepListener: DeleteStepListener
+    private val deleteStepListener: DeleteStepListener,
+    private val viewModel: StepsViewModel
 ) : RecyclerView.ViewHolder(itemView), StepsViewHolder {
 
     private val tag = "FormFieldsViewHolder"
@@ -36,17 +38,33 @@ class FormFieldViewHolder(
         }
         OptionsMenuHelper.setupOptionsMenu(context, options, onDeleteAction)
 
-        fieldsContainer.removeAllViews()
+        val existingCount = fieldsContainer.childCount
+        val newCount = item.formFields?.size ?: 1
 
-        for (formField in item.formFields!!) {
-            val formFieldView = LayoutInflater.from(itemView.context).inflate(R.layout.item_add_single_form_field, fieldsContainer, false)
-            bindFormField(formFieldView, formField, item)
-            fieldsContainer.addView(formFieldView)
+        if(newCount < existingCount) {
+            fieldsContainer.removeViews(newCount, existingCount - newCount)
+        }
+
+
+        //fieldsContainer.removeAllViews()
+        // if remove all views and bind again with values from viewmodel
+        // a flickering is happening when adding a new step in the recyclerview
+        for (formFieldIndex in 0 until newCount) {
+            val shouldAddView = (formFieldIndex > existingCount) || (existingCount == 0)
+
+            val formFieldView = if(shouldAddView) LayoutInflater.from(itemView.context).inflate(R.layout.item_add_single_form_field, fieldsContainer, false)
+                else fieldsContainer.getChildAt(formFieldIndex)
+            val formField = item.formFields?.get(formFieldIndex)
+
+            if(shouldAddView && (formField != null) ){
+                bindFormField(formFieldView, formField, item)
+                fieldsContainer.addView(formFieldView)
+            }
         }
 
         addFieldIcon.setOnClickListener {
             val newFormField = FormField()
-            item.formFields.add(newFormField)
+            item.formFields?.add(newFormField)
 
             val formFieldView = LayoutInflater.from(itemView.context).inflate(R.layout.item_add_single_form_field, fieldsContainer, false)
             bindFormField(formFieldView, newFormField, item)
@@ -60,9 +78,22 @@ class FormFieldViewHolder(
         val fieldRequiredSwitch = formFieldView.findViewById<Switch>(R.id.requiredSwitch)
         val deleteFieldIcon = formFieldView.findViewById<ImageView>(R.id.deleteFieldIcon)
 
-        //fieldNameTextField.editText?.setText("")
+        fieldNameTextField.editText?.setText(formField.name)
         fieldLabelTextField.editText?.setText(formField.label)
-        fieldRequiredSwitch.isChecked = false
+        fieldRequiredSwitch.isChecked = formField.isRequired
+
+        fieldLabelTextField.editText?.addTextChangedListener {
+            item.formFields?.indexOf(formField)?.let { stepPosition ->
+                viewModel.setLabelForFormField(bindingAdapterPosition, stepPosition, it.toString()) }
+        }
+        fieldNameTextField.editText?.addTextChangedListener {
+            item.formFields?.indexOf(formField)?.let { stepPosition ->
+                viewModel.setNameForFormField(bindingAdapterPosition, stepPosition, it.toString()) }
+        }
+        fieldRequiredSwitch.setOnCheckedChangeListener { _, isChecked ->
+            item.formFields?.indexOf(formField)?.let { stepPosition ->
+                viewModel.setIsRequiredForFormField(bindingAdapterPosition, stepPosition, isChecked) }
+        }
 
         deleteFieldIcon.setOnClickListener {
             item.formFields?.remove(formField)

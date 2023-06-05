@@ -16,6 +16,7 @@ public class DocumentRequestMapper {
                 .isOcrRequired(documentRequest.isOcrRequired())
                 .uploadedFileVariable(documentRequest.getUploadedFileVariable())
                 .ocrResultVariable(documentRequest.getOcrResultVariable())
+                .isRequired(documentRequest.getIsRequired())
                 .build();
     }
 }
