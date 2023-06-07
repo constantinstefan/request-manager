@@ -10,8 +10,26 @@ public class EmailStepMapper {
         emailStep.setReceiverEmail(emailStepDto.getReceiverEmail());
         emailStep.setId(emailStepDto.getId());
         emailStep.setSubject(emailStepDto.getSubject());
-        emailStep.setAttachements(emailStepDto.getAttachements());
+        emailStep.setAttachments(emailStepDto.getAttachments());
         emailStep.setContent(emailStepDto.getContent());
+        return emailStep;
+    }
+
+    public static EmailStepDto map(EmailStep emailStep) {
+        if(emailStep == null) return null;
+        return EmailStepDto.builder()
+                .receiverEmail(emailStep.getReceiverEmail())
+                .subject(emailStep.getSubject())
+                .content(emailStep.getContent())
+                .attachments(emailStep.getAttachments())
+                .build();
+    }
+
+    public static EmailStep mapForUpdate(EmailStep emailStep, EmailStep emailStepToChange) {
+        emailStep.setContent(emailStepToChange.getContent());
+        emailStep.setReceiverEmail(emailStepToChange.getReceiverEmail());
+        emailStep.setSubject(emailStepToChange.getSubject());
+        emailStep.setAttachments(emailStepToChange.getAttachments());
         return emailStep;
     }
 }

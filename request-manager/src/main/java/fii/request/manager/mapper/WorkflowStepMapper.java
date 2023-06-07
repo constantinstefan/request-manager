@@ -1,5 +1,6 @@
 package fii.request.manager.mapper;
 
+import fii.request.manager.domain.Workflow;
 import fii.request.manager.domain.WorkflowStep;
 import fii.request.manager.dto.DocumentRequestDto;
 import fii.request.manager.dto.EditableHtmlResponseDto;
@@ -31,21 +32,15 @@ public class WorkflowStepMapper {
         return workflowStep;
     }
 
+    public WorkflowStep mapForUpdate(WorkflowStep workflowStep, WorkflowStep workflowStepToChange) {
+        workflowStep.setStepName(workflowStepToChange.getStepName());
+        workflowStep.setStepDescription(workflowStep.getStepDescription());
+        workflowStep.setStepNumber(workflowStepToChange.getStepNumber());
+        workflowStep.setStepType(workflowStepToChange.getStepType());
+        return workflowStep;
+    }
+
     public WorkflowStepDto map(WorkflowStep workflowStep) {
-        /*if(workflowStep == null) return null;
-        return WorkflowStepDto.builder()
-                .workflowStepId(workflowStep.getWorkflowStepId())
-                .stepName(workflowStep.getStepName())
-                .stepNumber(workflowStep.getStepNumber())
-                .stepDescription(workflowStep.getStepDescription())
-                .stepType(workflowStep.getStepType())
-                .formFields(workflowStep.getFormFields().stream()
-                        .map(FormFieldMapper::map)
-                        .collect(Collectors.toList()))
-                .editableHtml(editableHtmlMapper.map(workflowStep.getEditableHtml()))
-                .document(documentRequestMapper.map(workflowStep.getDocumentRequest()))
-                .workflowId(workflowStep.getWorkflow().getId())
-                .build();*/
         if(workflowStep == null) return null;
         return WorkflowStepDto.builder()
                 .workflowStepId(workflowStep.getWorkflowStepId())
@@ -54,6 +49,7 @@ public class WorkflowStepMapper {
                 .stepDescription(workflowStep.getStepDescription())
                 .stepType(workflowStep.getStepType())
                 .document(documentRequestMapper.map(workflowStep.getDocumentRequest()))
+                .email(EmailStepMapper.map(workflowStep.getEmailStep()))
                 .workflowId(workflowStep.getWorkflow().getId())
                 .build();
     }

@@ -6,3 +6,4 @@ https://www.baeldung.com/java-auth0-jwt
 https://github.com/philipplackner/RetrofitCrashCourse/tree/master/app
 <a href="https://www.freepik.com/free-vector/illustration-paper_2606523.htm#query=document&position=0&from_view=search&track=robertav1_2_sidr">Image by rawpixel.com</a> on Freepik
 https://m2.material.io/components/menus/android#using-menus
+https://stackoverflow.com/questions/62987314/how-do-i-use-a-floating-action-button-as-a-square

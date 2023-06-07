@@ -18,5 +18,5 @@ public class EmailStep {
     String receiverEmail;
     String subject;
     String content;
-    String attachements;
+    String attachments;
 }

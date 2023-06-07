@@ -52,6 +52,11 @@ public class WorkflowStepService {
         return workflowStepRepository.save(workflowStep);
     }
 
+    public WorkflowStepDto updateWorkflowStep(Long workflowStepId, WorkflowStep workflowStepToChangeWith) {
+        WorkflowStep workflowStep = getByWorkflowStepId(workflowStepId);
+        return workflowStepMapper.map(workflowStepRepository.save(workflowStepMapper.mapForUpdate(workflowStep, workflowStepToChangeWith)));
+    }
+
     public List<WorkflowStepDto> getWorkflowSteps(Long workflowId) {
         return workflowStepRepository.findByWorkflowId(workflowId).stream()
                 .map(workflowStepMapper::map).collect(Collectors.toList());
@@ -96,5 +101,9 @@ public class WorkflowStepService {
 
     public WorkflowStep getByWorkflowStepId(Long workflowStepId) {
         return workflowStepRepository.findById(workflowStepId).orElseThrow();
+    }
+
+    public void removeStep(Long workflowStepId) {
+        workflowStepRepository.deleteById(workflowStepId);
     }
 }

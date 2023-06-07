@@ -13,5 +13,5 @@ public class EmailStepDto {
     String receiverEmail;
     String subject;
     String content;
-    String attachements;
+    String attachments;
 }

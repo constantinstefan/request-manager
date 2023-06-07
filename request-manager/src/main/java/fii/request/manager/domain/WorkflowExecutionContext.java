@@ -43,6 +43,7 @@ public class WorkflowExecutionContext {
     }
 
     public String resolveVariable(String variable) {
+        if(variable == null) return null;
         String found = variableValueByName.get(variable.substring(1));
         return (found != null)
                 ? found

@@ -27,10 +27,14 @@ public class DocumentRequestService {
     }
 
     public DocumentRequestDto addDocumentRequest(Long workflowStepId, DocumentRequest documentRequest) {
-        documentRequest = documentRequestRepository.save(documentRequest);
         WorkflowStep workflowStep = workflowStepRepository.findById(workflowStepId).orElseThrow();
-        workflowStep.setDocumentRequest(documentRequest);
-        workflowStepRepository.save(workflowStep);
-        return documentRequestMapper.map(documentRequest);
+        //documentRequest.setWorkflowStep(workflowStep);
+        return documentRequestMapper.map(documentRequestRepository.save(documentRequest));
+    }
+
+    public DocumentRequestDto updateDocumentRequest(Long workflowStepId, DocumentRequest documentRequestToChange) {
+        WorkflowStep workflowStep = workflowStepRepository.findById(workflowStepId).orElseThrow();
+        DocumentRequest documentRequest = documentRequestRepository.findById(workflowStep.getDocumentRequest().getId()).orElseThrow();
+        return documentRequestMapper.map(documentRequestMapper.mapForUpdate(documentRequest, documentRequestToChange));
     }
 }

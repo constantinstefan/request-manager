@@ -19,4 +19,11 @@ public class DocumentRequestMapper {
                 .isRequired(documentRequest.getIsRequired())
                 .build();
     }
+
+    public DocumentRequest mapForUpdate(DocumentRequest documentRequest, DocumentRequest documentRequestToChange) {
+        documentRequest.setDescription(documentRequestToChange.getDescription());
+        documentRequest.setIsRequired(documentRequestToChange.getIsRequired());
+        documentRequest.setUploadedFileVariable(documentRequestToChange.getUploadedFileVariable());
+        return documentRequest;
+    }
 }

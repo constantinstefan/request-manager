@@ -26,4 +26,6 @@ public class WorkflowStepDto {
     private List<FormFieldDto> formFields;
 
     private EditableHtmlResponseDto editableHtml;
+
+    private EmailStepDto email;
 }

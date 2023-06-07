@@ -1,9 +1,7 @@
 package fii.request.manager.service;
 
-import fii.request.manager.domain.DocumentRequest;
 import fii.request.manager.domain.EmailStep;
 import fii.request.manager.domain.WorkflowStep;
-import fii.request.manager.dto.DocumentRequestDto;
 import fii.request.manager.dto.EmailStepDto;
 import fii.request.manager.mapper.EmailStepMapper;
 import fii.request.manager.repository.EmailStepRepository;
@@ -31,6 +29,12 @@ public class EmailStepService {
         workflowStep.setEmailStep(emailStep);
         workflowStepRepository.save(workflowStep);
         return emailStep;
+    }
+
+    public EmailStepDto updateEmailStep(Long workflowStepId, EmailStep emailStepToChange) {
+        WorkflowStep workflowStep = workflowStepRepository.findById(workflowStepId).orElseThrow();
+        EmailStep emailStep = emailStepRepository.findById(workflowStep.getEmailStep().getId()).orElseThrow();
+        return EmailStepMapper.map(EmailStepMapper.mapForUpdate(emailStep, emailStepToChange));
     }
 
     public EmailStep getByWorkflowStepId(Long workflowStepId) {

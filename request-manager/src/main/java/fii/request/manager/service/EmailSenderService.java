@@ -67,6 +67,6 @@ public class EmailSenderService implements StepRunnerService{
         sendEmail(workflowExecutionContext.resolveVariable(emailStep.getReceiverEmail()),
                 workflowExecutionContext.resolveVariable(emailStep.getSubject()),
                 workflowExecutionContext.resolveVariable(emailStep.getContent()),
-                workflowExecutionContext.getFiles(emailStep.getAttachements()));
+                workflowExecutionContext.getFiles(emailStep.getAttachments()));
     }
 }
