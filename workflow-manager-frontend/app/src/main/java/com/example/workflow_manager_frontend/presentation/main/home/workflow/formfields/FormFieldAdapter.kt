@@ -22,10 +22,10 @@ class FormFieldAdapter(
     inner class FormFieldViewHolder(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView){
-        val field: TextInputEditText
+        val name: TextInputEditText
 
         init{
-            field = itemView.findViewById(R.id.field)
+            name = itemView.findViewById(R.id.field)
         }
     }
 
@@ -37,11 +37,11 @@ class FormFieldAdapter(
     override fun onBindViewHolder(holder: FormFieldViewHolder, position: Int) {
         val formField = getItem(position)
         viewHolders.add(holder)
-        holder.field.hint = formField.label
+        holder.name.hint = formField.name
     }
 
     private fun getEditedText(position: Int) : String {
-        return viewHolders.get(position).field.text.toString()
+        return viewHolders.get(position).name.text.toString()
     }
 
     override fun onSubmitForm(workflowExecutionContext: WorkflowExecutionContext) {

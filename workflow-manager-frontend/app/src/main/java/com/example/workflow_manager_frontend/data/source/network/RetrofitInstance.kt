@@ -19,7 +19,7 @@ object RetrofitInstance {
 
     val api: ApiClient by lazy {
         Retrofit.Builder()
-            .baseUrl(emulatorBaseUrl)
+            .baseUrl(hostBaseUrl)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

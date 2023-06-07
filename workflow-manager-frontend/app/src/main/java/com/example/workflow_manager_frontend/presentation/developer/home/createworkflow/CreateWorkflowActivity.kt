@@ -1,13 +1,16 @@
 package com.example.workflow_manager_frontend.presentation.developer.home.createworkflow
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.workflow_manager_frontend.R
+import com.example.workflow_manager_frontend.domain.Workflow
 import com.example.workflow_manager_frontend.presentation.developer.home.createworkflow.steps.StepsViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -32,9 +35,11 @@ class CreateWorkflowActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_create_workflow)
 
+        val workflow = intent.getParcelableExtra("workflow") as? Workflow
+
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
-        viewPager.adapter = CreateWorkflowPagerAdapter(this, stepsViewModel, sharingViewModel)
+        viewPager.adapter = CreateWorkflowPagerAdapter(this, stepsViewModel, sharingViewModel, workflow)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {

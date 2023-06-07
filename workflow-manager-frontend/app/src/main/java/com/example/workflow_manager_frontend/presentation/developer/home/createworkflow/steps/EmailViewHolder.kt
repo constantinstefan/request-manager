@@ -29,6 +29,11 @@ class EmailViewHolder(
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun bind(item: WorkflowStep) {
+        if(item.email?.receiverEmail?.isNotEmpty() == true) receiverTextInputLayout.editText?.setText(item.email.receiverEmail)
+        if(item.email?.subject?.isNotEmpty() == true) subjectTextInputLayout.editText?.setText(item.email.subject)
+        if(item.email?.content?.isNotEmpty() == true) contentTextInputLayout.editText?.setText(item.email.content)
+        if(item.email?.attachments?.isNotEmpty() == true) attachmentsTextInputLayout.editText?.setText(item.email.attachments)
+
         receiverTextInputLayout.editText?.addTextChangedListener {
             viewModel.setReceiverForEmail(bindingAdapterPosition, it.toString())
         }

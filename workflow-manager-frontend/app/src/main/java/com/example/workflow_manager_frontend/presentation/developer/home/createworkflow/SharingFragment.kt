@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.databinding.FragmentSharingBinding
 import com.example.workflow_manager_frontend.databinding.FragmentStepsBinding
+import com.example.workflow_manager_frontend.domain.Workflow
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +21,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class SharingFragment(
-    private val sharingViewModel: SharingViewModel
+    private val sharingViewModel: SharingViewModel,
+    private val workflow: Workflow?
 ) : Fragment() {
     private var _binding: FragmentSharingBinding? = null
     private val binding get() = _binding!!

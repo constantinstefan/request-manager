@@ -72,7 +72,7 @@ class FormFieldViewHolder(
         }
     }
 
-    fun bindFormField(formFieldView: View, formField: FormField, item: WorkflowStep) {
+    private fun bindFormField(formFieldView: View, formField: FormField, item: WorkflowStep) {
         val fieldNameTextField = formFieldView.findViewById<TextInputLayout>(R.id.nameTextField)
         val fieldLabelTextField = formFieldView.findViewById<TextInputLayout>(R.id.labelTextField)
         val fieldRequiredSwitch = formFieldView.findViewById<Switch>(R.id.requiredSwitch)

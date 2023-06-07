@@ -18,10 +18,14 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.databinding.FragmentStepsBinding
 import com.example.workflow_manager_frontend.domain.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -32,7 +36,8 @@ import java.io.IOException
  * create an instance of this fragment.
  */
 class StepsFragment(
-    private val stepsViewModel: StepsViewModel
+    private val stepsViewModel: StepsViewModel,
+    private val workflow: Workflow?
 ) : Fragment(), DeleteStepListener, HtmlUploadListener{
     private var _binding: FragmentStepsBinding? = null
     private val binding get() = _binding!!
@@ -70,7 +75,11 @@ class StepsFragment(
         setUpAddStepsMenu()
         setUpRecycleView()
 
-        bind()
+        val isForCreate = (workflow == null)
+
+
+        if(isForCreate) bindForCreate() else bindForUpdate(workflow)
+
         stepsViewModel.getWorkflowSteps().observe(viewLifecycleOwner) { workflowSteps ->
             val stepAdapter: WorkflowStepsAdapter =
                 binding.recyclerView.adapter as WorkflowStepsAdapter
@@ -160,9 +169,28 @@ class StepsFragment(
         return fileName
     }
 
-    private fun bind() {
-        stepsViewModel.setWorkflowName(binding.nameTextField.editText?.text.toString())
-        stepsViewModel.setWorkflowDescription(binding.descriptionTextField.editText?.text.toString())
+    private fun bindForCreate() {
+        if(workflow == null) {
+            stepsViewModel.setWorkflowName(binding.nameTextField.editText?.text.toString())
+            stepsViewModel.setWorkflowDescription(binding.descriptionTextField.editText?.text.toString())
+            return
+        }
+    }
+
+    private fun bindForUpdate(workflow: Workflow?) {
+        if(workflow == null) return
+        binding.nameTextField.editText?.setText(workflow.name)
+        binding.descriptionTextField.editText?.setText(workflow.description)
+        stepsViewModel.setWorkflowName(workflow.name)
+        stepsViewModel.setWorkflowDescription(workflow.description)
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                val steps = stepsViewModel.fetchFromRemote(workflow)
+                requireActivity().runOnUiThread {
+                    stepsViewModel.setWorkflowSteps(steps as MutableList<WorkflowStep>)
+                }
+            }
+        }
     }
 
     fun getViewModel() : StepsViewModel{

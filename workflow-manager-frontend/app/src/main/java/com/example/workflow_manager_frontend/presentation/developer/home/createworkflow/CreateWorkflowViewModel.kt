@@ -1,6 +1,7 @@
 package com.example.workflow_manager_frontend.presentation.developer.home.createworkflow
 
 import androidx.lifecycle.ViewModel
+import com.example.workflow_manager_frontend.data.repository.DeletedStepsRepository
 import com.example.workflow_manager_frontend.data.repository.WorkflowRepository
 import com.example.workflow_manager_frontend.data.repository.WorkflowStepRepository
 import com.example.workflow_manager_frontend.domain.request.SharingRequest
@@ -12,7 +13,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateWorkflowViewModel @Inject constructor(
     private val workflowRepository: WorkflowRepository,
-    private val workflowStepRepository: WorkflowStepRepository
+    private val workflowStepRepository: WorkflowStepRepository,
+    private val deletedStepsRepository: DeletedStepsRepository
 ): ViewModel() {
 
     private lateinit var sharingViewModel: SharingViewModel
@@ -43,5 +45,9 @@ class CreateWorkflowViewModel @Inject constructor(
             workflowStepRepository.createWorkflowStep(workflow.id, step)
         }
         return true
+    }
+
+    suspend fun updateWorkflow(workflowId: Int?) : Boolean {
+        TODO()
     }
 }

@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Email (
-    var receiver: String = "",
+    var receiverEmail: String = "",
     var subject: String = "",
     var content: String = "",
     var attachments: String = ""

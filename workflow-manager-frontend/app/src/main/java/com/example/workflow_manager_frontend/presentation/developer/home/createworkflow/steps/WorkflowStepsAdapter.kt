@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.workflow_manager_frontend.R
+import com.example.workflow_manager_frontend.domain.Workflow
 import com.example.workflow_manager_frontend.domain.WorkflowStep
 
 class WorkflowStepsAdapter(
@@ -15,7 +16,8 @@ class WorkflowStepsAdapter(
     private var items: MutableList<WorkflowStep> = mutableListOf()
 
     fun setItems(items: MutableList<WorkflowStep>) {
-        this.items = items
+        this.items.clear()
+        this.items.addAll(items)
         notifyDataSetChanged()
     }
 

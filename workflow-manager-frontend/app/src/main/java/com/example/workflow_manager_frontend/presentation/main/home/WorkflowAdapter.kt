@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.domain.Workflow
+import com.google.android.material.card.MaterialCardView
 
 class WorkflowAdapter(
     workflowDiffCallback: WorkflowDiffCallback,
@@ -21,14 +22,16 @@ class WorkflowAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
         val title: TextView
         val type: TextView
+        val card: MaterialCardView
         //val group: TextView
 
         init {
             title = itemView.findViewById(R.id.item_workflow_title)
             type = itemView.findViewById(R.id.item_workflow_type)
+            card = itemView.findViewById(R.id.item_workflow_card)
             //group = itemView.findViewById(R.id.item_workflow_group)
 
-            itemView.setOnClickListener {
+            card.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val workflow = getItem(position)

@@ -1,15 +1,23 @@
 package com.example.workflow_manager_frontend.presentation.developer.home.createworkflow.steps
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.workflow_manager_frontend.data.repository.DeletedStepsRepository
+import com.example.workflow_manager_frontend.data.repository.WorkflowStepRepository
 import com.example.workflow_manager_frontend.domain.Workflow
 import com.example.workflow_manager_frontend.domain.WorkflowStep
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.File
+import javax.inject.Inject
 
-class StepsViewModel: ViewModel() {
+@HiltViewModel
+class StepsViewModel @Inject constructor(
+    private val workflowStepRepository: WorkflowStepRepository,
+    private val deletedStepsRepository: DeletedStepsRepository
+): ViewModel() {
+
     private val tag = "StepsViewModel"
 
     private val workflow: MutableLiveData<Workflow?> = MutableLiveData()
@@ -62,6 +70,13 @@ class StepsViewModel: ViewModel() {
         return workflowSteps.value?.get(position)
     }
 
+    suspend fun fetchFromRemote(workflow: Workflow) : List<WorkflowStep>?{
+        if(workflow.id == null || workflow.id ==0) {
+            return emptyList()
+        }
+        return workflowStepRepository.getWorkflowSteps(workflow.id.toLong(), true)
+    }
+
     fun deleteStep(position: Int) {
         val currentSteps = workflowSteps.value.orEmpty().toMutableList()
         if( (! (position in 0 until currentSteps.size)) ) {
@@ -72,6 +87,7 @@ class StepsViewModel: ViewModel() {
         val deletedStep = currentSteps[position]
         if(deletedStep?.workflowStepId != 0) {
             Log.d(tag, "stepId not 0 need to delete from remote")
+            deletedStepsRepository.addDeletedStepToCache(deletedStep)
         }
 
         currentSteps.removeAt(position)
@@ -112,7 +128,7 @@ class StepsViewModel: ViewModel() {
     }
 
     fun setReceiverForEmail(position: Int, receiver: String) {
-        workflowSteps.value?.get(position)?.email?.receiver = receiver
+        workflowSteps.value?.get(position)?.email?.receiverEmail = receiver
     }
 
     fun setContentForEmail(position: Int, content: String) {
