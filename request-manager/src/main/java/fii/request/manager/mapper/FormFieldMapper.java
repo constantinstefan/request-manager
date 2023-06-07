@@ -14,4 +14,11 @@ public class FormFieldMapper {
                 .name(formField.getName())
                 .build();
     }
+
+    public static FormField mapForUpdate(FormField formField, FormField formFieldToChange) {
+        formField.setName(formFieldToChange.getName());
+        formField.setLabel(formFieldToChange.getLabel());
+        formField.setIsRequired(formFieldToChange.getIsRequired());
+        return formField;
+    }
 }

@@ -1,6 +1,7 @@
 package fii.request.manager.service;
 
 import fii.request.manager.domain.FormField;
+import fii.request.manager.domain.WorkflowStep;
 import fii.request.manager.repository.FormFieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,11 @@ public class FormFieldService {
         return formFields.stream().map(formField -> {
             return addFormField(workflowStepId, formField);
         }).collect(Collectors.toList());
+    }
+
+    public List<FormField> updateFormFields(Long workflowStepId, List<FormField> formFields) {
+        WorkflowStep workflowStep = workflowStepService.getByWorkflowStepId(workflowStepId);
+        formFieldRepository.deleteAll(formFieldRepository.findByWorkflowStep(workflowStep));
+        return addFormFields(workflowStepId, formFields);
     }
 }
