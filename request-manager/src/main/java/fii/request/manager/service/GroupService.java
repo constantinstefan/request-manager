@@ -41,4 +41,8 @@ public class GroupService {
     public List<CustomerGroup> getAll() {
         return groupRepository.findAll();
     }
+
+    public void deleteCustomerFromGroup(Long groupId, Long customerId) {
+        groupRepository.deleteMemberByCustomerIdAndGroupId(customerId, groupId);
+    }
 }

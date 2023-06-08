@@ -11,5 +11,5 @@ data class Workflow(
     var description: String = "",
     @PrimaryKey val id: Int? = 0,
     var name: String = "",
-    val sharing: Sharing? = null
+    val sharing: Sharing? = null,
 ) : Parcelable

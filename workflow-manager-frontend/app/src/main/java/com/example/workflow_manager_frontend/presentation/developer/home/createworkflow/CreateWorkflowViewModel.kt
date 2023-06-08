@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CreateWorkflowViewModel @Inject constructor(
     private val workflowRepository: WorkflowRepository,
     private val workflowStepRepository: WorkflowStepRepository,
-    private val deletedStepsRepository: DeletedStepsRepository
+   // private val deletedStepsRepository: DeletedStepsRepository
 ): ViewModel() {
 
     private lateinit var sharingViewModel: SharingViewModel
@@ -36,9 +36,14 @@ class CreateWorkflowViewModel @Inject constructor(
             description =  description)
         ) ?: return false
 
+        val sharingType = sharingViewModel.getType() ?: "PUBLIC"
+        var groupId = when(sharingType){
+            "GROUP" -> sharingViewModel.selectedGroup?.id
+            else -> null
+        }
         workflowRepository.setSharingRemote(workflow.id, SharingRequest(
-            sharingType = sharingViewModel.getType() ?: "PUBLIC",
-            groupId = null)
+            sharingType = sharingType,
+            groupId = groupId)
         ) ?: return false
 
         stepsViewModel.getWorkflowSteps().value?.forEach {step ->

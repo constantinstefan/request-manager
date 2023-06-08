@@ -3,6 +3,7 @@ package fii.request.manager.controller;
 import fii.request.manager.domain.Customer;
 import fii.request.manager.dto.ChangePasswordDto;
 import fii.request.manager.dto.CustomerDto;
+import fii.request.manager.dto.CustomerGroupDto;
 import fii.request.manager.dto.WorkflowDto;
 import fii.request.manager.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,12 @@ public class CustomerController {
     @ResponseBody
     CustomerDto getById(@PathVariable Long customerId) {
         return customerService.getByIdFetchingGroups(customerId);
+    }
+
+    @GetMapping(value ="/{customerId}/groups")
+    @ResponseBody
+    List<CustomerGroupDto> getGroups(@PathVariable Long customerId){
+        return customerService.getByIdFetchingGroups(customerId).getGroups();
     }
 
     @GetMapping

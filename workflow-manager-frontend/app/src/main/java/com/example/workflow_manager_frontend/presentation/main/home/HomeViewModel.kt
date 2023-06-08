@@ -3,6 +3,7 @@ package com.example.workflow_manager_frontend.presentation.main.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.workflow_manager_frontend.data.repository.GroupRepository
 import com.example.workflow_manager_frontend.data.repository.WorkflowRepository
 import com.example.workflow_manager_frontend.domain.Workflow
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    workflowRepository: WorkflowRepository
+    workflowRepository: WorkflowRepository,
+    groupRepository: GroupRepository
 ) : ViewModel()
 {
     val state : MutableStateFlow<List<Workflow>> = MutableStateFlow(emptyList())
@@ -22,7 +24,13 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             state.value = withContext(Dispatchers.IO) {
-                workflowRepository.getWorkflows(true)
+                val workflows = workflowRepository.getWorkflows(true)
+                workflows.forEach { workflow ->
+                    workflow.sharing?.group = workflow.sharing?.groupId?.let {
+                        groupRepository.getGroupById(it)
+                    }
+                }
+                return@withContext workflows
             }
             Log.d("viewmodel", state.value.toString())
         }

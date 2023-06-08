@@ -51,6 +51,7 @@ class WorkflowAdapter(
     override fun onBindViewHolder(holder: WorkflowViewHolder, position: Int) {
         val workflow = getItem(position)
         holder.title.text = workflow.name
-        holder.type.text = workflow.sharing?.sharingType
+        holder.type.text = if(workflow.sharing?.sharingType == "PUBLIC") "PUBLIC"
+            else workflow.sharing?.group?.name
     }
 }

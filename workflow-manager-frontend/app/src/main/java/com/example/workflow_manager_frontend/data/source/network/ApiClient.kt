@@ -29,6 +29,21 @@ interface ApiClient {
     @GET("/api/v1/groups/{groupId}")
     suspend fun getGroupById(@Path("groupId") groupId: Int) : Response<Group>
 
+    @GET("/api/v1/customers/{customerId}/groups")
+    suspend fun getGroupsByCustomerId(@Path("customerId") customerId: Int) : Response<List<Group>>
+
+    @POST("/api/v1/groups/{groupId}/members")
+    suspend fun addCustomerToGroup(
+        @Path("groupId") groupId: Int,
+        @Body customer: Customer
+    ) : Response<Customer>
+
+    @DELETE("/api/v1/groups/{groupId}/members/{customerId}")
+    suspend fun deleteCustomerFromGroup(
+        @Path("groupId") groupId: Int,
+        @Path("customerId") customerId: Int
+    ) : Response<Any>
+
     @POST("/api/v1/workflows")
     suspend fun addWorkflow(@Body workflow: WorkflowRequest) : Response<Workflow>
 

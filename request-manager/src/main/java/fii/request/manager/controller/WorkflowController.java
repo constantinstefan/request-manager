@@ -72,6 +72,22 @@ public class WorkflowController {
         return workflowStepService.getWorkflowStepsFetchingChildren(workflowId);
     }
 
+    @DeleteMapping(value = "/{workflowId}/steps/{stepId}")
+    ResponseEntity deleteSteps(@PathVariable Long workflowId,
+                               @PathVariable Long stepId) {
+        workflowService.assertContainsWorkflowStep(workflowId, stepId);
+        workflowStepService.removeStep(stepId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value="/{workflowId}/steps/{stepId}")
+    WorkflowStepDto putWorkflowSteps(@PathVariable Long workflowId,
+                                     @PathVariable Long stepId,
+                                     @RequestBody WorkflowStep workflowStep) {
+        workflowService.assertContainsWorkflowStep(workflowId, stepId);
+        return workflowStepService.updateWorkflowStep(stepId, workflowStep);
+    }
+
     @PostMapping(value="/{workflowId}/sharing")
     WorkflowSharing addWorkflowSharing(@PathVariable Long workflowId,
                                        @RequestBody WorkflowSharing workflowSharing) {
@@ -105,12 +121,27 @@ public class WorkflowController {
         return documentRequestService.addDocumentRequest(stepId, documentRequest);
     }
 
+    @PutMapping(value= "/{workflowId}/steps/{stepId}/document-request")
+    DocumentRequestDto putDocumentRequest(@PathVariable Long workflowId,
+                                          @PathVariable Long stepId,
+                                          @RequestBody DocumentRequest documentRequest) {
+        workflowService.assertContainsWorkflowStep(workflowId, stepId);
+        return documentRequestService.updateDocumentRequest(stepId, documentRequest);
+    }
+
     @PostMapping(value= "/{workflowId}/steps/{stepId}/email")
     EmailStep addEmailStep(@PathVariable Long workflowId,
                            @PathVariable Long stepId,
                            @RequestBody EmailStepDto emailStep) {
         workflowService.assertContainsWorkflowStep(workflowId, stepId);
         return emailStepService.addEmailStep(stepId, emailStep);
+    }
+    @PutMapping(value= "/{workflowId}/steps/{stepId}/email")
+    EmailStepDto putEmailStep(@PathVariable Long workflowId,
+                              @PathVariable Long stepId,
+                              @RequestBody EmailStep emailStep) {
+        workflowService.assertContainsWorkflowStep(workflowId, stepId);
+        return emailStepService.updateEmailStep(stepId, emailStep);
     }
     @GetMapping
     List<WorkflowDto> getAll() {

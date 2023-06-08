@@ -18,7 +18,7 @@ public class CustomerDto {
     String firstName;
     String lastName;
     String role;
-    List<CustomerGroup> groups;
+    List<CustomerGroupDto> groups;
 
     List<WorkflowDto> workflows;
 }

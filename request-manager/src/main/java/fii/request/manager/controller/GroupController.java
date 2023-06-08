@@ -7,6 +7,7 @@ import fii.request.manager.dto.CustomerGroupDto;
 import fii.request.manager.service.CustomerService;
 import fii.request.manager.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,5 +47,13 @@ public class GroupController {
     @ResponseBody
     CustomerDto addMember(@PathVariable Long groupId, @RequestBody Customer customer) {
         return customerService.addCustomer(groupId, customer);
+    }
+
+    @DeleteMapping(value = "/{groupId}/members/{customerId}")
+    @ResponseBody
+    ResponseEntity deleteMember(@PathVariable Long groupId,
+                                @PathVariable Long customerId) {
+        groupService.deleteCustomerFromGroup(groupId, customerId);
+        return ResponseEntity.ok().build();
     }
 }

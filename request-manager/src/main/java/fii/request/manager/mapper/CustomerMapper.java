@@ -14,7 +14,7 @@ public class CustomerMapper {
     public static CustomerDto map(Customer customer, Set<CustomerGroup> groups) {
         if(customer == null) return null;
         CustomerDto customerDto = map(customer);
-        customerDto.setGroups(groups.stream().toList());
+        customerDto.setGroups(groups.stream().map(CustomerGroupMapper::map).toList());
         return customerDto;
     }
 

@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.databinding.FragmentSharingBinding
-import com.example.workflow_manager_frontend.databinding.FragmentStepsBinding
+import com.example.workflow_manager_frontend.domain.Group
 import com.example.workflow_manager_frontend.domain.Workflow
+import java.util.stream.Collectors
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,9 +35,13 @@ class SharingFragment(
 
         _binding = FragmentSharingBinding.inflate(inflater, container, false)
 
-        sharingViewModel.setType(if(binding.visibilitySwitch.isChecked)
-            "GROUP" else
-                "PUBLIC")
+        val sharingType = workflow?.sharing?.sharingType ?: "PUBLIC"
+        binding.visibilitySwitch.isChecked = (sharingType == "GROUP")
+        sharingViewModel.setType(sharingType)
+        if(sharingType == "GROUP") {
+            binding.groupAutoCompleteTextView.visibility = View.VISIBLE
+        }
+
         binding.visibilitySwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 sharingViewModel.setType("GROUP")
@@ -46,6 +50,16 @@ class SharingFragment(
                 sharingViewModel.setType("PUBLIC")
                 binding.groupAutoCompleteTextView.visibility = View.GONE
             }
+        }
+
+        sharingViewModel.getGroups().observe(viewLifecycleOwner) { groups ->
+            val adapter = GroupAutocompleteAdapter(requireContext(), groups)
+            binding.groupAutoCompleteTextView.setAdapter(adapter)
+        }
+
+        binding.groupAutoCompleteTextView.setOnItemClickListener { adapterView, _, position, _ ->
+            val selectedItem = adapterView.getItemAtPosition(position) as Group
+            sharingViewModel.selectedGroup = selectedItem
         }
 
         return binding.root

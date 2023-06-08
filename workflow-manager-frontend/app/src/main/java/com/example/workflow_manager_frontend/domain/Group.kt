@@ -6,6 +6,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Group(
     val description: String,
-    val groupId: Int,
+    val id: Int,
     val name: String
-) : Parcelable
+) : Parcelable {
+    override fun toString(): String {
+        return name
+    }
+}

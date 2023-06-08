@@ -59,5 +59,17 @@ object AppModule {
     fun providesUserRepository() : UserRepository {
         return UserRepositoryImpl()
     }
+
+    @Provides
+    @Singleton
+    fun providesDeletedStepsRepository() : DeletedStepsRepository {
+        return DeletedStepsRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun providesGroupRepository(): GroupRepository {
+        return GroupRepositoryImpl()
+    }
 }
 

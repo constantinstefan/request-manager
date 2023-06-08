@@ -63,21 +63,6 @@ public class WorkflowStepService {
     }
 
     public List<WorkflowStepDto> getWorkflowStepsFetchingChildren(Long workflowId) {
-       /* List<WorkflowStep> workflowSteps = workflowStepRepository.findByWorkflowId(workflowId);
-        workflowSteps.stream()
-                    .forEach(workflowStep -> {
-                        switch (workflowStep.getStepType()) {
-                            case "FORM_FIELDS": {
-                                formFieldRepository.findByWorkflowStep(workflowStep).stream().forEach(formField -> {
-                                    workflowStep.getFormFields().add(formField);
-                                });
-                            }
-                            case "EDITABLE_HTML": {
-                                editableHtmlRepository.findByWorkflowStepId(workflowStep.getWorkflowStepId())
-                                        .ifPresent(editableHtml -> workflowStep.setEditableHtml(editableHtml));
-                            }
-                        }});
-        return workflowSteps.stream().map(workflowStepMapper::map).collect(Collectors.toList());*/
         List<WorkflowStepDto> workflowStepDtos = new ArrayList<>();
         workflowStepRepository.findByWorkflowId(workflowId).stream().forEach(workflowStep -> {
             switch (workflowStep.getStepType()) {
