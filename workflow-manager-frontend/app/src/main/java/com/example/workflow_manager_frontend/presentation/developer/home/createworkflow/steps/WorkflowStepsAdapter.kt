@@ -39,6 +39,10 @@ class WorkflowStepsAdapter(
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_add_email, parent, false)
                 EmailViewHolder(view, parent.context, fragment as DeleteStepListener, fragment.getViewModel())
             }
+            VIEW_TYPE_CHATGPT_PROMPT -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.item_add_chat_gpt_prompt, parent, false)
+                ChatGptPromptViewHolder(view, parent.context, fragment as DeleteStepListener, fragment.getViewModel())
+            }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -59,6 +63,7 @@ class WorkflowStepsAdapter(
                 "FORM_FIELDS" -> VIEW_TYPE_FORM_FIELD
                 "EDITABLE_HTML" -> VIEW_TYPE_EDITABLE_HTML
                 "EMAIL" -> VIEW_TYPE_EMAIL
+                "CHATGPT" -> VIEW_TYPE_CHATGPT_PROMPT
                 else -> throw IllegalArgumentException("Invalid item type")
             }
     }
@@ -68,6 +73,7 @@ class WorkflowStepsAdapter(
         const val VIEW_TYPE_FORM_FIELD = 1
         const val VIEW_TYPE_EDITABLE_HTML = 2
         const val VIEW_TYPE_EMAIL = 3
+        const val VIEW_TYPE_CHATGPT_PROMPT = 4
     }
 
 }

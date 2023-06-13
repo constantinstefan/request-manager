@@ -38,4 +38,8 @@ public class WorkflowStep {
     @OneToOne
     @JoinColumn(name="email_step_id")
     private EmailStep emailStep;
+
+    @OneToOne
+    @JoinColumn(name="chatgpt_step_id")
+    private ChatGptStep chatGptStep;
 }

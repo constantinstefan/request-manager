@@ -18,6 +18,9 @@ interface ApiClient {
     @GET("/api/v1/customers/{customerId}/workflows")
     suspend fun getWorkflows(@Path("customerId") customerId: Int) : Response<List<Workflow>>
 
+    @GET("/api/v1/customers")
+    suspend fun getCustomers() : Response<List<Customer>>
+
     @POST("/api/v1/customers")
     suspend fun postCustomers(@Body customer: Customer) : Response<Customer>
 
@@ -26,11 +29,17 @@ interface ApiClient {
         @Path("customerId") customerId: Int,
         @Body changePasswordRequest: ChangePasswordRequest) : Response<Customer>
 
+    @POST("/api/v1/groups")
+    suspend fun addGroup(@Body group: Group) : Response<Group>
+
     @GET("/api/v1/groups/{groupId}")
     suspend fun getGroupById(@Path("groupId") groupId: Int) : Response<Group>
 
     @GET("/api/v1/customers/{customerId}/groups")
     suspend fun getGroupsByCustomerId(@Path("customerId") customerId: Int) : Response<List<Group>>
+
+    @GET("/api/v1/groups/{groupId}/members")
+    suspend fun getCustomersByGroupId(@Path("groupId") groupId: Int) : Response<List<Customer>>
 
     @POST("/api/v1/groups/{groupId}/members")
     suspend fun addCustomerToGroup(
@@ -79,6 +88,13 @@ interface ApiClient {
         @Path("workflowId") workflowId: Int?,
         @Path("stepId") stepId: Int?,
         @Body email: Email
+    )
+
+    @POST("/api/v1/workflows/{workflowId}/steps/{stepId}/chatgpt-step")
+    suspend fun addChatGptStep(
+        @Path("workflowId") workflowId: Int?,
+        @Path("stepId") stepId: Int?,
+        @Body chatGptStep: ChatGptStep
     )
 
     @Multipart

@@ -153,4 +153,12 @@ class StepsViewModel @Inject constructor(
     fun setIsRequiredForFormField(position: Int, formFieldPosition: Int, isRequired: Boolean) {
         workflowSteps.value?.get(position)?.formFields?.get(formFieldPosition)?.isRequired = isRequired
     }
+
+    fun setOutputVariableForChatGptStep(position: Int, outputVariable: String) {
+        workflowSteps.value?.get(position)?.chatGptStep?.outputVariable = outputVariable;
+    }
+
+    fun setPromptForChatGptStep(position: Int, prompt: String) {
+        workflowSteps.value?.get(position)?.chatGptStep?.prompt = prompt;
+    }
 }

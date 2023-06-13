@@ -1,38 +1,46 @@
 package com.example.workflow_manager_frontend.presentation.main.home
 
-import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workflow_manager_frontend.data.repository.GroupRepository
 import com.example.workflow_manager_frontend.data.repository.WorkflowRepository
+import com.example.workflow_manager_frontend.data.source.network.NotificationClient
 import com.example.workflow_manager_frontend.domain.Workflow
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     workflowRepository: WorkflowRepository,
-    groupRepository: GroupRepository
+    groupRepository: GroupRepository,
+    notificationClient: NotificationClient
 ) : ViewModel()
 {
-    val state : MutableStateFlow<List<Workflow>> = MutableStateFlow(emptyList())
+    val state : MutableLiveData<List<Workflow>> = MutableLiveData()
+    private lateinit var workflows: List<Workflow>
 
     init {
+        notificationClient.subscribe()
         viewModelScope.launch {
-            state.value = withContext(Dispatchers.IO) {
-                val workflows = workflowRepository.getWorkflows(true)
-                workflows.forEach { workflow ->
-                    workflow.sharing?.group = workflow.sharing?.groupId?.let {
-                        groupRepository.getGroupById(it)
-                    }
+            workflows = workflowRepository.getWorkflows(true)
+            workflows.forEach { workflow ->
+                workflow.sharing?.group = workflow.sharing?.groupId?.let {
+                    groupRepository.getGroupById(it)
                 }
-                return@withContext workflows
             }
-            Log.d("viewmodel", state.value.toString())
+            state.value = workflows
+        }
+    }
+
+    fun filter(query: String?) {
+        if(query.isNullOrEmpty()) {
+            state.value = workflows
+            return
+        }
+        state.value = workflows.filter {
+            it.name.startsWith(query, true)
         }
     }
 }

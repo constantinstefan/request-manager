@@ -62,44 +62,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!--
-
-                <LinearLayout
-                    android:id="@+id/field1Layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/field1NameTextField"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Field Name">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/field1LabelTextField"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Field Label">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <Switch
-                        android:id="@+id/field1RequiredSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Required" />
-
-                </LinearLayout>
-                -->
             </LinearLayout>
 
                 <ImageView

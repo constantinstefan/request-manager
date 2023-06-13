@@ -31,6 +31,8 @@ public class WorkflowController {
 
     private EmailStepService emailStepService;
 
+    private ChatGptStepService chatGptStepService;
+
 
     @Autowired
     WorkflowController(WorkflowService workflowService,
@@ -40,7 +42,8 @@ public class WorkflowController {
                        FormFieldService formFieldService,
                        EditableHtmlService editableHtmlService,
                        DocumentRequestService documentRequestService,
-                       EmailStepService emailStepService) {
+                       EmailStepService emailStepService,
+                       ChatGptStepService chatGptStepService) {
         this.workflowService = workflowService;
         this.workflowStepService = workflowStepService;
         this.workflowSharingService = workflowSharingService;
@@ -49,6 +52,7 @@ public class WorkflowController {
         this.editableHtmlService = editableHtmlService;
         this.documentRequestService = documentRequestService;
         this.emailStepService = emailStepService;
+        this.chatGptStepService = chatGptStepService = chatGptStepService;
     }
 
     @GetMapping(value="/{workflowId}")
@@ -143,6 +147,15 @@ public class WorkflowController {
         workflowService.assertContainsWorkflowStep(workflowId, stepId);
         return emailStepService.updateEmailStep(stepId, emailStep);
     }
+
+    @PostMapping(value= "/{workflowId}/steps/{stepId}/chatgpt-step")
+    ChatGptStepDto addChatGptStep(@PathVariable Long workflowId,
+                           @PathVariable Long stepId,
+                           @RequestBody ChatGptStepDto chatGptStepDto) {
+        workflowService.assertContainsWorkflowStep(workflowId, stepId);
+        return chatGptStepService.addChatGptStep(stepId, chatGptStepDto);
+    }
+
     @GetMapping
     List<WorkflowDto> getAll() {
         return workflowService.getAllWorkflows();

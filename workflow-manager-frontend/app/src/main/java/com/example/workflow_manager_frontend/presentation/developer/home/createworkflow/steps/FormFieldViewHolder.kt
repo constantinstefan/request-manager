@@ -39,12 +39,11 @@ class FormFieldViewHolder(
         OptionsMenuHelper.setupOptionsMenu(context, options, onDeleteAction)
 
         val existingCount = fieldsContainer.childCount
-        val newCount = item.formFields?.size ?: 1
+        var newCount = item.formFields?.size ?: 1
 
         if(newCount < existingCount) {
             fieldsContainer.removeViews(newCount, existingCount - newCount)
         }
-
 
         //fieldsContainer.removeAllViews()
         // if remove all views and bind again with values from viewmodel

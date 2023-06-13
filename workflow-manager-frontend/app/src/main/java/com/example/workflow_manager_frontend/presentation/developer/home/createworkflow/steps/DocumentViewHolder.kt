@@ -30,8 +30,8 @@ class DocumentViewHolder(
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun bind(item: WorkflowStep) {
 
-        if(item.document?.description?.isNotEmpty() == true) descriptionTextField.editText?.setText(item.document.description)
-        if(item.document?.uploadedFileVariable?.isNotEmpty() == true) fileContentVariableTextField.editText?.setText(item.document.uploadedFileVariable)
+        descriptionTextField.editText?.setText(item.document?.description)
+        fileContentVariableTextField.editText?.setText(item.document?.uploadedFileVariable)
         isRequiredSwitch.isChecked = item.document?.isRequired ?: false
 
         descriptionTextField.editText?.addTextChangedListener {

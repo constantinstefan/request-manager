@@ -78,6 +78,13 @@ class CameraFirstFragment() : Fragment() {
         nextFragmentListener = arguments?.parcelable(ARG_NEXT_FRAGMENT_LISTENER)!!
 
         binding.btnTakePicture.setOnClickListener(::onButtonClicked)
+
+        binding.btnSkip.visibility = if(document?.isRequired == true) View.GONE
+            else View.VISIBLE
+        binding.btnSkip.setOnClickListener {
+            nextFragmentListener.onNextFragment()
+        }
+
         binding.description.text = document?.description ?: ""
         cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture(),::onCameraResult)
         return binding.root;

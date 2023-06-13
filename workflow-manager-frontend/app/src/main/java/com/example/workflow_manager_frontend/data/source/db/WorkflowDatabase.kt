@@ -10,13 +10,14 @@ import com.example.workflow_manager_frontend.domain.Workflow
 import com.example.workflow_manager_frontend.domain.WorkflowStep
 import com.example.workflow_manager_frontend.domain.converter.*
 
-@Database(entities = [Workflow::class, Jwt::class, WorkflowStep::class], version = 5)
+@Database(entities = [Workflow::class, Jwt::class, WorkflowStep::class], version = 6)
 @TypeConverters(
     SharingTypeConverter::class,
     DocumentConverter::class,
     EditableHtmlConverter::class,
     FormFieldConverter::class,
-    EmailConverter::class)
+    EmailConverter::class,
+    ChatGptStepConverter::class)
 abstract class WorkflowDatabase : RoomDatabase() {
     abstract fun workflowDao(): WorkflowDao
     abstract fun jwtDao(): JwtDao

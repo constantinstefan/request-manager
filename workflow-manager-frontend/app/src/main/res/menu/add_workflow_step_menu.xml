@@ -18,7 +18,7 @@
         android:icon="@drawable/baseline_email_24"
         android:title="Email"/>
     <item
-        android:id="@+id/menu_item_ai"
+        android:id="@+id/menu_item_chatgpt_prompt"
         android:icon="@drawable/baseline_chat_24"
-        android:title="LLM step"/>
+        android:title="ChatGPT Prompt"/>
 </menu>

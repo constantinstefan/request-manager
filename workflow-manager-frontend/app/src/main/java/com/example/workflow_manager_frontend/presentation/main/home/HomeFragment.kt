@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -57,7 +58,7 @@ class HomeFragment(
 
     private fun setUpViewModel() {
         lifecycleScope.launchWhenStarted {
-            homeViewModel.state.collect { state ->
+            homeViewModel.state.observe(viewLifecycleOwner) { state ->
                 run {
                     Log.d("workflow", state.toString())
                     workflowList = state.toMutableList()

@@ -4,4 +4,6 @@ import com.example.workflow_manager_frontend.domain.Customer
 
 interface UserRepository {
     suspend fun getPrincipal(): Customer?
+
+    suspend fun getUsers() : List<Customer> ?
 }

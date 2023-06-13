@@ -39,13 +39,19 @@ public class GroupController {
 
     @PostMapping
     @ResponseBody
-    CustomerGroup addGroup(@RequestBody CustomerGroup customerGroup) {
+    CustomerGroupDto addGroup(@RequestBody CustomerGroup customerGroup) {
         return groupService.addGroup(customerGroup);
+    }
+
+    @GetMapping(value = "/{groupId}/members")
+    @ResponseBody
+    List<CustomerDto> getMembersByID(@PathVariable Long groupId) {
+        return groupService.getByIdFetchingCustomers(groupId).getCustomers();
     }
 
     @PostMapping(value = "/{groupId}/members")
     @ResponseBody
-    CustomerDto addMember(@PathVariable Long groupId, @RequestBody Customer customer) {
+    CustomerDto addMember(@PathVariable Long groupId, @RequestBody CustomerDto customer) {
         return customerService.addCustomer(groupId, customer);
     }
 

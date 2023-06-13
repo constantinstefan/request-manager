@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.databinding.ActivityDeveloperMainBinding
+import com.example.workflow_manager_frontend.presentation.developer.groups.DeveloperGroupFragment
 import com.example.workflow_manager_frontend.presentation.developer.home.DeveloperHomeFragment
 import com.example.workflow_manager_frontend.presentation.main.home.HomeFragment
 import com.example.workflow_manager_frontend.presentation.main.profile.ProfileFragment
@@ -24,7 +25,7 @@ class DeveloperMainActivity : AppCompatActivity() {
             when(item.itemId) {
                 R.id.menu_item_home -> {setFragment(DeveloperHomeFragment()); true}
                 R.id.menu_item_profile -> {setFragment(ProfileFragment()); true}
-                R.id.menu_item_groups -> {setFragment(ProfileFragment()); true}
+                R.id.menu_item_groups -> {setFragment(DeveloperGroupFragment()); true}
                 else -> false
             }
         }

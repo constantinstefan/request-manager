@@ -10,16 +10,7 @@ import com.example.workflow_manager_frontend.domain.Group
 import com.example.workflow_manager_frontend.domain.Workflow
 import java.util.stream.Collectors
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SharingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SharingFragment(
     private val sharingViewModel: SharingViewModel,
     private val workflow: Workflow?
@@ -55,6 +46,10 @@ class SharingFragment(
         sharingViewModel.getGroups().observe(viewLifecycleOwner) { groups ->
             val adapter = GroupAutocompleteAdapter(requireContext(), groups)
             binding.groupAutoCompleteTextView.setAdapter(adapter)
+            if(binding.groupAutoCompleteTextView.text.toString().isEmpty()) {
+                binding.groupAutoCompleteTextView.setText(workflow?.sharing?.group?.name);
+                sharingViewModel.selectedGroup = workflow?.sharing?.group
+            }
         }
 
         binding.groupAutoCompleteTextView.setOnItemClickListener { adapterView, _, position, _ ->

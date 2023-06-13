@@ -11,4 +11,8 @@ interface GroupRepository {
     suspend fun addCustomerToGroup(groupId: Int, customer: Customer)
 
     suspend fun deleteCustomerFromGroup(groupId: Int, customerId: Int)
+
+    suspend fun getGroupMembers(groupId: Int) :List<Customer>?
+
+    suspend fun addGroup(group: Group) : Group?
 }

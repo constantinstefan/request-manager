@@ -69,6 +69,12 @@ class EditableHtmlFragment() : Fragment() {
 
         _binding = FragmentEditableHtmlBinding.inflate(inflater, container, false)
 
+        binding.btnSkip.visibility = if(editableHtml?.isRequired == true) View.GONE
+            else View.VISIBLE
+        binding.btnSkip.setOnClickListener {
+            nextFragmentListener.onNextFragment()
+        }
+
         binding.submitButton.setOnClickListener {
             handleSubmitButton()
         }

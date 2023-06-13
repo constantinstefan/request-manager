@@ -6,6 +6,8 @@ import lombok.Getter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Builder
@@ -49,6 +51,27 @@ public class WorkflowExecutionContext {
                 ? found
                 : variable;
     }
+
+    public String resolveVariablesInText(String text) {
+        if (text == null) {
+            return null;
+        }
+
+        Pattern pattern = Pattern.compile("\\$\\w+");
+        Matcher matcher = pattern.matcher(text);
+        StringBuffer resolvedText = new StringBuffer();
+
+        while (matcher.find()) {
+            String variable = matcher.group(0);
+            String resolvedValue = resolveVariable(variable);
+            String replacement = (resolvedValue != null) ? resolvedValue : matcher.group(0);
+            matcher.appendReplacement(resolvedText, Matcher.quoteReplacement(replacement));
+        }
+
+        matcher.appendTail(resolvedText);
+        return resolvedText.toString();
+    }
+
 
     public Map<String, byte[]> getFiles(String fileVariables) {
         return Arrays.asList(fileVariables.split(";")).stream()

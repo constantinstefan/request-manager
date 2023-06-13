@@ -23,8 +23,8 @@ public class GroupService {
         this.customerRepository = customerRepository;
     }
 
-    public CustomerGroup addGroup(CustomerGroup customerGroup) {
-        return groupRepository.save(customerGroup);
+    public CustomerGroupDto addGroup(CustomerGroup customerGroup) {
+        return CustomerGroupMapper.map(groupRepository.save(customerGroup));
     }
 
     public CustomerGroupDto getByIdFetchingCustomers(Long groupId) {

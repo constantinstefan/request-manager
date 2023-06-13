@@ -9,6 +9,7 @@ data class WorkflowStep(
     val editableHtml: EditableHtml? = null,
     val formFields: MutableList<FormField>? = null,
     val email: Email? = null,
+    val chatGptStep: ChatGptStep? = null,
     val stepDescription: String = "",
     val stepName: String = "",
     var stepNumber: Int = 0,

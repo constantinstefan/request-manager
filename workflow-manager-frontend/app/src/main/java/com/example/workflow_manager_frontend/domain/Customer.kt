@@ -7,4 +7,8 @@ data class Customer(
     val lastName: String?,
     val role: String,
     val password: String
-)
+) {
+    override fun toString(): String {
+        return email
+    }
+}

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -36,6 +37,19 @@ class DeveloperHomeFragment(): Fragment() {
             startCreateWorkflowActivityIntent(null)
         }
 
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    homeViewModel.filter(newText)
+                }
+                return true
+            }
+        })
+
         setUpRecycleView()
         setUpViewModel()
 
@@ -51,7 +65,7 @@ class DeveloperHomeFragment(): Fragment() {
 
     private fun setUpViewModel() {
         lifecycleScope.launchWhenStarted {
-            homeViewModel.state.collect { state ->
+            homeViewModel.state.observe(viewLifecycleOwner) { state ->
                 run {
                     Log.d("workflow", state.toString())
                     val listAdapter = binding.recycleViewWorkflow.adapter as ListAdapter<Workflow, WorkflowAdapter.WorkflowViewHolder>

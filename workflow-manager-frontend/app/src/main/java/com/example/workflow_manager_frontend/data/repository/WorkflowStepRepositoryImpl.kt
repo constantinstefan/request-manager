@@ -67,6 +67,10 @@ class WorkflowStepRepositoryImpl @Inject constructor(
                 "EDITABLE_HTML" -> {
                     addHtmlStep(workflowId, stepId, step)
                     }
+                "CHATGPT" -> {
+                    step.chatGptStep?.let{RetrofitInstance.api.addChatGptStep(
+                        workflowId, stepId, it)
+                    }}
             }
 
         } catch(e: Exception) {

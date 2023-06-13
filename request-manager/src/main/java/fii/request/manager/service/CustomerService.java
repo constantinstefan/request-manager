@@ -96,8 +96,8 @@ public class CustomerService {
     }
 
     @Transactional
-    public CustomerDto addCustomer(Long groupId, Customer customerToAdd) {
-        Customer customer = customerRepository.findById(customerToAdd.getCustomerId())
+    public CustomerDto addCustomer(Long groupId, CustomerDto customerToAdd) {
+        Customer customer = customerRepository.findById(customerToAdd.getId())
                 .orElseThrow();
         CustomerGroup group = groupRepository.findById(groupId)
                 .orElseThrow();

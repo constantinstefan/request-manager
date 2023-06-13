@@ -62,4 +62,34 @@ class GroupRepositoryImpl : GroupRepository {
         }
         return null
     }
+
+    override suspend fun getGroupMembers(groupId: Int): List<Customer>? {
+        try{
+            val response = RetrofitInstance.api.getCustomersByGroupId(groupId)
+            if(! response.isSuccessful) {
+                Log.e(tag, response.toString())
+                return emptyList()
+            }
+            return response.body()
+        }
+        catch (e: IOException) {
+            Log.e(tag, e.toString())
+        }
+        return emptyList()
+    }
+
+    override suspend fun addGroup(group: Group)  : Group?{
+        try{
+            val response = RetrofitInstance.api.addGroup(group)
+            if(! response.isSuccessful) {
+                Log.e(tag, response.toString())
+                return null
+            }
+            return response.body()
+        }
+        catch (e: IOException) {
+            Log.e(tag, e.toString())
+        }
+        return null
+    }
 }

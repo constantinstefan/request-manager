@@ -1,5 +1,6 @@
 package fii.request.manager.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fii.request.manager.domain.ChatGptStep;
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,4 +29,6 @@ public class WorkflowStepDto {
     private EditableHtmlResponseDto editableHtml;
 
     private EmailStepDto email;
+
+    private ChatGptStepDto chatGptStep;
 }

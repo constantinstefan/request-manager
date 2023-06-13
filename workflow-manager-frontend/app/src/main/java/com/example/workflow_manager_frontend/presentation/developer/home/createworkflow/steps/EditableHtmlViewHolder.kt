@@ -32,8 +32,8 @@ class EditableHtmlViewHolder(
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun bind(item: WorkflowStep) {
-        if(item.editableHtml?.uploadedEditedHtmlFileVariable?.isNotEmpty() == true) htmlTextInputLayout.editText?.setText(item.editableHtml.uploadedEditedHtmlFileVariable)
-        if(item.editableHtml?.pdfResultVariable?.isNotEmpty() == true) htmlTextInputLayout.editText?.setText(item.editableHtml.pdfResultVariable)
+        htmlTextInputLayout.editText?.setText(item.editableHtml?.uploadedEditedHtmlFileVariable)
+        pdfTextInputLayout.editText?.setText(item.editableHtml?.pdfResultVariable)
         isRequiredSwitch.isChecked = item.editableHtml?.isRequired ?: false
 
         htmlTextInputLayout.editText?.addTextChangedListener {

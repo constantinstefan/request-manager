@@ -8,7 +8,7 @@ object RetrofitInstance {
 
     //for testing purposes don't rely on these
     private val emulatorBaseUrl = "http://10.0.2.2:8080"
-    private val hostBaseUrl = "http://192.168.74.162:8080"
+    private val hostBaseUrl = "http://192.168.56.162:8080"
 
     private val httpClient: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(60, TimeUnit.SECONDS)

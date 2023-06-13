@@ -5,11 +5,13 @@ import fii.request.manager.dto.ChangePasswordDto;
 import fii.request.manager.dto.CustomerDto;
 import fii.request.manager.dto.CustomerGroupDto;
 import fii.request.manager.dto.WorkflowDto;
+import fii.request.manager.mapper.CustomerMapper;
 import fii.request.manager.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/customers")
@@ -35,8 +37,9 @@ public class CustomerController {
 
     @GetMapping
     @ResponseBody
-    List<Customer> getAll() {
-        return customerService.getAll().stream().toList();
+    List<CustomerDto> getAll() {
+        return customerService.getAll().stream()
+                .map(CustomerMapper::map).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/{customerId}/workflows")

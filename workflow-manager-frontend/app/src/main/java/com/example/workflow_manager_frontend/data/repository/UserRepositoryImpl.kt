@@ -22,4 +22,19 @@ class UserRepositoryImpl : UserRepository {
         }
         return null
     }
+
+    override suspend fun getUsers(): List<Customer>? {
+        try{
+            val response = RetrofitInstance.api.getCustomers()
+            if(! response.isSuccessful) {
+                Log.e(tag, response.toString())
+                return emptyList()
+            }
+            return response.body()
+        }
+        catch (e: IOException) {
+            Log.e(tag, e.toString())
+        }
+        return emptyList()
+    }
 }
