@@ -15,14 +15,12 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     workflowRepository: WorkflowRepository,
     groupRepository: GroupRepository,
-    notificationClient: NotificationClient
 ) : ViewModel()
 {
     val state : MutableLiveData<List<Workflow>> = MutableLiveData()
     private lateinit var workflows: List<Workflow>
 
     init {
-        notificationClient.subscribe()
         viewModelScope.launch {
             workflows = workflowRepository.getWorkflows(true)
             workflows.forEach { workflow ->

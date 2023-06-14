@@ -113,4 +113,9 @@ interface ApiClient {
         @Part("data") data: RequestBody,
         @Part file: List<MultipartBody.Part>
         ) : Response<Any>
+
+    @GET("/api/v1/workflows/{workflowId}/executions")
+    suspend fun getExecutions(@Path("workflowId") workflowId : Long) : Response<List<Execution>>
+    @GET("/api/v1/notifications")
+    suspend fun getNotifications() : Response<List<Notification>>
 }

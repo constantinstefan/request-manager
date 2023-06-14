@@ -9,4 +9,9 @@
         android:enabled="true"
         android:icon="@drawable/baseline_person_24"
         android:title="Profile"/>
+    <item
+        android:id="@+id/menu_item_notifications"
+        android:enabled="true"
+        android:icon="@drawable/baseline_notifications_24"
+        android:title="Notifications"/>
 </menu>

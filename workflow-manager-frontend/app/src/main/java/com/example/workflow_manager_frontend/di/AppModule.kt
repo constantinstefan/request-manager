@@ -77,5 +77,11 @@ object AppModule {
     fun providesNotificationClient() : NotificationClient {
         return NotificationClient()
     }
+
+    @Provides
+    @Singleton
+    fun providesNotificationRepository() : NotificationRepository {
+        return NotificationRepositoryImpl()
+    }
 }
 

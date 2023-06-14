@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @RestController
@@ -20,8 +23,6 @@ public class WorkflowController {
     private WorkflowStepService workflowStepService;
 
     private WorkflowSharingService workflowSharingService;
-
-    private WorkflowRunnerServiceImpl workflowRunnerService;
 
     private FormFieldService formFieldService;
 
@@ -33,26 +34,36 @@ public class WorkflowController {
 
     private ChatGptStepService chatGptStepService;
 
+    private WorkflowAsyncRunnerService workflowAsyncRunnerService;
+
+    private CustomerService customerService;
+
+    private ExecutionService executionService;
 
     @Autowired
     WorkflowController(WorkflowService workflowService,
                        WorkflowStepService workflowStepService,
                        WorkflowSharingService workflowSharingService,
-                       WorkflowRunnerServiceImpl workflowRunnerService,
+                       WorkflowRunnerService workflowRunnerService,
                        FormFieldService formFieldService,
                        EditableHtmlService editableHtmlService,
                        DocumentRequestService documentRequestService,
                        EmailStepService emailStepService,
-                       ChatGptStepService chatGptStepService) {
+                       ChatGptStepService chatGptStepService,
+                       WorkflowAsyncRunnerService workflowAsyncRunnerService,
+                       CustomerService customerService,
+                       ExecutionService executionService) {
         this.workflowService = workflowService;
         this.workflowStepService = workflowStepService;
         this.workflowSharingService = workflowSharingService;
-        this.workflowRunnerService = workflowRunnerService;
         this.formFieldService = formFieldService;
         this.editableHtmlService = editableHtmlService;
         this.documentRequestService = documentRequestService;
         this.emailStepService = emailStepService;
         this.chatGptStepService = chatGptStepService = chatGptStepService;
+        this.workflowAsyncRunnerService = workflowAsyncRunnerService;
+        this.customerService =customerService;
+        this.executionService = executionService;
     }
 
     @GetMapping(value="/{workflowId}")
@@ -162,19 +173,29 @@ public class WorkflowController {
     }
 
     @PostMapping(value= "/{workflowId}/execution", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    ResponseEntity<byte[]> doExecution(@PathVariable Long workflowId,
-                                       @RequestPart(value="file", required=false) List<MultipartFile> files,
-                                       @RequestPart(value="data", required = false) WorkflowExecutionContextDto workflowExecutionContextDto) {
+    @ResponseBody
+    ExecutionDto doExecution(@PathVariable Long workflowId,
+                             @RequestPart(value="file", required=false) List<MultipartFile> files,
+                             @RequestPart(value="data", required = false) WorkflowExecutionContextDto workflowExecutionContextDto) {
         workflowExecutionContextDto.setFiles(files);
         WorkflowExecutionContext workflowExecutionContext = WorkflowExecutionContextMapper.map(workflowExecutionContextDto);
-        workflowRunnerService.runWorkflow(workflowId, workflowExecutionContext);
+        Customer customer = customerService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "result.pdf");
+        ExecutionDto execution = ExecutionDto.builder()
+                .startTime(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
+                .workflowId(workflowId)
+                .status("IN_PROGRESS")
+                .build();
+        execution = executionService.saveExecution(workflowId, customer.getCustomerId(), execution);
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(workflowExecutionContext.getFile("pdf-file"));
+        workflowAsyncRunnerService.runWorkflowAsync(workflowId, customer.getCustomerId(), workflowExecutionContext, execution);
+
+        return execution;
+    }
+
+    @GetMapping(value = "/{workflowId}/executions")
+    @ResponseBody
+    List<ExecutionDto> getExecutions(@PathVariable Long workflowId) {
+        return executionService.getExecutionsByWorkflowId(workflowId);
     }
 }
