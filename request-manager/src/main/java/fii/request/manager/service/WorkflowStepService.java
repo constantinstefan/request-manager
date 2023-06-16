@@ -14,6 +14,7 @@ import fii.request.manager.repository.WorkflowRepository;
 import fii.request.manager.repository.WorkflowStepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,30 +59,15 @@ public class WorkflowStepService {
     }
 
     public List<WorkflowStepDto> getWorkflowSteps(Long workflowId) {
-        return workflowStepRepository.findByWorkflowId(workflowId).stream()
-                .map(workflowStepMapper::map).collect(Collectors.toList());
+        return workflowStepRepository.findByWorkflowIdNotFetchingChildren(workflowId).stream()
+                .map(workflowStep -> workflowStepMapper.map(workflowStep))
+                .collect(Collectors.toList());
     }
 
     public List<WorkflowStepDto> getWorkflowStepsFetchingChildren(Long workflowId) {
-        List<WorkflowStepDto> workflowStepDtos = new ArrayList<>();
-        workflowStepRepository.findByWorkflowId(workflowId).stream().forEach(workflowStep -> {
-            switch (workflowStep.getStepType()) {
-                case "FORM_FIELDS": {
-                    List<FormFieldDto> formFieldDtos = formFieldRepository.findByWorkflowStep(workflowStep).stream()
-                            .map(FormFieldMapper::map).collect(Collectors.toList());
-                        workflowStepDtos.add(workflowStepMapper.map(workflowStep, formFieldDtos));
-                } break;
-                case "EDITABLE_HTML": {
-                    editableHtmlRepository.findByWorkflowStepId(workflowStep.getWorkflowStepId())
-                            .map(editableHtml -> editableHtmlMapper.map(editableHtml))
-                            .ifPresent(editableHtmlDto -> workflowStepDtos.add(workflowStepMapper.map(workflowStep, editableHtmlDto)));
-                } break;
-                default: {
-                    workflowStepDtos.add(workflowStepMapper.map(workflowStep));
-                }
-            }
-        });
-        return workflowStepDtos;
+        return workflowStepRepository.findByWorkflowId(workflowId).stream()
+                .map(workflowStep -> workflowStepMapper.map(workflowStep))
+                .collect(Collectors.toList());
     }
 
     public WorkflowStep getByWorkflowStepId(Long workflowStepId) {

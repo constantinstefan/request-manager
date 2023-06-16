@@ -8,5 +8,5 @@ import com.example.workflow_manager_frontend.domain.WorkflowStep
 interface WorkflowStepDao {
 
     @Query("SELECT * FROM workflowstep where workflowstep.workflowId = :workflowId")
-    fun getWorkflowStepsByWorkflowId(workflowId: Long) : List<WorkflowStep>
+    fun getWorkflowStepsByWorkflowId(workflowId: Int?) : List<WorkflowStep>
 }

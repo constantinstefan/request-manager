@@ -23,12 +23,12 @@ public class EmailStepService {
         this.workflowStepRepository = workflowStepRepository;
     }
 
-    public EmailStep addEmailStep(Long workflowStepId, EmailStepDto emailStepDto) {
-        EmailStep emailStep = emailStepRepository.save(EmailStepMapper.map(workflowStepId, emailStepDto));
+    public EmailStepDto addEmailStep(Long workflowStepId, EmailStepDto emailStepDto) {
         WorkflowStep workflowStep = workflowStepRepository.findById(workflowStepId).orElseThrow();
+        EmailStep emailStep = EmailStepMapper.map(workflowStepId, emailStepDto);
         workflowStep.setEmailStep(emailStep);
         workflowStepRepository.save(workflowStep);
-        return emailStep;
+        return EmailStepMapper.map(emailStep);
     }
 
     public EmailStepDto updateEmailStep(Long workflowStepId, EmailStep emailStepToChange) {

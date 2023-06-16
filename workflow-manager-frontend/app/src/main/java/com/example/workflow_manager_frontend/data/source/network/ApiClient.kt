@@ -62,7 +62,7 @@ interface ApiClient {
         @Body sharing: SharingRequest) : Response<Sharing>
 
     @GET("/api/v1/workflows/{workflowId}/steps")
-    suspend fun getWorkflowStepsByWorkflowId(@Path("workflowId") workflowId: Long) : Response<List<WorkflowStep>>
+    suspend fun getWorkflowStepsByWorkflowId(@Path("workflowId") workflowId: Int?) : Response<List<WorkflowStep>>
 
     @POST("/api/v1/workflows/{workflowId}/steps")
     suspend fun addWorkflowStep(
@@ -115,7 +115,7 @@ interface ApiClient {
         ) : Response<Any>
 
     @GET("/api/v1/workflows/{workflowId}/executions")
-    suspend fun getExecutions(@Path("workflowId") workflowId : Long) : Response<List<Execution>>
+    suspend fun getExecutions(@Path("workflowId") workflowId: Int?) : Response<List<Execution>>
     @GET("/api/v1/notifications")
     suspend fun getNotifications() : Response<List<Notification>>
 }

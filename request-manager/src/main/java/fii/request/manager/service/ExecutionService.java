@@ -3,6 +3,7 @@ package fii.request.manager.service;
 import fii.request.manager.domain.Execution;
 import fii.request.manager.dto.ExecutionDto;
 import fii.request.manager.mapper.ExecutionMapper;
+import fii.request.manager.repository.CustomerRepository;
 import fii.request.manager.repository.ExecutionRepository;
 import fii.request.manager.repository.WorkflowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class ExecutionService {
     private ExecutionRepository executionRepository;
     private WorkflowRepository workflowRepository;
 
+    private CustomerRepository customerRepository;
+
     private WebsocketNotificationService websocketNotificationService;
 
     private NotificationService notificationService;
@@ -24,9 +27,11 @@ public class ExecutionService {
     ExecutionService(ExecutionRepository executionRepository,
                      WorkflowRepository workflowRepository,
                      WebsocketNotificationService websocketNotificationService,
-                     NotificationService notificationService) {
+                     NotificationService notificationService,
+                     CustomerRepository customerRepository) {
         this.executionRepository = executionRepository;
         this.workflowRepository = workflowRepository;
+        this.customerRepository = customerRepository;
         this.websocketNotificationService = websocketNotificationService;
         this.notificationService = notificationService;
     }
@@ -34,13 +39,15 @@ public class ExecutionService {
     public ExecutionDto saveExecution(Long workflowId, Long customerId, ExecutionDto execution) {
         Execution executionToSave = ExecutionMapper.map(execution);
         executionToSave.setWorkflow(workflowRepository.findById(workflowId).orElse(null));
-        websocketNotificationService.sendExecutionNotification(executionToSave);
+        executionToSave.setCustomer(customerRepository.findById(customerId).orElse(null));
+        ExecutionDto executionDto = ExecutionMapper.map(executionRepository.save(executionToSave));
+        websocketNotificationService.sendExecutionNotification(workflowId, executionDto);
         sendNotification(customerId, executionToSave);
-        return ExecutionMapper.map(executionRepository.save(executionToSave));
+        return executionDto;
     }
 
     public List<ExecutionDto> getExecutionsByWorkflowId(Long workflowId) {
-        return executionRepository.findByWorkflowId(workflowId).stream()
+        return executionRepository.findByWorkflowIdOrderByStartTimeDesc(workflowId).stream()
                 .map(ExecutionMapper::map).toList();
     }
 
@@ -52,6 +59,9 @@ public class ExecutionService {
             }
             case "FAILURE": {
                 notificationService.sendNotification(customerId,"Failed to complete " + execution.getWorkflow().getName());
+                break;
+            }
+            case "IN_PROGRESS": {
                 break;
             }
             default: {

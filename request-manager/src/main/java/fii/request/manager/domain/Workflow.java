@@ -14,7 +14,6 @@ public class Workflow {
     private String name;
     private String description;
 
-    //LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "workflow", cascade = CascadeType.ALL)
     private Set<WorkflowStep> workflowSteps;

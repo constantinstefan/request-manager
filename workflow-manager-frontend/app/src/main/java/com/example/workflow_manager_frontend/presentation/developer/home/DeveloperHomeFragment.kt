@@ -13,8 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.example.workflow_manager_frontend.databinding.FragmentDeveloperHomeBinding
+import com.example.workflow_manager_frontend.domain.Execution
 import com.example.workflow_manager_frontend.domain.Workflow
 import com.example.workflow_manager_frontend.presentation.developer.home.createworkflow.CreateWorkflowActivity
+import com.example.workflow_manager_frontend.presentation.developer.home.execution.ExecutionActivity
 import com.example.workflow_manager_frontend.presentation.main.home.HomeViewModel
 import com.example.workflow_manager_frontend.presentation.main.home.WorkflowAdapter
 import com.example.workflow_manager_frontend.presentation.main.home.WorkflowDiffCallback
@@ -59,7 +61,7 @@ class DeveloperHomeFragment(): Fragment() {
     private fun setUpRecycleView() {
         binding.recycleViewWorkflow.adapter = WorkflowAdapter(
             WorkflowDiffCallback()
-        ) { workflow -> startCreateWorkflowActivityIntent(workflow) }
+        ) { workflow -> startExecutionActivityIntent(workflow) }
         binding.recycleViewWorkflow.layoutManager = LinearLayoutManager(context)
     }
 
@@ -77,6 +79,12 @@ class DeveloperHomeFragment(): Fragment() {
 
     private fun startCreateWorkflowActivityIntent(workflow: Workflow?) {
         val intent = Intent(context, CreateWorkflowActivity::class.java)
+        intent.putExtra("workflow", workflow)
+        startActivity(intent)
+    }
+
+    private fun startExecutionActivityIntent(workflow: Workflow?) {
+        val intent = Intent(context, ExecutionActivity::class.java)
         intent.putExtra("workflow", workflow)
         startActivity(intent)
     }

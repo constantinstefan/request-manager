@@ -22,6 +22,8 @@ public class EmailStepMapper {
                 .subject(emailStep.getSubject())
                 .content(emailStep.getContent())
                 .attachments(emailStep.getAttachments())
+                .workflowStepId(emailStep.getWorkflowStepId())
+                .id(emailStep.getId())
                 .build();
     }
 

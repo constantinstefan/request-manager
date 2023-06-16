@@ -11,7 +11,7 @@ public class ExecutionMapper {
         return ExecutionDto.builder()
                 .message(execution.getMessage())
                 .workflowId(execution.getWorkflow().getId())
-                .customer(execution.getCustomer())
+                .customer(CustomerMapper.map(execution.getCustomer()))
                 .startTime(execution.getStartTime().toEpochSecond(ZoneOffset.UTC))
                 .stepNumber(execution.getStepNumber())
                 .endTime(execution.getEndTime().toEpochSecond(ZoneOffset.UTC))

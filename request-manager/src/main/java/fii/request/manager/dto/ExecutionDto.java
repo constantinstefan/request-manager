@@ -27,5 +27,5 @@ public class ExecutionDto {
 
     private Long workflowId;
 
-    private Customer customer;
+    private CustomerDto customer;
 }

@@ -8,5 +8,5 @@ import java.util.Set;
 
 public interface ExecutionRepository extends JpaRepository<Execution, Long> {
 
-    Set<Execution> findByWorkflowId(Long workflowId);
+    Set<Execution> findByWorkflowIdOrderByStartTimeDesc(Long workflowId);
 }

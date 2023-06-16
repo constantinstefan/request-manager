@@ -18,7 +18,7 @@ class WorkflowViewModel @Inject constructor(
 
     private val tag = "WorkflowViewModel"
 
-    suspend fun getSteps(workflowId: Long) : List<WorkflowStep>? {
+    suspend fun getSteps(workflowId: Int?) : List<WorkflowStep>? {
         val steps = workflowStepRepository.getWorkflowSteps(workflowId, true)
         Log.d(tag, steps.toString())
         return steps

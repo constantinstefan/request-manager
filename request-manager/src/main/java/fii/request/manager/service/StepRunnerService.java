@@ -5,5 +5,5 @@ import fii.request.manager.dto.WorkflowExecutionContextDto;
 
 public interface StepRunnerService {
 
-    void runServerStep(Long workflowStepId, WorkflowExecutionContext workflowExecutionContext);
+    void runServerStep(Long workflowStepId, WorkflowExecutionContext workflowExecutionContext) throws Exception;
 }

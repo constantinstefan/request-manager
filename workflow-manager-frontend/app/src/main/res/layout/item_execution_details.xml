@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
     <!-- Circle View -->
     <View
@@ -44,6 +45,8 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:text="message"
+        android:textColor="@color/red_error"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/stepName"
         app:layout_constraintTop_toBottomOf="@id/circleView"
         app:layout_constraintBottom_toBottomOf="parent" />

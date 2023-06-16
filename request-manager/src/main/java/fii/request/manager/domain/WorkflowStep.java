@@ -1,7 +1,10 @@
 package fii.request.manager.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
@@ -24,22 +27,23 @@ public class WorkflowStep {
 
     private String stepDescription;
 
-    @OneToOne
+
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="document_id")
     private DocumentRequest documentRequest;
 
-    @OneToMany(mappedBy = "workflowStep")
+    @OneToMany(mappedBy = "workflowStep", cascade = {CascadeType.ALL})
     private Set<FormField> formFields;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="editable_html_id")
     private EditableHtml editableHtml;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="email_step_id")
     private EmailStep emailStep;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="chatgpt_step_id")
     private ChatGptStep chatGptStep;
 }

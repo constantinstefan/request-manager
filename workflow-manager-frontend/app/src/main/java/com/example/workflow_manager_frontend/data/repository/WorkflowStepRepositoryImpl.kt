@@ -1,7 +1,5 @@
 package com.example.workflow_manager_frontend.data.repository
-import android.net.Uri
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.workflow_manager_frontend.data.source.db.WorkflowStepDao
 import com.example.workflow_manager_frontend.data.source.network.RetrofitInstance
 import com.example.workflow_manager_frontend.domain.WorkflowStep
@@ -11,9 +9,6 @@ import com.google.gson.Gson
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import javax.inject.Inject
 
 class WorkflowStepRepositoryImpl @Inject constructor(
@@ -22,7 +17,7 @@ class WorkflowStepRepositoryImpl @Inject constructor(
 
     private val tag: String = "WorkflowStepRepository"
 
-    override suspend fun getWorkflowSteps(workflowId: Long, fetchFromRemote: Boolean): List<WorkflowStep>? {
+    override suspend fun getWorkflowSteps(workflowId: Int?, fetchFromRemote: Boolean): List<WorkflowStep>? {
         if(! fetchFromRemote) {
            return workflowStepDao.getWorkflowStepsByWorkflowId(workflowId)
         }
@@ -118,7 +113,7 @@ class WorkflowStepRepositoryImpl @Inject constructor(
             file = file)
     }
 
-    override suspend fun updateWorkflowStep(workflowId: Long, step: WorkflowStep) {
+    override suspend fun updateWorkflowStep(workflowId: Int?, step: WorkflowStep) {
         TODO("Not yet implemented")
     }
 }

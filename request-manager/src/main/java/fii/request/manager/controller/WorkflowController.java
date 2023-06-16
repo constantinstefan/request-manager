@@ -110,9 +110,9 @@ public class WorkflowController {
     }
 
     @PostMapping(value = "/{workflowId}/steps/{stepId}/form-fields")
-    List<FormField> addFormFields(@PathVariable Long workflowId,
+    List<FormFieldDto> addFormFields(@PathVariable Long workflowId,
                                   @PathVariable Long stepId,
-                                  @RequestBody List<FormField> formFields) {
+                                  @RequestBody List<FormFieldDto> formFields) {
         workflowService.assertContainsWorkflowStep(workflowId, stepId);
         return formFieldService.addFormFields(stepId, formFields);
     }
@@ -125,7 +125,7 @@ public class WorkflowController {
         workflowService.assertContainsWorkflowStep(workflowId, stepId);
         htmlDto.setFile(file);
         htmlDto.setWorkflowStepId(stepId);
-        return editableHtmlService.addEditableHtml(htmlDto);
+        return editableHtmlService.addEditableHtml(stepId, htmlDto);
     }
 
     @PostMapping(value= "/{workflowId}/steps/{stepId}/document-request")
@@ -145,7 +145,7 @@ public class WorkflowController {
     }
 
     @PostMapping(value= "/{workflowId}/steps/{stepId}/email")
-    EmailStep addEmailStep(@PathVariable Long workflowId,
+    EmailStepDto addEmailStep(@PathVariable Long workflowId,
                            @PathVariable Long stepId,
                            @RequestBody EmailStepDto emailStep) {
         workflowService.assertContainsWorkflowStep(workflowId, stepId);

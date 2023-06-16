@@ -74,7 +74,7 @@ class StepsViewModel @Inject constructor(
         if(workflow.id == null || workflow.id ==0) {
             return emptyList()
         }
-        return workflowStepRepository.getWorkflowSteps(workflow.id.toLong(), true)
+        return workflowStepRepository.getWorkflowSteps(workflow.id, true)
     }
 
     fun deleteStep(position: Int) {

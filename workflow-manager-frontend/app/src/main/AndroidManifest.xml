@@ -10,10 +10,11 @@
 
     <application
         android:name=".WorkflowManagerApp"
+        android:label="Workflow Manager"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_purple"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
@@ -31,6 +32,12 @@
         <activity
             android:name=".presentation.developer.DeveloperMainActivity"
             android:exported="true" />
+        <activity
+            android:name=".presentation.developer.home.execution.ExecutionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.developer.home.execution.ExecutionDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.main.profile.ChangePasswordActivity"
             android:exported="false" />

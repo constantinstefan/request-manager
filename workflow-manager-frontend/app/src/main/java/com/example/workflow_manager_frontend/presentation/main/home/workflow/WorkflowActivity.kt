@@ -67,7 +67,7 @@ class WorkflowActivity : AppCompatActivity(), NextFragmentListener, Parcelable{
     }
 
     private suspend fun fetchFragments(workflowId: Int, workflowExecutionContext: WorkflowExecutionContext): List<Fragment> = withContext(Dispatchers.IO) {
-        workflowViewModel.getSteps(workflowId.toLong())?.mapNotNull { step ->
+        workflowViewModel.getSteps(workflowId)?.mapNotNull { step ->
             when (step.stepType) {
                 "DOCUMENT" -> CameraFirstFragment.newInstance(step.document, workflowExecutionContext, this@WorkflowActivity)
                 "FORM_FIELDS" -> step.formFields?.let { formFields ->

@@ -9,6 +9,7 @@ import com.example.workflow_manager_frontend.data.source.network.NotificationCli
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -39,7 +40,6 @@ object AppModule {
     @Singleton
     fun providesWorkflowRepository(workflowDatabase: WorkflowDatabase): WorkflowRepository {
         return WorkflowRepositoryImpl(workflowDatabase.workflowDao())
-        //return WorkflowRepositoryStub()
     }
 
     @Provides
@@ -82,6 +82,12 @@ object AppModule {
     @Singleton
     fun providesNotificationRepository() : NotificationRepository {
         return NotificationRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun providesExecutionRepository() : ExecutionRepository {
+        return ExecutionRepositoryImpl()
     }
 }
 

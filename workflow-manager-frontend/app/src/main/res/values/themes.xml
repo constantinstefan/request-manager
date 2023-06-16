@@ -9,7 +9,7 @@
     </style>
 
     <style name="ErrorTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="android:textColor">#FF0000</item>
+        <item name="android:textColor">#CF6679</item>
     </style>
 
     <style name="circleImageView" parent="">

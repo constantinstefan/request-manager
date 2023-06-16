@@ -50,7 +50,10 @@ public class WorkflowStepMapper {
                 .stepType(workflowStep.getStepType())
                 .document(documentRequestMapper.map(workflowStep.getDocumentRequest()))
                 .email(EmailStepMapper.map(workflowStep.getEmailStep()))
+                .editableHtml(editableHtmlMapper.map(workflowStep.getEditableHtml()))
                 .chatGptStep(ChatGptStepMapper.map(workflowStep.getChatGptStep()))
+                .formFields(workflowStep.getFormFields().stream()
+                        .map(FormFieldMapper::map).collect(Collectors.toList()))
                 .workflowId(workflowStep.getWorkflow().getId())
                 .build();
     }

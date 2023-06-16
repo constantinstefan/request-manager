@@ -23,12 +23,11 @@ public class ChatGptStepService {
     }
 
     public ChatGptStepDto addChatGptStep(Long workflowStepId, ChatGptStepDto chatGptStepDto) {
-        ChatGptStep chatGptStep = chatGptStepRepository.save(
-                ChatGptStepMapper.map(workflowStepId, chatGptStepDto));
         WorkflowStep workflowStep = workflowStepRepository.findById(workflowStepId).orElseThrow();
+        ChatGptStep chatGptStep = ChatGptStepMapper.map(workflowStepId, chatGptStepDto);
         workflowStep.setChatGptStep(chatGptStep);
         workflowStepRepository.save(workflowStep);
-        return ChatGptStepMapper.map(chatGptStep);
+        return ChatGptStepMapper.map(workflowStep.getChatGptStep());
     }
 
     public ChatGptStep getByWorkflowStepId(Long workflowStepId) {
