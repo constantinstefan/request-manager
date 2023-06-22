@@ -43,76 +43,73 @@
 
     </LinearLayout>
 
-            <!-- triggeredBy -->
-            <LinearLayout
-                android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp">
+
+        <!-- First Column: triggeredBy -->
+        <LinearLayout
+            android:id="@+id/firstColumnLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="24dp"
-                android:paddingVertical="8dp">
+                android:text="TriggeredBy: "
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="#FFFFFF" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="triggeredBy: "
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:id="@+id/triggeredByTextView"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/purple_primary"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textAppearance="?android:textAppearanceSmall"/>
-            </LinearLayout>
-
-            <!-- startTime -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="24dp"
-                android:paddingVertical="8dp">
+                android:text="Start time: "
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="startTime: "
-                    android:textColor="#FFFFFF"
-                    android:textAppearance="?android:textAppearanceSmall"/>
-
-                <TextView
-                    android:id="@+id/startTimeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_primary"
-                    android:textAppearance="?android:textAppearanceSmall"/>
-            </LinearLayout>
-
-            <!-- endTime -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="24dp"
-                android:paddingVertical="8dp">
+                android:text="End time: "
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="end time: "
-                    android:textColor="#FFFFFF"
-                    android:textAppearance="?android:textAppearanceSmall"/>
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/endTimeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_primary"
-                    android:textAppearance="?android:textAppearanceSmall"/>
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@id/firstColumnLayout"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/triggeredByTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/purple_primary" />
+
+            <TextView
+                android:id="@+id/startTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/purple_primary"
+                android:textAppearance="?android:textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/endTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/purple_primary"
+                android:textAppearance="?android:textAppearanceSmall" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

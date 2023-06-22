@@ -8,3 +8,11 @@ https://github.com/philipplackner/RetrofitCrashCourse/tree/master/app
 https://m2.material.io/components/menus/android#using-menus
 https://stackoverflow.com/questions/62987314/how-do-i-use-a-floating-action-button-as-a-square
 https://stackoverflow.com/questions/62987314/how-do-i-use-a-floating-action-button-as-a-square
+https://www.loginradius.com/blog/engineering/guest-post/jwt-authentication-best-practices-and-when-to-use/
+https://m2.material.io/components/buttons-floating-action-button#usage
+https://platform.openai.com/docs/api-reference/chat/create
+https://www.digitalocean.com/community/tutorials/android-mvvm-design-pattern
+https://www.geeksforgeeks.org/difference-between-a-fragment-and-an-activity-in-android/
+https://www.baeldung.com/cs/layered-architecture
+https://www.adobe.com/acrobat/resources/what-is-a-digital-workflow.html
+https://www.techtarget.com/searchcio/definition/workflow

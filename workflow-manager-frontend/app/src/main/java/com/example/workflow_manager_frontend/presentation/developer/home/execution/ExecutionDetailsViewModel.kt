@@ -24,9 +24,9 @@ class ExecutionDetailsViewModel @Inject constructor(
 
     private val staticExecution : MutableLiveData<Execution> = MutableLiveData()
 
-    fun subscribeForExecutions(workflowId: Int?) {
+    fun subscribeForExecutions(workflowId: Int?, executionId: Int?) {
         val notificationClient = NotificationClient()
-        notificationClient.subscribe("/executions") {
+        notificationClient.subscribe("/executions/$workflowId/$executionId") {
             updateExecution(it.payload)
         }
     }

@@ -10,6 +10,7 @@ import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.domain.FormField
 import com.example.workflow_manager_frontend.domain.WorkflowExecutionContext
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 
 class FormFieldAdapter(
@@ -23,9 +24,11 @@ class FormFieldAdapter(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView){
         val name: TextInputEditText
+        val layout : TextInputLayout
 
         init{
             name = itemView.findViewById(R.id.field)
+            layout = itemView.findViewById(R.id.layout)
         }
     }
 
@@ -38,10 +41,18 @@ class FormFieldAdapter(
         val formField = getItem(position)
         viewHolders.add(holder)
         holder.name.hint = formField.name
+
+        holder.name.hint = if(formField.isRequired) "${formField.name}*"
+            else formField.name
     }
 
-    private fun getEditedText(position: Int) : String {
-        return viewHolders.get(position).name.text.toString()
+    fun getEditedText(position: Int?) : String {
+        if(position == null) return ""
+        return viewHolders[position].name.text.toString()
+    }
+
+    override fun onFieldError(position: Int, errorMessage: String) {
+        viewHolders[position].layout.error = errorMessage
     }
 
     override fun onSubmitForm(workflowExecutionContext: WorkflowExecutionContext) {

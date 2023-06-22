@@ -7,8 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.workflow_manager_frontend.R
+import com.example.workflow_manager_frontend.databinding.ActivityCreateGroupBinding
+import com.example.workflow_manager_frontend.databinding.ActivitySignUpBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -23,27 +26,20 @@ class CreateGroupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_group)
 
-        val createGroupButton = findViewById<Button>(R.id.createGroupButton)
-        val groupNameText = findViewById<EditText>(R.id.groupNameEditText)
-        val groupDescriptionText = findViewById<EditText>(R.id.groupDescriptionEditText)
+        val binding: ActivityCreateGroupBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_create_group)
+        binding.viewModel = createGroupViewModel
+        binding.lifecycleOwner = this
 
-        createGroupButton.setOnClickListener {
-
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    if(createGroupViewModel.createGroup(
-                            groupNameText.text.toString(), groupDescriptionText.text.toString())) {
-                            Log.d("", "CreatedGroupSuccessfully");
-                            runOnUiThread {
-                                showSnackBar()
-                            }
-                            TimeUnit.SECONDS.sleep(1L);
-                            finish()
-                    }
-                }
+        createGroupViewModel.success.observe(this){
+            if (!it) return@observe
+            Log.d("", "CreatedGroupSuccessfully");
+            runOnUiThread {
+                showSnackBar()
             }
+            TimeUnit.SECONDS.sleep(1L);
+            finish()
         }
     }
 

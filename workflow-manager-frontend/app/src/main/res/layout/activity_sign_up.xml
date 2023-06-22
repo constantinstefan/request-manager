@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.workflow_manager_frontend.presentation.auth.SignUpViewModel" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/signupLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -40,6 +46,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:error="@{viewModel.emailError}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appName">
@@ -48,6 +55,7 @@
             android:id="@+id/usernameFieldSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewModel.email}"
             android:hint="Email"
             android:inputType="text" />
 
@@ -61,6 +69,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:error="@{viewModel.passwordError}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/usernameFieldLayoutSignUp">
@@ -69,6 +78,7 @@
             android:id="@+id/passwordFieldSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewModel.password}"
             android:hint="Password"
             android:inputType="textPassword" />
 
@@ -82,6 +92,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        app:error="@{viewModel.confirmPasswordError}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordFieldLayoutSignUp">
@@ -90,6 +101,7 @@
             android:id="@+id/confirmPasswordFieldSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewModel.confirmPassword}"
             android:hint="Confirm password"
             android:inputType="textPassword" />
 
@@ -100,6 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:checked="@={viewModel.isDeveloper()}"
         android:text="Developer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/confirmPasswordFieldLayoutSignUp" />
@@ -142,9 +155,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:text="Sign Up"
+        android:onClick="@{() -> viewModel.handleSignUp()}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loginTextLinkOnSignUpPage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

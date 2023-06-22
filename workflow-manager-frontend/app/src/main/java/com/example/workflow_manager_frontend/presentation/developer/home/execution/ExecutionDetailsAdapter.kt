@@ -53,7 +53,8 @@ class ExecutionDetailsAdapter(
 
         updateColor(position, holder, stepExecution)
 
-        if( (stepExecution.step.stepNumber == position) && (stepExecution.execution.status == "FAILURE") ) {
+        val currentExecutionPosition = stepExecution.execution.stepNumber - 1
+        if( (currentExecutionPosition == position) && (stepExecution.execution.status == "FAILURE") ) {
             holder.failureMessage.visibility = View.VISIBLE
             holder.failureMessage.text = stepExecution.execution.message
         }

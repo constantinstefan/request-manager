@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Transformations.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.canhub.cropper.parcelable
@@ -30,6 +32,8 @@ class FormFieldsFragment(
     private var formFields: List<FormField>? = null
     private lateinit var workflowExecutionContext : WorkflowExecutionContext
     private lateinit var nextFragmentListener: NextFragmentListener
+
+    private val formFieldsViewModel : FormFieldsViewModel by viewModels()
 
 
     private val classTag = "FormFieldsFragment"
@@ -69,6 +73,18 @@ class FormFieldsFragment(
 
         binding.submitButton.setOnClickListener {
             val formfieldAdapter = binding.recycleView.adapter as FormFieldAdapter
+            val formFieldsViewModel = formFieldsViewModel
+
+            var isError = false
+            formFields?.forEachIndexed { index, formField ->
+                if (formField.isRequired && formFieldsViewModel.validateField(formfieldAdapter.getEditedText(index)).isNotEmpty()) {
+                    formfieldAdapter.onFieldError(index, "Cannot be empty!")
+                    isError = true
+                }
+            }
+
+            if(isError) return@setOnClickListener
+
             formfieldAdapter.onSubmitForm(workflowExecutionContext)
             nextFragmentListener.onNextFragment()
             Log.d(classTag, workflowExecutionContext.toString())

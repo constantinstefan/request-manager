@@ -10,8 +10,11 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.workflow_manager_frontend.R
+import com.example.workflow_manager_frontend.databinding.ActivityLoginBinding
+import com.example.workflow_manager_frontend.databinding.ActivitySignUpBinding
 import com.example.workflow_manager_frontend.presentation.main.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -34,57 +37,20 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
 
-        val emailFieldLayout : TextInputLayout = findViewById(R.id.usernameFieldLayoutSignUp)
-        val passwordFieldLayout: TextInputLayout = findViewById(R.id.passwordFieldLayoutSignUp)
-        val confirmPasswordFieldLayout : TextInputLayout = findViewById(R.id.confirmPasswordFieldLayoutSignUp)
-        val signUpButton : Button = findViewById(R.id.signupButton)
-        val loginTextLink: TextView = findViewById(R.id.loginTextLinkOnSignUpPage)
-        val accountTypeSwitch : SwitchMaterial = findViewById(R.id.accountTypeSwitch)
+        val binding: ActivitySignUpBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
+        binding.viewModel = signUpViewModel
+        binding.lifecycleOwner = this
 
-        signUpViewModel.emailError.observe(this) { errorMessage ->
-            emailFieldLayout.error = errorMessage
-        }
-
-        signUpViewModel.passwordError.observe(this) { errorMessage ->
-            passwordFieldLayout.error = errorMessage
-            confirmPasswordFieldLayout.error = errorMessage
-        }
-
-        loginTextLink.setOnClickListener {
+        signUpViewModel.success.observe(this) {
+            if (!it) return@observe
+            Log.d(tag, "sign up successfully");
+            runOnUiThread {
+                showSnackBar()
+            }
+            TimeUnit.SECONDS.sleep(1L);
             createLoginIntent()
-        }
-
-        signUpButton.setOnClickListener {
-            lifecycleScope.launch {
-                handleSignUp(emailFieldLayout, passwordFieldLayout, confirmPasswordFieldLayout, accountTypeSwitch)
-            }
-        }
-    }
-
-    private suspend fun handleSignUp(emailFieldLayout : TextInputLayout,
-                                     passwordFieldLayout: TextInputLayout,
-                                     confirmPasswordFieldLayout: TextInputLayout,
-                                     accountTypeSwitch: SwitchMaterial) {
-        val email = emailFieldLayout.editText?.text.toString()
-        val password = passwordFieldLayout.editText?.text.toString()
-        val confirmPassword = confirmPasswordFieldLayout.editText?.text.toString()
-        val isDeveloper = accountTypeSwitch.isChecked
-
-        if (! signUpViewModel.validateFields(email, password, confirmPassword)) {
-            return;
-        }
-
-        withContext(Dispatchers.IO) {
-            if(signUpViewModel.signup(email, password, isDeveloper)) {
-                Log.d(tag, "sign up successfully");
-                runOnUiThread {
-                    showSnackBar()
-                }
-                TimeUnit.SECONDS.sleep(1L);
-                createLoginIntent()
-            }
         }
     }
 

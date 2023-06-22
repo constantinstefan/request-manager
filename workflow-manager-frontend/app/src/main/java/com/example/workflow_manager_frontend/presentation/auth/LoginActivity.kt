@@ -7,10 +7,12 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.workflow_manager_frontend.R
 import com.example.workflow_manager_frontend.data.source.network.RetrofitInstance
+import com.example.workflow_manager_frontend.databinding.ActivityLoginBinding
 import com.example.workflow_manager_frontend.domain.request.AuthenticationRequest
 import com.example.workflow_manager_frontend.presentation.developer.DeveloperMainActivity
 import com.example.workflow_manager_frontend.presentation.main.MainActivity
@@ -30,39 +32,24 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
-        val signUpTextLink : TextView = findViewById(R.id.signUpTextLink)
-        signUpTextLink.setOnClickListener() {
+        val binding: ActivityLoginBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.viewModel = loginViewModel
+        binding.lifecycleOwner = this
+
+        binding.signUpTextLink.setOnClickListener() {
             createSignUpActivityIntent()
         }
 
-        val loginButton: Button = findViewById(R.id.loginButton)
-        loginButton.setOnClickListener() {
-            lifecycleScope.launch{
-                    handleLogin()
-            }
-        }
-
-    }
-
-    private suspend fun handleLogin() {
-        val userName = findViewById<TextInputEditText>(R.id.usernameField).text.toString()
-        val password = findViewById<TextInputEditText>(R.id.passwordField).text.toString()
-
-        withContext(Dispatchers.IO) {
-            if (! loginViewModel.login(userName, password)) {
-                return@withContext
-            }
-
-            when(val role = loginViewModel.getRole()) {
+        loginViewModel.role.observe(this) {
+            when (it) {
                 "ROLE_CUSTOMER" -> createMainActivityIntent()
                 "ROLE_DEVELOPER" -> createDeveloperMainActivityIntent()
-                else -> Log.e(tag, "invalid role: $role")
+                else -> Log.e(tag, "invalid role: $it")
             }
         }
     }
-
     private fun createMainActivityIntent() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

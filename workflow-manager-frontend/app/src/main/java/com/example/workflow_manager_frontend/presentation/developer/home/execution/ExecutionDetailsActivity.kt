@@ -39,7 +39,7 @@ class ExecutionDetailsActivity: AppCompatActivity() {
 
         binding.recycleViewExecutionDetails.adapter = ExecutionDetailsAdapter(this, ExecutionDetailsDiffCallback())
         binding.recycleViewExecutionDetails.layoutManager = LinearLayoutManager(this)
-        executionDetailsViewModel.subscribeForExecutions(workflow.id)
+        executionDetailsViewModel.subscribeForExecutions(workflow.id, execution.id)
 
         executionDetailsViewModel.getStepExecutions(execution).observe(this){
             val listAdapter = binding.recycleViewExecutionDetails.adapter

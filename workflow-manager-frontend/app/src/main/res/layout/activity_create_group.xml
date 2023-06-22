@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.workflow_manager_frontend.presentation.developer.groups.create.CreateGroupViewModel" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rootLayout">
@@ -23,6 +29,7 @@
             android:id="@+id/groupNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewModel.groupName}"
             android:hint="Group Name"
             android:inputType="text" />
 
@@ -44,6 +51,7 @@
             android:id="@+id/groupDescriptionEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewModel.groupDescription}"
             android:hint="Group Description" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -55,8 +63,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
         android:text="Create Group"
+        android:onClick="@{() -> viewModel.onCreateGroup()}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
